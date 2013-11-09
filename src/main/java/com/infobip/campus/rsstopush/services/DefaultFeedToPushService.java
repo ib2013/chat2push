@@ -32,6 +32,8 @@ public class DefaultFeedToPushService implements FeedToPushService {
 
 	public void readRSSFeeds() {
 
+		PushNotification pushNotification = new PushNotification();
+		pushNotification.broadcastDeletedChannel("djeSiJarane");
 		ArrayList<RssFeedModel> sourcesList = new ArrayList<RssFeedModel>(
 				RssFeedModel.findAllRssFeedModels());
 		ArrayList<MessageModel> messagesList = fetchMessageModelListFromSources(sourcesList);
@@ -146,24 +148,7 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		lastFeedDates.remove(channel);
 	}
 
-	public JsonArray channelMapCounterToJson() {
-
-		JsonArray jsonArray = new JsonArray();
-
-		for (Map.Entry<ChannelModel, Integer> entry : channelNotificationCounter
-				.entrySet()) {
-			JsonObject jsonObject = new JsonObject();
-
-			ChannelModel channel = entry.getKey();
-			Integer counter = entry.getValue();
-
-			jsonObject.addProperty("name", channel.getName());
-			jsonObject.addProperty("description", channel.getDescription());
-			jsonObject.addProperty("counter", counter);
-
-			jsonArray.add(jsonObject);
-		}
-
-		return jsonArray;
+	public HashMap<ChannelModel,Integer> channelMapCounterToJson() {
+		return channelNotificationCounter;
 	}
 }
