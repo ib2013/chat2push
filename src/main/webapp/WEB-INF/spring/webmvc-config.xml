@@ -12,7 +12,7 @@
 	<mvc:annotation-driven />
 
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources -->
+	<!-- Handles HTTP GET requests for /** by efficiently serving up static resources -->
 	<mvc:resources location="/" mapping="/**" />
 	<!-- <mvc:resources location="/pages" mapping="/**" /> -->
 
