@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.infobip.campus.rsstopush.adapters.models.MessageModel;
 import com.infobip.campus.rsstopush.services.FeedToPushService;
+import com.infobip.campus.rsstopush.services.PushNotification;
 
 @RequestMapping("/cron")
 @Controller
@@ -25,7 +27,7 @@ public class CronJobController {
 		LOG.info("Requesting JOB!");
 
 		feedToPushService.readRSSFeeds();
-
+		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
