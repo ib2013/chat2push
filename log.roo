@@ -84,3 +84,6 @@ hint relationships
 hint
 help
 field list --fieldName rssFeeds --type ~.models.RssFeedModel --class ~.models.RssSourceModel
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 15:08:36
+perform clean
+perform package
