@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonArray;
@@ -16,19 +18,23 @@ import com.infobip.campus.rsstopush.channels.ChannelHandler;
 import com.infobip.campus.rsstopush.channels.ChannelModel;
 import com.infobip.campus.rsstopush.configuration.Configuration;
 import com.infobip.campus.rsstopush.models.RssFeedModel;
+import com.infobip.campus.rsstopush.web.CronJobController;
 
 @Service
 public class DefaultFeedToPushService implements FeedToPushService {
 	HashMap<ChannelModel, Date> lastFeedDates = new HashMap<ChannelModel, Date>();
 	HashMap<ChannelModel, Integer> channelNotificationCounter = new HashMap<ChannelModel, Integer>();
-	ChannelHandler channelHandler;
+	ChannelHandler channelHandler = new ChannelHandler();
+	private static final Logger LOG = LoggerFactory.getLogger(CronJobController.class);
 
 	public DefaultFeedToPushService() {
-		channelHandler = new ChannelHandler();
+		readRSSFeeds();
+		LOG.info("DefaultFeedToPushService CREATED!");
 	}
 
 	public void readRSSFeeds() {
-		ArrayList<RssFeedModel> sourcesList = new ArrayList<RssFeedModel>(RssFeedModel.findAllRssFeedModels());
+		ArrayList<RssFeedModel> sourcesList = new ArrayList<RssFeedModel>(
+				RssFeedModel.findAllRssFeedModels());
 
 		ArrayList<MessageModel> messagesList = fetchMessageModelListFromSources(sourcesList);
 		ArrayList<ChannelModel> channelList = channelHandler.fetchChannelList();
@@ -45,10 +51,10 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		}
 
 		updateUsersWithNotifications(messagesList, channelList);
-		System.out.println("======================");
 	}
 
-	private ArrayList<MessageModel> fetchMessageModelListFromSources(ArrayList<RssFeedModel> sourcesList) {
+	private ArrayList<MessageModel> fetchMessageModelListFromSources(
+			ArrayList<RssFeedModel> sourcesList) {
 
 		ArrayList<MessageModel> messagesList = new ArrayList<MessageModel>();
 		SourceAdapterContainer container = new SourceAdapterContainer();
@@ -66,12 +72,15 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		return messagesList;
 	}
 
-	public void updateUsersWithNotifications(ArrayList<MessageModel> messagesList, ArrayList<ChannelModel> channelList) {
+	public void updateUsersWithNotifications(
+			ArrayList<MessageModel> messagesList,
+			ArrayList<ChannelModel> channelList) {
 		for (MessageModel x : messagesList) {
 			for (ChannelModel y : channelList) {
 				if (hasMatch(x, y)) {
 
-					PushNotification pushN = new PushNotification(x, y.getName());
+					PushNotification pushN = new PushNotification(x,
+							y.getName());
 					pushN.notifyChannel(y.getName());
 				}
 			}
@@ -94,21 +103,27 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		if (message.getDate().compareTo(lastTorrentFeedDate) <= 0)
 			return false;
 
-		if (channel.getName().toUpperCase().equals(Configuration.DEFAULT_TPB_NAME.toUpperCase())
-				&& (message.getLink().startsWith("http://thepiratebay.sx") || message.getLink().startsWith("https://thepiratebay.sx"))) {
+		if (channel.getName().toUpperCase()
+				.equals(Configuration.DEFAULT_TPB_NAME.toUpperCase())
+				&& (message.getLink().startsWith("http://thepiratebay.sx") || message
+						.getLink().startsWith("https://thepiratebay.sx"))) {
 			lastFeedDates.put(channel, message.getDate());
 			channelNotificationCounter.put(channel, oldCounter + 1);
 			return true;
 		}
 
-		if (channel.getName().toUpperCase().equals(Configuration.DEFAULT_YT_NAME.toUpperCase())
-				&& (message.getLink().startsWith("http://www.youtube.com/watch") || message.getLink().startsWith("https://www.youtube.com/watch"))) {
+		if (channel.getName().toUpperCase()
+				.equals(Configuration.DEFAULT_YT_NAME.toUpperCase())
+				&& (message.getLink()
+						.startsWith("http://www.youtube.com/watch") || message
+						.getLink().startsWith("https://www.youtube.com/watch"))) {
 			lastFeedDates.put(channel, message.getDate());
 			channelNotificationCounter.put(channel, oldCounter + 1);
 			return true;
 		}
 
-		if (channel.getName().toUpperCase().equals(Configuration.DEFAULT_CHANNEL_NAME.toUpperCase())) {
+		if (channel.getName().toUpperCase()
+				.equals(Configuration.DEFAULT_CHANNEL_NAME.toUpperCase())) {
 			lastFeedDates.put(channel, message.getDate());
 			channelNotificationCounter.put(channel, oldCounter + 1);
 			return true;
@@ -116,7 +131,8 @@ public class DefaultFeedToPushService implements FeedToPushService {
 
 		String[] splitString = channel.getName().split(" ");
 		for (int i = 0; i < splitString.length; i++) {
-			if (!message.getTitle().toLowerCase().contains(splitString[i].toLowerCase())) {
+			if (!message.getTitle().toLowerCase()
+					.contains(splitString[i].toLowerCase())) {
 				return false;
 			}
 		}

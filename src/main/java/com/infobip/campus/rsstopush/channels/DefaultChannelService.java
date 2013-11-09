@@ -1,10 +1,16 @@
 package com.infobip.campus.rsstopush.channels;
 
+import com.google.appengine.api.urlfetch.HTTPHeader;
+import com.google.appengine.api.urlfetch.HTTPMethod;
+import com.google.appengine.api.urlfetch.HTTPRequest;
+import com.google.appengine.api.urlfetch.HTTPResponse;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.infobip.campus.rsstopush.configuration.Configuration;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
@@ -22,35 +28,34 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-
 @SuppressWarnings("deprecation")
 @Service
 public class DefaultChannelService implements ChannelService {
-	/* (non-Javadoc)
-	 * @see com.infobip.campus.rsstopush.channels.ChannelService#fetchChannelList()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.infobip.campus.rsstopush.channels.ChannelService#fetchChannelList()
 	 */
 	@Override
 	public ArrayList<ChannelModel> fetchChannelList() {
 		ArrayList<ChannelModel> channelList;
 		try {
-			HttpClient client = new DefaultHttpClient();
-			HttpGet request = new HttpGet(
-					"https://pushapi.infobip.com/1/application/"
-							+ Configuration.APPLICATION_ID + "/channels");
+			Gson gson = new Gson();
 
-			request.addHeader("Authorization", Configuration.AUTHORIZATION_INFO);
-			HttpResponse response = client.execute(request);
+			URL url = new URL("https://pushapi.infobip.com/1/application/"
+					+ Configuration.APPLICATION_ID + "/channels");
+			HTTPRequest request = new HTTPRequest(url, HTTPMethod.GET);
 
-			BufferedReader rd = new BufferedReader(new InputStreamReader(
-					response.getEntity().getContent()));
+			request.addHeader(new HTTPHeader("Authorization",
+					Configuration.AUTHORIZATION_INFO));
 
-			String responseText = new String();
-			String line;
-			while ((line = rd.readLine()) != null) {
-				responseText += line;
-			}
+			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
+					.fetch(request);
 
-			channelList = parseJson(responseText);
+			response.getContent().toString();
+
+			channelList = parseJson(response.getContent().toString());
 
 			return channelList;
 
@@ -61,8 +66,12 @@ public class DefaultChannelService implements ChannelService {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.infobip.campus.rsstopush.channels.ChannelService#parseJson(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.infobip.campus.rsstopush.channels.ChannelService#parseJson(java.lang
+	 * .String)
 	 */
 	@Override
 	public ArrayList<ChannelModel> parseJson(String jsonResponse) {
@@ -96,24 +105,31 @@ public class DefaultChannelService implements ChannelService {
 		return channelList;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.infobip.campus.rsstopush.channels.ChannelService#addChannel(com.infobip.campus.rsstopush.channels.ChannelModel)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.infobip.campus.rsstopush.channels.ChannelService#addChannel(com.infobip
+	 * .campus.rsstopush.channels.ChannelModel)
 	 */
 	@Override
 	public boolean addChannel(ChannelModel channel) {
 		Gson gson = new Gson();
 		try {
-			StringEntity parms = new StringEntity(gson.toJson(channel));
-			HttpClient client = new DefaultHttpClient();
-			HttpPost request = new HttpPost(
-					"https://pushapi.infobip.com/1/application/"
-							+ Configuration.APPLICATION_ID + "/channel");
-			request.addHeader("Authorization", Configuration.AUTHORIZATION_INFO);
-			request.addHeader("content-type", "application/json");
-			request.setEntity(parms);
-			HttpResponse response = client.execute(request);
-			if (response.getStatusLine().toString()
-					.contains("HTTP/1.1 201 Created")) {
+			URL url = new URL("https://pushapi.infobip.com/1/application/"
+					+ Configuration.APPLICATION_ID + "/channel");
+			HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
+
+			request.addHeader(new HTTPHeader("Authorization",
+					Configuration.AUTHORIZATION_INFO));
+			request.addHeader(new HTTPHeader("content-type", "application/json"));
+			request.setPayload(gson.toJson(channel).getBytes());
+
+			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
+					.fetch(request);
+			String responseText = response.getContent().toString();
+
+			if (responseText.contains("HTTP/1.1 201 Created")) {
 				return true;
 			} else {
 				return false;
@@ -124,26 +140,31 @@ public class DefaultChannelService implements ChannelService {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.infobip.campus.rsstopush.channels.ChannelService#deleteChannel(com.infobip.campus.rsstopush.channels.ChannelModel)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.infobip.campus.rsstopush.channels.ChannelService#deleteChannel(com
+	 * .infobip.campus.rsstopush.channels.ChannelModel)
 	 */
 	@Override
 	public boolean deleteChannel(ChannelModel channel) {
-
+		Gson gson = new Gson();
 		try {
-			HttpClient client = new DefaultHttpClient();
 			String channelName = channel.getName().replaceAll(" ", "%20");
-			HttpDelete request = new HttpDelete(
-					"https://pushapi.infobip.com/1/application/"
-							+ Configuration.APPLICATION_ID
-							+ "/channel/" + channelName);
-			request.addHeader("Authorization",
-					Configuration.AUTHORIZATION_INFO);
-			request.addHeader("applicationID",
-					Configuration.APPLICATION_ID);
-			request.addHeader("channelName", channel.getName());
+			URL url = new URL("https://pushapi.infobip.com/1/application/"
+					+ Configuration.APPLICATION_ID + "/channel/" + channelName);
+			HTTPRequest request = new HTTPRequest(url, HTTPMethod.DELETE);
 
-			HttpResponse response = client.execute(request);
+			request.addHeader(new HTTPHeader("Authorization",
+					Configuration.AUTHORIZATION_INFO));
+			request.addHeader(new HTTPHeader("applicationID",
+					Configuration.APPLICATION_ID));
+			request.addHeader(new HTTPHeader("channelName", channel.getName()));
+
+			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
+					.fetch(request);
+
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -151,32 +172,35 @@ public class DefaultChannelService implements ChannelService {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.infobip.campus.rsstopush.channels.ChannelService#updateChannel(com.infobip.campus.rsstopush.channels.ChannelModel, com.infobip.campus.rsstopush.channels.ChannelModel)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.infobip.campus.rsstopush.channels.ChannelService#updateChannel(com
+	 * .infobip.campus.rsstopush.channels.ChannelModel,
+	 * com.infobip.campus.rsstopush.channels.ChannelModel)
 	 */
 	@Override
 	public boolean updateChannel(ChannelModel oldModel, ChannelModel newModel) {
 
 		Gson gson = new Gson();
 		try {
-
 			String formatSpace = oldModel.getName().replaceAll(" ", "%20");
-			StringEntity parms = new StringEntity(gson.toJson(newModel));
+			URL url = new URL("https://pushapi.infobip.com/1/application/"
+					+ Configuration.APPLICATION_ID + "/channel/" + formatSpace);
+			HTTPRequest request = new HTTPRequest(url, HTTPMethod.PUT);
 
-			HttpClient client = new DefaultHttpClient();
-			HttpPut request = new HttpPut(
-					"https://pushapi.infobip.com/1/application/"
-							+ Configuration.APPLICATION_ID + "/channel/"
-							+ formatSpace);
+			request.addHeader(new HTTPHeader("Authorization",
+					Configuration.AUTHORIZATION_INFO));
+			request.addHeader(new HTTPHeader("content-type", "application/json"));
+			request.addHeader(new HTTPHeader("channelName", oldModel.getName()));
+			request.setPayload(gson.toJson(newModel).getBytes());
 
-			request.addHeader("Authorization", Configuration.AUTHORIZATION_INFO);
-			request.addHeader("content-type", "application/json");
+			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
+					.fetch(request);
+			String responseText = response.getContent().toString();
 
-			request.setEntity(parms);
-			request.addHeader("channelName", oldModel.getName());
-			HttpResponse response = client.execute(request);
-
-			if (response.getStatusLine().toString().contains("HTTP/1.1 200 OK")) {
+			if (responseText.contains("HTTP/1.1 201 Created")) {
 				return true;
 			} else {
 				return false;

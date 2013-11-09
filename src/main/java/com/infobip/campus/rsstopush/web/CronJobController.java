@@ -28,10 +28,10 @@ public class CronJobController {
 	public ResponseEntity<String> doJob() {
 		LOG.info("Requesting JOB!");
 
-		/*feedToPushService.readRSSFeeds();*/
+		feedToPushService.readRSSFeeds();
 		
-		PushNotification pN = new PushNotification();
-		pN.broadcastDeletedChannel("AAAAAAAA");
+		/*PushNotification pN = new PushNotification();
+		pN.broadcastDeletedChannel("EHEHEHHEHE");*/
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
