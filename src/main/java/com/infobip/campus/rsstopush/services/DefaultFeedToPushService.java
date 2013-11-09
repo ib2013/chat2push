@@ -3,11 +3,14 @@ package com.infobip.campus.rsstopush.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.infobip.campus.rsstopush.*;
 import com.infobip.campus.rsstopush.adapters.SourceAdapter;
 import com.infobip.campus.rsstopush.adapters.SourceAdapterContainer;
@@ -16,6 +19,7 @@ import com.infobip.campus.rsstopush.adapters.models.MessageModel;
 import com.infobip.campus.rsstopush.channels.*;
 import com.infobip.campus.rsstopush.models.RssFeedModel;
 import com.infobip.campus.rsstopush.configuration.Configuration;
+import com.infobip.campus.rsstopush.channels.ChannelModel;
 
 @Service
 public class DefaultFeedToPushService implements FeedToPushService {
@@ -137,16 +141,28 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		return true;
 	}
 
-	public boolean checkDates() {
-		return false;
-	}
-
-	public HashMap<ChannelModel, Integer> fetchChannelListCounter() {
-		return channelNotificationCounter;
-	}
-
 	public void deleteChannelFromMap(ChannelModel channel) {
 		channelNotificationCounter.remove(channel);
 		lastFeedDates.remove(channel);
+	}
+	
+	public JsonArray channelMapCounterToJson() {
+
+		JsonArray jsonArray = new JsonArray();
+
+		for (Map.Entry<ChannelModel, Integer> entry : channelNotificationCounter.entrySet()) {
+			JsonObject jsonObject = new JsonObject();
+
+			ChannelModel channel = entry.getKey();
+			Integer counter = entry.getValue();
+
+			jsonObject.addProperty("name", channel.getName());
+			jsonObject.addProperty("description", channel.getDescription());
+			jsonObject.addProperty("counter", counter);
+
+			jsonArray.add(jsonObject);
+		}
+
+		return jsonArray;
 	}
 }
