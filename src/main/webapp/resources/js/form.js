@@ -8,14 +8,16 @@ documentReady = function(basePath){
 	boolChanalClick = false;
 	$('#loading').show();
 	$.get(basePath + "source/fetch", function(data, status, xhr) {
-		if(data != "") {
-			d = jQuery.parseJSON(data);
+		if(data) {
+			var d = jQuery.parseJSON(data);
 			for(var i = 0; i<d.length; i++) {
-				var newValue = d[i].id;
-				var newSourceName = d[i].type; 
-				$('#rss_source').append("<option value='"+newValue+"'>"+newSourceName+"</option>");
-				$('#loading').hide();
+				if(d){
+					var newValue = d[i].id;
+					var newSourceName = d[i].type; 
+					$('#rss_source').append("<option value='"+newValue+"'>"+newSourceName+"</option>");
+				}
 			}
+			$('#loading').hide();
 		}
 	});
 	var definitionWindowWidth = $( window ).width();
@@ -24,7 +26,6 @@ documentReady = function(basePath){
 	$('#content').css('height', definitionWindowHeight);
 	addListElement(1);
 };
-
 
 
 function useSourceFormValue() {
@@ -50,7 +51,7 @@ function useSourceFormValue() {
 				}
 				else {
 					$('#loading').hide();
-					alert("Fail");
+					alert("Fail source name");
 				}				
 		});
 	}
@@ -93,7 +94,7 @@ function useAddFormValue() {
 					}
 					else {
 						$('#loading').hide();
-						alert("Fail");
+						alert("Fail add feed");
 					}
 
 			});
@@ -128,7 +129,7 @@ function addNewCanal() {
 				}
 				else {
 					$('#loading').hide();
-					alert("Fail");
+					alert("Fail add channel");
 				}
 		});
 	}
@@ -183,7 +184,7 @@ function changeTab(value) {
 function addListElement(value) {
 	if(value == 1){
 		$('#loading').show();
-		$.get(_basePath +"feed/fetch",{value:value},  function(data, status, xhr) {
+		$.get(_basePath +"feed/fetch", function(data, status, xhr) {
 			if(data != ""){
 				list = jQuery.parseJSON(data);
 				$('#list_view').html("");
@@ -205,8 +206,9 @@ function addListElement(value) {
 	else if (value == 2) {
 		$('#loading').show();
 		$.get(_basePath +"channel/fetch",  function(data, status, xhr) {
-			alert(data[0].name);
-			if(data != ""){
+			alert(JSON.stringify(data));
+			
+			/*if(data != ""){
 				$('#list_view').html("");
 				list = data;
 				for(var i = 0; i<list.length; i++) {
@@ -219,7 +221,7 @@ function addListElement(value) {
 			}
 			else {
 				alert('Error');
-			}
+			}*/
 		});
 	}
 }
