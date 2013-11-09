@@ -1,7 +1,7 @@
 rss-to-push
 ===========
 
-RSS feeds to Infobip Push Notifications
+RSS feeds to Infobip Push Notifications - http://push.infobip.com/
 
 
 
