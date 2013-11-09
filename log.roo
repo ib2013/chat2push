@@ -1,0 +1,62 @@
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 13:56:34
+project --topLevelPackage com.infobip.campus.rsstopush --projectName RssToPush --java 7 --packaging WAR
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-08 13:56:42
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 13:56:59
+persistence setup --database GOOGLE_APP_ENGINE --provider DATANUCLEUS 
+entity jpa --class com.infobip.campus.rsstopush.models.PushModel
+field string --fieldName title 
+hint
+hint web mvc
+web mvc setup
+hint
+hint web mvc
+web mvc json add --jsonObject ~.models.PushModel 
+web mvc controller --class ~.web.PushModelController
+hint
+hint logging
+logging setup --level DEBUG
+hint
+perform clean 
+perform package 
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-08 14:38:40
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 14:42:22
+hint
+perform clean
+perform package 
+perform package 
+hint
+hint eclipse
+perform package 
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 15:11:53
+perform clean 
+perform package 
+hint
+entity jpa --class ~.models.PushModel2 
+perform package
+perform package
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 17:56:00
+help
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-08 17:57:43
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 17:59:26
+hint
+// [failed] perform clean
+// [failed] perform clean 
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-08 18:08:42
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 18:09:02
+// [failed] perform clean 
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-08 18:09:41
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 18:14:20
+// [failed] perform clean 
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-08 18:15:57
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 18:16:33
+// [failed] perform clean
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-08 18:16:57
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 18:22:23
+// [failed] perform package 
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 18:25:24
+// [failed] perform clean
+exit
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-08 18:26:32
+entity jpa --class ~.models.NoviModel
+field string --fieldName title
+field string --fieldName payload
