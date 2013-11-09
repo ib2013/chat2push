@@ -25,10 +25,9 @@ import com.infobip.campus.rsstopush.channels.ChannelModel;
 public class DefaultFeedToPushService implements FeedToPushService {
 	HashMap<ChannelModel, Date> lastFeedDates = new HashMap<ChannelModel, Date>();
 	HashMap<ChannelModel, Integer> channelNotificationCounter = new HashMap<ChannelModel, Integer>();
-	ChannelHandler channelHandler;
+	ChannelService channelHandler = new DefaultChannelService();
 
 	public DefaultFeedToPushService() {
-		channelHandler = new ChannelHandler();
 	}
 
 	public void readRSSFeeds() {
@@ -102,11 +101,11 @@ public class DefaultFeedToPushService implements FeedToPushService {
 
 		if (message.getDate().compareTo(lastTorrentFeedDate) <= 0)
 			return false;
-		
+
 		if (channel.getName().toUpperCase()
 				.equals(Configuration.DEFAULT_TPB_NAME.toUpperCase())
-				&& (message.getLink().startsWith("http://thepiratebay.sx")
-						|| message.getLink().startsWith("https://thepiratebay.sx")) ) {
+				&& (message.getLink().startsWith("http://thepiratebay.sx") || message
+						.getLink().startsWith("https://thepiratebay.sx"))) {
 			lastFeedDates.put(channel, message.getDate());
 			channelNotificationCounter.put(channel, oldCounter + 1);
 			return true;
@@ -114,8 +113,9 @@ public class DefaultFeedToPushService implements FeedToPushService {
 
 		if (channel.getName().toUpperCase()
 				.equals(Configuration.DEFAULT_YT_NAME.toUpperCase())
-				&& (message.getLink().startsWith("http://www.youtube.com/watch")
-						|| message.getLink().startsWith("https://www.youtube.com/watch")) ) {
+				&& (message.getLink()
+						.startsWith("http://www.youtube.com/watch") || message
+						.getLink().startsWith("https://www.youtube.com/watch"))) {
 			lastFeedDates.put(channel, message.getDate());
 			channelNotificationCounter.put(channel, oldCounter + 1);
 			return true;
@@ -145,12 +145,13 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		channelNotificationCounter.remove(channel);
 		lastFeedDates.remove(channel);
 	}
-	
+
 	public JsonArray channelMapCounterToJson() {
 
 		JsonArray jsonArray = new JsonArray();
 
-		for (Map.Entry<ChannelModel, Integer> entry : channelNotificationCounter.entrySet()) {
+		for (Map.Entry<ChannelModel, Integer> entry : channelNotificationCounter
+				.entrySet()) {
 			JsonObject jsonObject = new JsonObject();
 
 			ChannelModel channel = entry.getKey();

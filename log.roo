@@ -60,35 +60,9 @@ exit
 entity jpa --class ~.models.NoviModel
 field string --fieldName title
 field string --fieldName payload
-<<<<<<< HEAD
-// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 10:55:12
-hint
-entity jpa --class ~.models.RssPopisModel
-hint
-entity jpa --class ~.models.RssFeedModel
-field number --fieldName id --type int
-field string --fieldName rssUrl
-hint
-hint fields
-hint relationships
-field string --fieldName rssUrl
-field string --fieldName description
-hint relationships
-field number --fieldName rssSourceId --type int
-hint
-hint entities
-entity jpa --class ~.models.RssSourceModel
-field number --fieldName id --type int
-field string --fieldName sourceName
-// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 11:20:53
-hint relationships
-hint
-help
-field list --fieldName rssFeeds --type ~.models.RssFeedModel --class ~.models.RssSourceModel
-// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 15:08:36
-perform clean
-perform package
-=======
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 11:21:21
+<<<<<<< HEAD
 >>>>>>> 82d82f4a576f4357ae58666467d0f5d1fb89b281
 // Spring Roo UNKNOWN VERSION log opened at 2013-11-09 15:28:56
+=======
+>>>>>>> 9141bd2b6e6917c0ad187f9550194d989bdb2861
