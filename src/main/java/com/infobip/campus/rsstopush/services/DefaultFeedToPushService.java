@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import com.infobip.campus.rsstopush.*;
 import com.infobip.campus.rsstopush.adapters.SourceAdapter;
 import com.infobip.campus.rsstopush.adapters.SourceAdapterContainer;
+import com.infobip.campus.rsstopush.adapters.TorrentSourceAdapter;
 import com.infobip.campus.rsstopush.adapters.models.MessageModel;
 import com.infobip.campus.rsstopush.channels.*;
 import com.infobip.campus.rsstopush.models.RssFeedModel;
+import com.infobip.campus.rsstopush.configuration.Configuration;
 
 @Service
 public class DefaultFeedToPushService implements FeedToPushService {
@@ -81,7 +83,7 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		}
 	}
 
-	public boolean hasMatch(MessageModel torrent, ChannelModel channel) {
+	public boolean hasMatch(MessageModel message, ChannelModel channel) {
 
 		Date lastTorrentFeedDate = lastFeedDates.get(channel);
 		Integer oldCounter = channelNotificationCounter.get(channel);
@@ -94,41 +96,43 @@ public class DefaultFeedToPushService implements FeedToPushService {
 			oldCounter = 0;
 		}
 
-		if (torrent.getDate().compareTo(lastTorrentFeedDate) <= 0)
+		if (message.getDate().compareTo(lastTorrentFeedDate) <= 0)
 			return false;
-
+		
 		if (channel.getName().toUpperCase()
 				.equals(Configuration.DEFAULT_TPB_NAME.toUpperCase())
-				&& torrent.getId() == Configuration.TPB_ID) {
-			lastFeedDates.put(channel, torrent.getDate());
+				&& (message.getLink().startsWith("http://thepiratebay.sx")
+						|| message.getLink().startsWith("https://thepiratebay.sx")) ) {
+			lastFeedDates.put(channel, message.getDate());
 			channelNotificationCounter.put(channel, oldCounter + 1);
 			return true;
 		}
 
 		if (channel.getName().toUpperCase()
 				.equals(Configuration.DEFAULT_YT_NAME.toUpperCase())
-				&& torrent.getId() == Configuration.YT_ID) {
-			lastFeedDates.put(channel, torrent.getDate());
+				&& (message.getLink().startsWith("http://www.youtube.com/watch")
+						|| message.getLink().startsWith("https://www.youtube.com/watch")) ) {
+			lastFeedDates.put(channel, message.getDate());
 			channelNotificationCounter.put(channel, oldCounter + 1);
 			return true;
 		}
 
 		if (channel.getName().toUpperCase()
 				.equals(Configuration.DEFAULT_CHANNEL_NAME.toUpperCase())) {
-			lastFeedDates.put(channel, torrent.getDate());
+			lastFeedDates.put(channel, message.getDate());
 			channelNotificationCounter.put(channel, oldCounter + 1);
 			return true;
 		}
 
 		String[] splitString = channel.getName().split(" ");
 		for (int i = 0; i < splitString.length; i++) {
-			if (!torrent.getTitle().toLowerCase()
+			if (!message.getTitle().toLowerCase()
 					.contains(splitString[i].toLowerCase())) {
 				return false;
 			}
 		}
 
-		lastFeedDates.put(channel, torrent.getDate());
+		lastFeedDates.put(channel, message.getDate());
 		channelNotificationCounter.put(channel, oldCounter + 1);
 		return true;
 	}
