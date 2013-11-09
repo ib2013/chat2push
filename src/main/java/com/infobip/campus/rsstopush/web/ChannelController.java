@@ -1,7 +1,5 @@
 package com.infobip.campus.rsstopush.web;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.infobip.campus.rsstopush.channels.ChannelModel;
 import com.infobip.campus.rsstopush.channels.DefaultChannelService;
+import com.infobip.campus.rsstopush.services.DefaultFeedToPushService;
 
 @RequestMapping("/channel/**")
 @Controller
@@ -20,13 +19,14 @@ public class ChannelController {
 
 	@Autowired
 	DefaultChannelService defaultChannelService;
+	@Autowired
+	DefaultFeedToPushService defaultFeedToPush;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/fetch")
 	@ResponseBody
-	public List<ArrayList<ChannelModel>> fetchChannelList() {
-
-		return Arrays.asList(defaultChannelService.fetchChannelList());
-
+	public List<ChannelModel> fetchChannelList() {
+		// return Arrays.asList(defaultFeedToPush.channelMapCounterToJson());
+		return null;
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
