@@ -2,7 +2,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <spring:url value="/" var="_basePath" />
-
+<div id="loading">
+	  <img id="loading-image" src="css/loading.gif" alt="Loading..." />
+</div>
+<div id='central'>
 <div id='list_options'>
 	<label id='rss_feed_list_tab' class='listOptions' onclick='changeTab(1)' >List of RSS feed</label>
 	<label id='rss_chanal_tab' class='listOptions' onclick='changeTab(2)' >List of channel</label>
@@ -23,20 +26,19 @@
 	-->
 	<table>
 		<tr><th colspan='2'><h3>Add new RSS adress</h3></th></tr>
-		<tr><td>Source:</td><td><select onchange='useSelectValue()' class='select_fld' id='rss_source'><option value='0'>-- Select source value --</option></select></td></tr>
-		<tr><td>RSS link:</td><td><input type='text' id='rss_uri' class='text_value' name='rss_uri' disabled placeholder='http://example.rss' /></td></tr>
-		<tr><td>RSS description:</td><td><input id='rss_description' class='text_value' name='rss_description' disabled  ></td></tr>
-		<tr><td colspan='2'><input type='button' value='Submit' class='submitBtn ' onclick='useAddFormValue()' /></td></tr>					
+		<tr><td>RSS link:</td><td><input type='text' id='rss_uri' class='text_value' name='rss_uri' placeholder='http://example.rss' /></td></tr>
+		<tr><td>RSS description:</td><td><input id='rss_description' class='text_value' name='rss_description'  ></td></tr>
+		<tr><td colspan='2'><input type='button' value='Submit' class='submitBtn ' onclick='addNewFeed()' /></td></tr>					
 	</table>
 		
 		<table>
 			<tr><th colspan='2'><h3>Add new channel</h3></th></tr>
 			<tr><td>Title:</td><td><input type='text' id='title' class='text_value' name='title' /></td></tr>
 			<tr><td>Description:</td><td><input id='chaneel_description' class='text_value' name='canal_description'  ></td></tr>
-			<tr><td colspan='2'><input type='button' value='Submit' class='submitBtn ' onclick='addNewCanal()' /></td></tr>
+			<tr><td colspan='2'><input type='button' id='addNewChanelBtn' value='Submit' class='submitBtn ' onclick='addNewChannel()' /></td></tr>
 		</table>
 </div>
-	
+</div>	
 <script type="text/javascript">
 var _basePath = '${_basePath}';
 
