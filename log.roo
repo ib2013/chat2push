@@ -60,3 +60,4 @@ exit
 entity jpa --class ~.models.NoviModel
 field string --fieldName title
 field string --fieldName payload
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 11:21:21
