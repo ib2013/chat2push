@@ -33,7 +33,8 @@ public class PushNotification {
 	String mimeType = "text/html";
 	ArrayList<String> channelNames = new ArrayList<String>();
 	ArrayList<String> OSTypes = new ArrayList<String>();
-
+	
+	private static final Logger LOG = LoggerFactory.getLogger(CronJobController.class);
 	public PushNotification() {
 
 	}
@@ -55,6 +56,8 @@ public class PushNotification {
 		}
 
 		channelNames.add(channelName);
+		
+		
 	}
 
 	public void notifyChannel(String channelName) {
@@ -72,8 +75,7 @@ public class PushNotification {
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 
-			Logger LOG = LoggerFactory.getLogger(CronJobController.class);
-			LOG.info(response.toString());
+			LOG.info("POSLANA NOTIFIKACIJA NA: " + channelName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -100,8 +102,7 @@ public class PushNotification {
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 
-			Logger LOG = LoggerFactory.getLogger(CronJobController.class);
-			LOG.info(response.toString());
+			LOG.info("POSLANA BROADCAST NOTIFIKACIJA");
 
 		} catch (Exception e) {
 			e.printStackTrace();
