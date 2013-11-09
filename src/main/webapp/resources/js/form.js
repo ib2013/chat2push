@@ -7,7 +7,7 @@ documentReady = function(basePath){
 	boolFeedClick = true;
 	boolChanalClick = false;
 	$('#loading').show();
-	$.get(basePath + "/RssSourceServlet", function(data, status, xhr) {
+	$.get(basePath + "source/fetch", function(data, status, xhr) {
 		if(data != "") {
 			d = jQuery.parseJSON(data);
 			for(var i = 0; i<d.length; i++) {
@@ -41,7 +41,7 @@ function useSourceFormValue() {
 	}
 	else {
 		$('#loading').show();
-		$.post(_basePath +"/RssSourceServlet", { source_name: newSourceName }, function(rez, status, xhr) {
+		$.post(_basePath +"", { source_name: newSourceName }, function(rez, status, xhr) {
 			if(rez == "success"){
 					$('#rss_source').append("<option value='"+newValue+"'>"+newSourceName+"</option>");
 					$('#rss_source_new').val("");
@@ -79,7 +79,7 @@ function useAddFormValue() {
 	//var selectValue = parseInt($('#rss_source').val());
 	var rssUri = $('#rss_uri').val();
 	var rssDescription = $('#rss_description').val();
-		var rssJson = new Object();
+	var rssJson = new Object();
 		//rssJson.rss_fk = selectValue;
 		if(rssUri.length !=0 && rssDescription.length !=0) {
 			rssJson.rss_uri = rssUri;
@@ -107,11 +107,11 @@ function useAddFormValue() {
 			$('#loading').hide();
 			alert("Fields are required ");
 		}
-	}
+/*	}
 	else {
 		$('#loading').hide();
 		alert("Insert all values!");
-	}
+	}*/
 }
 
 function addNewCanal() {
@@ -188,7 +188,7 @@ function changeTab(value) {
 function addListElement(value) {
 	if(value == 1){
 		$('#loading').show();
-		$.get(_basePath +"/RssPopisServlet",{value:value},  function(data, status, xhr) {
+		$.get(_basePath +"feed/fetch",{value:value},  function(data, status, xhr) {
 			if(data != ""){
 				list = jQuery.parseJSON(data);
 				$('#list_view').html("");
@@ -209,14 +209,15 @@ function addListElement(value) {
 	}
 	else if (value == 2) {
 		$('#loading').show();
-		$.get(_basePath +"channel/fetch",{value: value},  function(data, status, xhr) {
+		$.get(_basePath +"channel/fetch",  function(data, status, xhr) {
+			alert(data[0].name);
 			if(data != ""){
 				$('#list_view').html("");
-				list = jQuery.parseJSON(data);
+				list = data;
 				for(var i = 0; i<list.length; i++) {
-					var chaneelName = list[i].ime;
-					//var chaneelDescription = list[i].opis;	
-					var chaneelCounter = list[i].brojac;
+					var chaneelName = list[i].name;
+					//var chaneelDescription = list[i].description;	
+					var chaneelCounter = list[i].counter;
 					$('#loading').hide();
 					$('#list_view').append("<li title='"+chaneelName+"'>"+chaneelName.substr(0,40)+"  <label id='"+chaneelName+"' class='removeList' onclick='removeChannel(this)'>Remove</label> <span class='badge'>"+chaneelCounter+"</span></li>");
 				}
@@ -233,7 +234,7 @@ function removeRssFeed(listElement){
 	if(!(isNaN(listElement.id))){
 		if(confirm('Are you sure you want to delete RSS Feed?')){
 			$('#loading').show();
-			$.post(_basePath +"/RssDeleteElemntListServlet", { id: listElement.id }, function(data, status, xhr) {
+			$.post(_basePath +"feed/delete", { id: listElement.id }, function(data, status, xhr) {
 				if(data == 'success'){
 					$('#list_view').html("");
 					addListElement(1);

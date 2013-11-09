@@ -1,5 +1,7 @@
 package com.infobip.campus.rsstopush.web;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,10 @@ public class CronJobController {
 	public ResponseEntity<String> doJob() {
 		LOG.info("Requesting JOB!");
 
-		feedToPushService.readRSSFeeds();
+		/*feedToPushService.readRSSFeeds();*/
+		
+		PushNotification pN = new PushNotification();
+		pN.broadcastDeletedChannel("AAAAAAAA");
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
