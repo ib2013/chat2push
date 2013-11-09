@@ -15,6 +15,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -23,7 +24,12 @@ import com.google.gson.JsonParser;
 
 
 @SuppressWarnings("deprecation")
-public class ChannelHandler {
+@Service
+public class DefaultChannelService implements ChannelService {
+	/* (non-Javadoc)
+	 * @see com.infobip.campus.rsstopush.channels.ChannelService#fetchChannelList()
+	 */
+	@Override
 	public ArrayList<ChannelModel> fetchChannelList() {
 		ArrayList<ChannelModel> channelList;
 		try {
@@ -55,6 +61,10 @@ public class ChannelHandler {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.infobip.campus.rsstopush.channels.ChannelService#parseJson(java.lang.String)
+	 */
+	@Override
 	public ArrayList<ChannelModel> parseJson(String jsonResponse) {
 		ArrayList<ChannelModel> channelList = new ArrayList<ChannelModel>();
 
@@ -86,6 +96,10 @@ public class ChannelHandler {
 		return channelList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.infobip.campus.rsstopush.channels.ChannelService#addChannel(com.infobip.campus.rsstopush.channels.ChannelModel)
+	 */
+	@Override
 	public boolean addChannel(ChannelModel channel) {
 		Gson gson = new Gson();
 		try {
@@ -110,6 +124,10 @@ public class ChannelHandler {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.infobip.campus.rsstopush.channels.ChannelService#deleteChannel(com.infobip.campus.rsstopush.channels.ChannelModel)
+	 */
+	@Override
 	public boolean deleteChannel(ChannelModel channel) {
 
 		try {
@@ -133,6 +151,10 @@ public class ChannelHandler {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.infobip.campus.rsstopush.channels.ChannelService#updateChannel(com.infobip.campus.rsstopush.channels.ChannelModel, com.infobip.campus.rsstopush.channels.ChannelModel)
+	 */
+	@Override
 	public boolean updateChannel(ChannelModel oldModel, ChannelModel newModel) {
 
 		Gson gson = new Gson();

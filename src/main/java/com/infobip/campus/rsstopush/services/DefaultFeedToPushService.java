@@ -25,7 +25,7 @@ import com.infobip.campus.rsstopush.channels.ChannelModel;
 public class DefaultFeedToPushService implements FeedToPushService {
 	HashMap<ChannelModel, Date> lastFeedDates = new HashMap<ChannelModel, Date>();
 	HashMap<ChannelModel, Integer> channelNotificationCounter = new HashMap<ChannelModel, Integer>();
-	ChannelHandler channelHandler = new ChannelHandler();
+	ChannelService channelHandler = new DefaultChannelService();
 
 	public DefaultFeedToPushService() {
 	}
