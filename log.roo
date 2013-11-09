@@ -61,9 +61,17 @@ entity jpa --class ~.models.NoviModel
 field string --fieldName title
 field string --fieldName payload
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 11:21:21
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 82d82f4a576f4357ae58666467d0f5d1fb89b281
+// Spring Roo UNKNOWN VERSION log opened at 2013-11-09 15:28:56
+=======
+>>>>>>> 9141bd2b6e6917c0ad187f9550194d989bdb2861
+=======
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 16:05:16
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-09 16:08:47
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 16:10:30
 hint
 hint logging
 logging setup --level INFO 
+>>>>>>> 595aa2c4a759f4beed754a9bea3d5d222a656de7

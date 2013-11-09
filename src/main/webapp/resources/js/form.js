@@ -7,7 +7,7 @@ documentReady = function(basePath){
 	boolFeedClick = true;
 	boolChanalClick = false;
 	$('#loading').show();
-	$.get(basePath + "/RssSourceServlet", function(data, status, xhr) {
+	$.get(basePath + "source/fetch", function(data, status, xhr) {
 		if(data != "") {
 			d = jQuery.parseJSON(data);
 			for(var i = 0; i<d.length; i++) {
@@ -210,10 +210,11 @@ function addListElement(value) {
 	}
 	else if (value == 2) {
 		$('#loading').show();
-		$.get(_basePath +"channel/fetch",{value: value},  function(data, status, xhr) {
+		$.get(_basePath +"channel/fetch",  function(data, status, xhr) {
+			alert(data[0].name);
 			if(data != ""){
 				$('#list_view').html("");
-				list = jQuery.parseJSON(data);
+				list = data;
 				for(var i = 0; i<list.length; i++) {
 					var chaneelName = list[i].name;
 					//var chaneelDescription = list[i].description;	

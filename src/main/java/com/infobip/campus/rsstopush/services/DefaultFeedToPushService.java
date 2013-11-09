@@ -4,36 +4,32 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.infobip.campus.rsstopush.*;
 import com.infobip.campus.rsstopush.adapters.SourceAdapter;
 import com.infobip.campus.rsstopush.adapters.SourceAdapterContainer;
-import com.infobip.campus.rsstopush.adapters.TorrentSourceAdapter;
 import com.infobip.campus.rsstopush.adapters.models.MessageModel;
-import com.infobip.campus.rsstopush.channels.*;
-import com.infobip.campus.rsstopush.models.RssFeedModel;
-import com.infobip.campus.rsstopush.configuration.Configuration;
+import com.infobip.campus.rsstopush.channels.ChannelHandler;
 import com.infobip.campus.rsstopush.channels.ChannelModel;
+import com.infobip.campus.rsstopush.configuration.Configuration;
+import com.infobip.campus.rsstopush.models.RssFeedModel;
 
 @Service
 public class DefaultFeedToPushService implements FeedToPushService {
 	HashMap<ChannelModel, Date> lastFeedDates = new HashMap<ChannelModel, Date>();
 	HashMap<ChannelModel, Integer> channelNotificationCounter = new HashMap<ChannelModel, Integer>();
-	ChannelService channelHandler = new DefaultChannelService();
+	ChannelHandler channelHandler;
 
 	public DefaultFeedToPushService() {
+		channelHandler = new ChannelHandler();
 	}
 
 	public void readRSSFeeds() {
+		ArrayList<RssFeedModel> sourcesList = new ArrayList<RssFeedModel>(RssFeedModel.findAllRssFeedModels());
 
-		ArrayList<RssFeedModel> sourcesList = new ArrayList<RssFeedModel>(
-				RssFeedModel.findAllRssFeedModels());
 		ArrayList<MessageModel> messagesList = fetchMessageModelListFromSources(sourcesList);
 		ArrayList<ChannelModel> channelList = channelHandler.fetchChannelList();
 
@@ -52,8 +48,7 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		System.out.println("======================");
 	}
 
-	private ArrayList<MessageModel> fetchMessageModelListFromSources(
-			ArrayList<RssFeedModel> sourcesList) {
+	private ArrayList<MessageModel> fetchMessageModelListFromSources(ArrayList<RssFeedModel> sourcesList) {
 
 		ArrayList<MessageModel> messagesList = new ArrayList<MessageModel>();
 		SourceAdapterContainer container = new SourceAdapterContainer();
@@ -71,15 +66,12 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		return messagesList;
 	}
 
-	public void updateUsersWithNotifications(
-			ArrayList<MessageModel> messagesList,
-			ArrayList<ChannelModel> channelList) {
+	public void updateUsersWithNotifications(ArrayList<MessageModel> messagesList, ArrayList<ChannelModel> channelList) {
 		for (MessageModel x : messagesList) {
 			for (ChannelModel y : channelList) {
 				if (hasMatch(x, y)) {
 
-					PushNotification pushN = new PushNotification(x,
-							y.getName());
+					PushNotification pushN = new PushNotification(x, y.getName());
 					pushN.notifyChannel(y.getName());
 				}
 			}
@@ -102,27 +94,21 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		if (message.getDate().compareTo(lastTorrentFeedDate) <= 0)
 			return false;
 
-		if (channel.getName().toUpperCase()
-				.equals(Configuration.DEFAULT_TPB_NAME.toUpperCase())
-				&& (message.getLink().startsWith("http://thepiratebay.sx") || message
-						.getLink().startsWith("https://thepiratebay.sx"))) {
+		if (channel.getName().toUpperCase().equals(Configuration.DEFAULT_TPB_NAME.toUpperCase())
+				&& (message.getLink().startsWith("http://thepiratebay.sx") || message.getLink().startsWith("https://thepiratebay.sx"))) {
 			lastFeedDates.put(channel, message.getDate());
 			channelNotificationCounter.put(channel, oldCounter + 1);
 			return true;
 		}
 
-		if (channel.getName().toUpperCase()
-				.equals(Configuration.DEFAULT_YT_NAME.toUpperCase())
-				&& (message.getLink()
-						.startsWith("http://www.youtube.com/watch") || message
-						.getLink().startsWith("https://www.youtube.com/watch"))) {
+		if (channel.getName().toUpperCase().equals(Configuration.DEFAULT_YT_NAME.toUpperCase())
+				&& (message.getLink().startsWith("http://www.youtube.com/watch") || message.getLink().startsWith("https://www.youtube.com/watch"))) {
 			lastFeedDates.put(channel, message.getDate());
 			channelNotificationCounter.put(channel, oldCounter + 1);
 			return true;
 		}
 
-		if (channel.getName().toUpperCase()
-				.equals(Configuration.DEFAULT_CHANNEL_NAME.toUpperCase())) {
+		if (channel.getName().toUpperCase().equals(Configuration.DEFAULT_CHANNEL_NAME.toUpperCase())) {
 			lastFeedDates.put(channel, message.getDate());
 			channelNotificationCounter.put(channel, oldCounter + 1);
 			return true;
@@ -130,8 +116,7 @@ public class DefaultFeedToPushService implements FeedToPushService {
 
 		String[] splitString = channel.getName().split(" ");
 		for (int i = 0; i < splitString.length; i++) {
-			if (!message.getTitle().toLowerCase()
-					.contains(splitString[i].toLowerCase())) {
+			if (!message.getTitle().toLowerCase().contains(splitString[i].toLowerCase())) {
 				return false;
 			}
 		}
@@ -146,24 +131,7 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		lastFeedDates.remove(channel);
 	}
 
-	public JsonArray channelMapCounterToJson() {
-
-		JsonArray jsonArray = new JsonArray();
-
-		for (Map.Entry<ChannelModel, Integer> entry : channelNotificationCounter
-				.entrySet()) {
-			JsonObject jsonObject = new JsonObject();
-
-			ChannelModel channel = entry.getKey();
-			Integer counter = entry.getValue();
-
-			jsonObject.addProperty("name", channel.getName());
-			jsonObject.addProperty("description", channel.getDescription());
-			jsonObject.addProperty("counter", counter);
-
-			jsonArray.add(jsonObject);
-		}
-
-		return jsonArray;
+	public HashMap<ChannelModel, Integer> channelMapCounterToJson() {
+		return channelNotificationCounter;
 	}
 }

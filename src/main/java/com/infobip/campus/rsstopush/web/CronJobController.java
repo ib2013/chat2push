@@ -16,7 +16,7 @@ import com.infobip.campus.rsstopush.services.FeedToPushService;
 public class CronJobController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CronJobController.class);
-	
+
 	@Autowired
 	FeedToPushService feedToPushService;
 
