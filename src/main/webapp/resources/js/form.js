@@ -123,7 +123,7 @@ function addNewCanal() {
 		chaneelJson.title = chaneelTitle;
 		chaneelJson.description = chaneelDescription;
 		$('#loading').show();
-		$.post(_basePath +"/RssChanelServlet", { rss_chaneel: JSON.stringify(chaneelJson) }, function(rez, status, xhr) {
+		$.post(_basePath +"channel/add", { rss_chaneel: JSON.stringify(chaneelJson) }, function(rez, status, xhr) {
 			if(rez == "success"){
 					$('#title').val("");
 					$('#chaneel_description').val("");
@@ -210,7 +210,7 @@ function addListElement(value) {
 	}
 	else if (value == 2) {
 		$('#loading').show();
-		$.get(_basePath +"/FeedToPushServlet",{value: value},  function(data, status, xhr) {
+		$.get(_basePath +"channel/fetch",{value: value},  function(data, status, xhr) {
 			if(data != ""){
 				$('#list_view').html("");
 				list = jQuery.parseJSON(data);
@@ -257,7 +257,7 @@ function removeChannel(listElement){
 	if(isNaN(listElement.id)){
 		if(confirm('Are you sure you want to delete '+ listElement.id +'?')){
 			$('#loading').show();
-			$.post(_basePath +"/FeedToPushServlet", { channel_name: listElement.id }, function(data, status, xhr) {
+			$.post(_basePath +"channel/delete", { channel_name: listElement.id }, function(data, status, xhr) {
 				if(data == 'success'){
 					$('#list_view').html("");
 					addListElement(2);
