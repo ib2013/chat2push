@@ -25,13 +25,7 @@ documentReady = function(basePath){
 	addListElement(1);
 };
 
-$(function () {
-	$('#rss_source_new').keypress(function (event) {
-		if (event.which == 13) {
-			useSourceFormValue();
-		}
-	});
-});
+
 
 function useSourceFormValue() {
 	var newSourceName = $('#rss_source_new').val();
