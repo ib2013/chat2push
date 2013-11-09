@@ -60,6 +60,7 @@ exit
 entity jpa --class ~.models.NoviModel
 field string --fieldName title
 field string --fieldName payload
+<<<<<<< HEAD
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 10:55:12
 hint
 entity jpa --class ~.models.RssPopisModel
@@ -87,3 +88,6 @@ field list --fieldName rssFeeds --type ~.models.RssFeedModel --class ~.models.Rs
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 15:08:36
 perform clean
 perform package
+=======
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 11:21:21
+>>>>>>> 82d82f4a576f4357ae58666467d0f5d1fb89b281

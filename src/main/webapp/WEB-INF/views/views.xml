@@ -5,28 +5,22 @@
 
 <tiles-definitions>
 
-  <definition name="index" extends="public">
-    <put-attribute name="body" value="/WEB-INF/views/index.jsp" />
+  
+  <definition name="central" extends="public">
+    <put-attribute name="central" value="/WEB-INF/views/central.jsp" />
   </definition>
   
-  <definition name="mojView" extends="public">
-    <put-attribute name="body" value="/WEB-INF/views/index.jsp" />
-  </definition>
-  
-  <definition name="pushmodel/pozoviService" extends="public">
-    <put-attribute name="body" value="/WEB-INF/views/index2.jsp" />
-  </definition>
 
   <definition name="dataAccessFailure" extends="public">
-    <put-attribute name="body" value="/WEB-INF/views/dataAccessFailure.jsp" />
+    <put-attribute name="central" value="/WEB-INF/views/dataAccessFailure.jsp" />
   </definition>
 
   <definition name="resourceNotFound" extends="public">
-    <put-attribute name="body" value="/WEB-INF/views/resourceNotFound.jsp" />
+    <put-attribute name="central" value="/WEB-INF/views/resourceNotFound.jsp" />
   </definition>
 
   <definition name="uncaughtException" extends="public">
-    <put-attribute name="body" value="/WEB-INF/views/uncaughtException.jsp" />
+    <put-attribute name="central" value="/WEB-INF/views/uncaughtException.jsp" />
   </definition>
 
 </tiles-definitions>
