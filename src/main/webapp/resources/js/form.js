@@ -76,12 +76,11 @@ function useSelectValue() {
 }
 
 function useAddFormValue() {
-	var selectValue = parseInt($('#rss_source').val());
+	//var selectValue = parseInt($('#rss_source').val());
 	var rssUri = $('#rss_uri').val();
 	var rssDescription = $('#rss_description').val();
-	if(selectValue != 0) {
 		var rssJson = new Object();
-		rssJson.rss_fk = selectValue;
+		//rssJson.rss_fk = selectValue;
 		if(rssUri.length !=0 && rssDescription.length !=0) {
 			rssJson.rss_uri = rssUri;
 			rssJson.rss_description = rssDescription;
