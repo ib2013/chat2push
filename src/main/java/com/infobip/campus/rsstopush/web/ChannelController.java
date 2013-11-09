@@ -1,6 +1,6 @@
 package com.infobip.campus.rsstopush.web;
 
-import java.util.List;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,9 +24,8 @@ public class ChannelController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/fetch")
 	@ResponseBody
-	public List<ChannelModel> fetchChannelList() {
-		// return Arrays.asList(defaultFeedToPush.channelMapCounterToJson());
-		return null;
+	public HashMap<ChannelModel, Integer> fetchChannelList() {
+		return defaultFeedToPush.channelMapCounterToJson();
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")

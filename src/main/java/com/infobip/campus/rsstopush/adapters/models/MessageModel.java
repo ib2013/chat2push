@@ -15,7 +15,7 @@ public class MessageModel {
 	}
 
 	public MessageModel(String title, String description, String link,
-			String source, String guid, int id) {
+			String source, int id) {
 		this.title = title;
 		this.description = description;
 		this.link = link;
