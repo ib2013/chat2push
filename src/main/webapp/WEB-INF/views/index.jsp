@@ -36,12 +36,12 @@
 			<tr><td colspan='2'><input type='button' value='Submit' class='submitBtn ' onclick='addNewCanal()' /></td></tr>
 		</table>
 </div>
+	
 <script type="text/javascript">
 var _basePath = '${_basePath}';
 
 $( document ).ready(function() {	
 	documentReady(_basePath);
-	
 });
 
 </script>
