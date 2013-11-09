@@ -116,7 +116,7 @@ public class YouTubeSourceAdapter implements SourceAdapter {
 								"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 						try {
-							//System.out.println(published);
+							// System.out.println(published);
 							Date date = formatter.parse(published.substring(0,
 									24));
 							message.setDate(date);
@@ -124,7 +124,7 @@ public class YouTubeSourceAdapter implements SourceAdapter {
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						
+
 						event = eventReader.nextEvent();
 						continue;
 					}
@@ -168,10 +168,9 @@ public class YouTubeSourceAdapter implements SourceAdapter {
 	}
 
 	@Override
-	public boolean isValid(int id) {
-		if (id == Configuration.YT_ID)
-			return true;
-		return false;
+	public boolean isValid(String rssUrl) {
+		return rssUrl.startsWith("http://gdata.youtube.com/feeds/api/")
+				|| rssUrl.startsWith("https://gdata.youtube.com/feeds/api/");
 	}
 
 }

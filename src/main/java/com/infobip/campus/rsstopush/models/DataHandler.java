@@ -7,7 +7,7 @@ public class DataHandler {
 	public DataHandler() {
 	}
 	
-	public ArrayList<RssFeedModel> fetchAllRssFeedModels() {
+	/*public ArrayList<RssFeedModel> fetchAllRssFeedModels() {
 		return new ArrayList<RssFeedModel>(RssFeedModel.findAllRssFeedModels());
 	}
 
@@ -33,5 +33,5 @@ public class DataHandler {
 	public boolean deleteFromRssSource(RssSourceModel model) {
 		model.clear();
 		return true;
-	}
+	}*/
 }

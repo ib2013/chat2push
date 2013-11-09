@@ -15,6 +15,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import com.infobip.campus.rsstopush.adapters.models.*;
 import com.infobip.campus.rsstopush.configuration.Configuration;
+import com.infobip.campus.rsstopush.models.RssSourceModel;
 
 public class TorrentSourceAdapter implements SourceAdapter {
 
@@ -105,8 +106,7 @@ public class TorrentSourceAdapter implements SourceAdapter {
 						try {
 							message.setDate(new Date(pubdate));
 							feed.addMessage(message);
-						}
-						catch(Exception e) {
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
 						event = eventReader.nextEvent();
@@ -159,10 +159,9 @@ public class TorrentSourceAdapter implements SourceAdapter {
 	}
 
 	@Override
-	public boolean isValid(int id) {
-		if (id == Configuration.TPB_ID)
-			return true;
-		return false;
+	public boolean isValid(String rssUrl) {
+		return rssUrl.startsWith("http://rss.thepiratebay.sx/")
+				|| rssUrl.startsWith("https://rss.thepiratebay.sx/");
 	}
 
 }
