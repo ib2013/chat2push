@@ -33,14 +33,17 @@ function addNewFeed() {
 		    data: JSON.stringify(rssJson),
 		    success:  function(rez, status, xhr) {
 				if(rez == "success"){
-						$('#rss_source_new').val("");
-						$('#rss_uri').val("");
-						$('#rss_description').val("");
-						$('#rss_uri').prop('disabled', false);
-						$('#rss_description').prop('disabled', false);
-						addListElement(1);
-						$('#loading').hide();
-						alert("New RSS adress is inserted");
+					addListElement(1);
+					changeTab(1);
+					$('#rss_source_new').val("");
+					$('#rss_uri').val("");
+					$('#rss_description').val("");
+					$('#rss_uri').prop('disabled', false);
+					$('#rss_description').prop('disabled', false);			
+					boolFeedClick = false;
+
+					$('#loading').hide();
+					alert("New RSS adress is inserted");
 				}
 				else {
 					$('#loading').hide();
@@ -90,12 +93,12 @@ function addNewChannel() {
 		$('#loading').show();
 		$.post(_basePath +"channel/add",{channel: chanName.toString()}, function(rez, status, xhr) {
       			if(rez == "success"){
-      					$('#title').val("");
-      					$('#chaneel_description').val("");
-      					addListElement(2);
-      					changeTab(2);
-      					$('#loading').hide();
-      					alert("New chaneel is inserted");
+  					$('#title').val("");
+  					$('#chaneel_description').val("");
+  					addListElement(2);
+  					changeTab(2);
+  					$('#loading').hide();
+  					alert("New chaneel is inserted");
       			}
   				else {
   					$('#loading').hide();
@@ -131,7 +134,7 @@ function changeTab(value) {
 		}
 	}
 	else if(value == 2) {
-		refreshIntervalId = setInterval(function(){addListElement(2);},60000);
+		refreshIntervalId = setInterval(function(){addListElement(2);},20000);
 		if(boolChanalClick){
 			boolFeedClick = false;
 			boolChanalClick = true;
@@ -161,13 +164,13 @@ function addListElement(value) {
 					var rssName = data[0][i].rssUrl;
 					var rssDescription = data[0][i].description;
 					$('#list_view').append("<li title='"+rssName+" - "+ rssDescription +"'>"+rssName.substr(0,40)+" - "+ rssDescription.substr(0,15) +"<label id='"+rssName+"' class='removeList' onclick='removeRssFeed(this)'>Remove<label> </li>");
-					$('#loading').hide();
+				
 				}
-			
+				$('#loading').hide();
 			}
 			else {
 				$('#loading').hide();
-				alert('Error');
+				alert('Error loading Rss element.');
 			}
 		});
 	}
@@ -186,7 +189,7 @@ function addListElement(value) {
 				}
 			}
 			else {
-				alert('Error');
+				alert('Error loading channel.');
 			}
 		});
 	}
@@ -213,6 +216,7 @@ function removeRssFeed(listElement){
       			if(rez == 'success'){
 					$('#list_view').html("");
 					addListElement(1);
+					changeTab(1);
 					$('#loading').hide();
 				}
 				else {
