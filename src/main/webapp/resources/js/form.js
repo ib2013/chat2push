@@ -66,7 +66,7 @@ function addNewChannel() {
 		    url: _basePath +"channel/add",
 		    headers: { 
 		    	'X-AppEngine-Cron': true,
-		        'Accept': 'application/json',
+		        'Accept': 'text/plain',
 		        'Content-Type': 'application/json' 
 		    },
 		    method: 'POST',
@@ -153,9 +153,9 @@ function changeTab(value) {
 
 function addListElement(value) {
 	if(value == 1){
-	//	$('#loading').show();
+		$('#loading').show();
 		$.get(_basePath +"feed/fetch", function(data, status, xhr) {
-			if(JSON.stringify(data) != ""){
+			if(status == "success" ){
 				$('#list_view').html("");
 				for(var i = 0; i<data[0].length; i++) {
 					var rssName = data[0][i].rssUrl;
@@ -195,9 +195,22 @@ function addListElement(value) {
 function removeRssFeed(listElement){
 	if((isNaN(listElement.id))){
 		if(confirm('Are you sure you want to delete RSS Feed?')){
+			var rssJson = new Object();
+			rssJson.rssUrl = listElement.id;
+			rssJson.description = "";
 			$('#loading').show();
-			$.post(_basePath +"feed/delete", { feedName: listElement.id }, function(data, status, xhr) {
-				if(data == 'success'){
+			$.ajax({
+		    url: _basePath +"feed/delete",
+		    headers: { 
+		    	'X-AppEngine-Cron': true,
+		        'Accept': 'text/plain',
+		        'Content-Type': 'application/json' 
+		    },
+		    method: 'POST',
+		    contentType: 'application/json',
+		    data: JSON.stringify(rssJson),
+		    success:  function(rez, status, xhr) {
+      			if(data == 'success'){
 					$('#list_view').html("");
 					addListElement(1);
 					$('#loading').hide();
@@ -206,8 +219,9 @@ function removeRssFeed(listElement){
 					$('#loading').hide();
 					alert('Error');
 				}
+		   }
 		});
-		}
+			}
 	}
 	else {
 		$('#loading').hide();

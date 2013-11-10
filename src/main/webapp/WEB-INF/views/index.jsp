@@ -3,7 +3,7 @@
 
 <spring:url value="/" var="_basePath" />
 <div id="loading">
-	  <img id="loading-image" src="css/loading.gif" alt="Loading..." />
+	  <img id="loading-image" src="resources/images/loading.gif" alt="Loading..." />
 </div>
 <div id='central'>
 <div id='list_options'>
