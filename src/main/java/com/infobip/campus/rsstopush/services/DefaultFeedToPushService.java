@@ -150,6 +150,14 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		channelNotificationCounter.remove(channel);
 		lastFeedDates.remove(channel);
 	}
+	
+	public void addChannelToMap(ChannelModel channel) {
+		Date date = new Date();
+		date.setTime(date.getTime() - 60 * 60 * 1000);
+		
+		channelNotificationCounter.put(channel,0);
+		lastFeedDates.put(channel,date);
+	}
 
 	public HashMap<ChannelModel, Integer> channelMapCounterToJson() {
 		return channelNotificationCounter;

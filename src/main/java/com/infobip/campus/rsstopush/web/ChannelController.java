@@ -17,6 +17,7 @@ import com.google.gson.JsonParser;
 import com.infobip.campus.rsstopush.channels.ChannelModel;
 import com.infobip.campus.rsstopush.channels.DefaultChannelService;
 import com.infobip.campus.rsstopush.services.DefaultFeedToPushService;
+import com.infobip.campus.rsstopush.services.PushNotification;
 
 @RequestMapping("/channel/**")
 @Controller
@@ -58,6 +59,7 @@ public class ChannelController {
 
 		ChannelModel model = new ChannelModel(name.replace('+', ' '), "");
 		if (defaultChannelService.addChannel(model) == true) {
+			defaultFeedToPush.addChannelToMap(model);
 			return "success";
 		} else {
 			return "fail";
@@ -73,6 +75,10 @@ public class ChannelController {
 		
 		if (defaultChannelService.deleteChannel(model) == true) {
 			defaultFeedToPush.deleteChannelFromMap(model);
+			
+			PushNotification broadcast = new PushNotification();
+			broadcast.broadcastDeletedChannel(model.getName());
+			
 			return "success";
 		} else {
 			return "false";
