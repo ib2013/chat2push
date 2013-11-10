@@ -10,6 +10,8 @@ public interface SourceAdapter {
 	public abstract ArrayList<MessageModel> getMessages();
 
 	public abstract boolean isValid(String rssUrl);
+	
+	public abstract boolean isFeasible(String url);
 
 	public abstract void setUrl(String url);
 	

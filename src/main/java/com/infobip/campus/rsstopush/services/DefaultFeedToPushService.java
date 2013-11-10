@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonArray;
@@ -14,8 +15,8 @@ import com.google.gson.JsonObject;
 import com.infobip.campus.rsstopush.adapters.SourceAdapter;
 import com.infobip.campus.rsstopush.adapters.SourceAdapterContainer;
 import com.infobip.campus.rsstopush.adapters.models.MessageModel;
-import com.infobip.campus.rsstopush.channels.ChannelHandler;
 import com.infobip.campus.rsstopush.channels.ChannelModel;
+import com.infobip.campus.rsstopush.channels.DefaultChannelService;
 import com.infobip.campus.rsstopush.configuration.Configuration;
 import com.infobip.campus.rsstopush.models.RssFeedModel;
 import com.infobip.campus.rsstopush.web.CronJobController;
@@ -24,20 +25,22 @@ import com.infobip.campus.rsstopush.web.CronJobController;
 public class DefaultFeedToPushService implements FeedToPushService {
 	HashMap<ChannelModel, Date> lastFeedDates = new HashMap<ChannelModel, Date>();
 	HashMap<ChannelModel, Integer> channelNotificationCounter = new HashMap<ChannelModel, Integer>();
-	ChannelHandler channelHandler = new ChannelHandler();
-	private static final Logger LOG = LoggerFactory.getLogger(CronJobController.class);
+	@Autowired
+	DefaultChannelService defaultChannelService;
+	private static final Logger LOG = LoggerFactory
+			.getLogger(CronJobController.class);
 
 	public DefaultFeedToPushService() {
-		readRSSFeeds();
-		LOG.info("DefaultFeedToPushService CREATED!");
 	}
 
 	public void readRSSFeeds() {
+
 		ArrayList<RssFeedModel> sourcesList = new ArrayList<RssFeedModel>(
 				RssFeedModel.findAllRssFeedModels());
 
 		ArrayList<MessageModel> messagesList = fetchMessageModelListFromSources(sourcesList);
-		ArrayList<ChannelModel> channelList = channelHandler.fetchChannelList();
+		ArrayList<ChannelModel> channelList = defaultChannelService
+				.fetchChannelList();
 
 		for (ChannelModel channel : channelList) {
 			if (!lastFeedDates.containsKey(channel)) {
@@ -51,6 +54,7 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		}
 
 		updateUsersWithNotifications(messagesList, channelList);
+
 	}
 
 	private ArrayList<MessageModel> fetchMessageModelListFromSources(

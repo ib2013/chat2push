@@ -173,4 +173,9 @@ public class YouTubeSourceAdapter implements SourceAdapter {
 				|| rssUrl.startsWith("https://gdata.youtube.com/feeds/api/");
 	}
 
+	@Override
+	public boolean isFeasible(String url) {
+		return url.contains("youtube.com");
+	}
+
 }

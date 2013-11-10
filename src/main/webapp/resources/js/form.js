@@ -131,7 +131,7 @@ function changeTab(value) {
 		}
 	}
 	else if(value == 2) {
-		refreshIntervalId = setInterval(function(){addListElement(2);},5000);
+		refreshIntervalId = setInterval(function(){addListElement(2);},60000);
 		if(boolChanalClick){
 			boolFeedClick = false;
 			boolChanalClick = true;

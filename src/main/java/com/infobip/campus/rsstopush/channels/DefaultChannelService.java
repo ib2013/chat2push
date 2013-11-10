@@ -7,6 +7,7 @@ import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.infobip.campus.rsstopush.configuration.Configuration;
+import com.infobip.campus.rsstopush.web.CronJobController;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -21,6 +22,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonArray;
@@ -31,6 +34,9 @@ import com.google.gson.JsonParser;
 @SuppressWarnings("deprecation")
 @Service
 public class DefaultChannelService implements ChannelService {
+	private static final Logger LOG = LoggerFactory
+			.getLogger(CronJobController.class);
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -53,14 +59,13 @@ public class DefaultChannelService implements ChannelService {
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 
-			response.getContent().toString();
+			String responseText = new String(response.getContent());
 
-			channelList = parseJson(response.getContent().toString());
-
+			channelList = parseJson(responseText);
 			return channelList;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.info(e.getMessage());
 			return null;
 		}
 
@@ -127,13 +132,9 @@ public class DefaultChannelService implements ChannelService {
 
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
-			String responseText = response.getContent().toString();
+			String responseText = new String(response.getContent());
 
-			if (responseText.contains("HTTP/1.1 201 Created")) {
-				return true;
-			} else {
-				return false;
-			}
+			return true; //response.getResponseCode() == 200;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -198,7 +199,7 @@ public class DefaultChannelService implements ChannelService {
 
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
-			String responseText = response.getContent().toString();
+			String responseText = new String(response.getContent());
 
 			if (responseText.contains("HTTP/1.1 201 Created")) {
 				return true;

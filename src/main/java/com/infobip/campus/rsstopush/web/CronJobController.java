@@ -30,9 +30,6 @@ public class CronJobController {
 
 		feedToPushService.readRSSFeeds();
 		
-		/*PushNotification pN = new PushNotification();
-		pN.broadcastDeletedChannel("EHEHEHHEHE");*/
-		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

@@ -49,7 +49,7 @@ public class PushNotification {
 		ArrayList<SourceAdapter> adapters = adapterContainer.getAdapters();
 
 		for (SourceAdapter adapter : adapters) {
-			if (adapter.isValid(x.getLink())) {
+			if (adapter.isFeasible(x.getLink())) {
 				androidData = new Data(adapter.getAdapterdescription());
 				break;
 			}
@@ -71,11 +71,15 @@ public class PushNotification {
 					Configuration.AUTHORIZATION_INFO));
 			request.addHeader(new HTTPHeader("content-type", "application/json"));
 			request.setPayload(gson.toJson(this).getBytes());
+			
+			String INFO = "Payload:" + new String (request.getPayload());
+			INFO += "Url: " + request.getURL() + " Header:" + request.getHeaders().toString();
+			
 
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 
-			LOG.info("POSLANA NOTIFIKACIJA NA: " + channelName);
+			LOG.info("POSLANA NOTIFIKACIJA NA: " + channelName + " --- " + INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
