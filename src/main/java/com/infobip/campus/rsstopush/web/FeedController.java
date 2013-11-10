@@ -31,7 +31,15 @@ public class FeedController {
 	@ResponseBody
 	public String deleteFeed(@RequestBody RssFeedModel model) {
 		try {
-			model.remove();
+			List<RssFeedModel> rssFeedList = RssFeedModel.findAllRssFeedModels();
+			
+			for (RssFeedModel rssFeed : rssFeedList){
+				if (rssFeed.getRssUrl().equals(model.getRssUrl())){
+					rssFeed.remove();
+					break;
+				}
+			}
+			
 			return "success";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
