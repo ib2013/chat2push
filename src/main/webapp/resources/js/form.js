@@ -210,7 +210,7 @@ function removeRssFeed(listElement){
 		    contentType: 'application/json',
 		    data: JSON.stringify(rssJson),
 		    success:  function(rez, status, xhr) {
-      			if(data == 'success'){
+      			if(rez == 'success'){
 					$('#list_view').html("");
 					addListElement(1);
 					$('#loading').hide();
