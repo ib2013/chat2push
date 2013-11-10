@@ -49,7 +49,7 @@ public class PushNotification {
 		ArrayList<SourceAdapter> adapters = adapterContainer.getAdapters();
 
 		for (SourceAdapter adapter : adapters) {
-			if (adapter.isValid(x.getLink())) {
+			if (adapter.isFeasible(x.getLink())) {
 				androidData = new Data(adapter.getAdapterdescription());
 				break;
 			}

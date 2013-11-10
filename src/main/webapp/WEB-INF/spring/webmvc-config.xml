@@ -13,7 +13,7 @@
 
 
 	<!-- Handles HTTP GET requests for /** by efficiently serving up static resources -->
-	<mvc:resources location="/" mapping="/**" />
+	<mvc:resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>
 	<!-- <mvc:resources location="/pages" mapping="/**" /> -->
 
 	<!-- Allows for mapping the DispatcherServlet to "/" by forwarding static resource requests to the container's default Servlet -->

@@ -35,18 +35,12 @@ public class DefaultFeedToPushService implements FeedToPushService {
 
 	public void readRSSFeeds() {
 
-		LOG.info("STARTING readRssFeeds() METHOD");
-
 		ArrayList<RssFeedModel> sourcesList = new ArrayList<RssFeedModel>(
 				RssFeedModel.findAllRssFeedModels());
 
-		LOG.info("FETCHED FEEDS LIST!");
-
 		ArrayList<MessageModel> messagesList = fetchMessageModelListFromSources(sourcesList);
-		LOG.info("FETCHED MESSAGE MODEL LIST!");
 		ArrayList<ChannelModel> channelList = defaultChannelService
 				.fetchChannelList();
-		LOG.info("FETCHED CHANNEL LIST!");
 
 		for (ChannelModel channel : channelList) {
 			if (!lastFeedDates.containsKey(channel)) {
@@ -59,21 +53,8 @@ public class DefaultFeedToPushService implements FeedToPushService {
 			}
 		}
 
-		LOG.info("UPDATED HASHMAP WITH CHANNELS!");
-		
-		LOG.info("Message list:");
-		for (MessageModel message : messagesList){
-			LOG.info(message.toString());
-		}
-		
-		LOG.info("Channel list:");
-		for (ChannelModel channel : channelList){
-			LOG.info(channel.toString());
-		}
-
 		updateUsersWithNotifications(messagesList, channelList);
 
-		LOG.info("FINISHING readRssFeeds() METHOD");
 	}
 
 	private ArrayList<MessageModel> fetchMessageModelListFromSources(
@@ -101,7 +82,6 @@ public class DefaultFeedToPushService implements FeedToPushService {
 		for (MessageModel x : messagesList) {
 			for (ChannelModel y : channelList) {
 				if (hasMatch(x, y)) {
-					LOG.info("HAS MATCH! :) :) :) :) :)");
 
 					PushNotification pushN = new PushNotification(x,
 							y.getName());

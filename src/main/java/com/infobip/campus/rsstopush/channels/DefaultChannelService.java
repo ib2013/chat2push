@@ -134,11 +134,7 @@ public class DefaultChannelService implements ChannelService {
 					.fetch(request);
 			String responseText = new String(response.getContent());
 
-			if (responseText.contains("HTTP/1.1 201 Created")) {
-				return true;
-			} else {
-				return false;
-			}
+			return true; //response.getResponseCode() == 200;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

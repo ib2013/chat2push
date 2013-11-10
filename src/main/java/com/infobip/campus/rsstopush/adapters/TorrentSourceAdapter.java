@@ -163,5 +163,11 @@ public class TorrentSourceAdapter implements SourceAdapter {
 		return rssUrl.startsWith("http://rss.thepiratebay.sx/")
 				|| rssUrl.startsWith("https://rss.thepiratebay.sx/");
 	}
+	
+	@Override
+	public boolean isFeasible(String url) {
+		return url.contains("thepiratebay.sx")
+				|| url.contains("thepiratebay.se");
+	}
 
 }
