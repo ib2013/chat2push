@@ -1,5 +1,8 @@
 package com.infobip.campus.rsstopush.channels;
 
+import org.springframework.roo.addon.equals.RooEquals;
+
+@RooEquals
 public class ChannelModel {
 
 	String name;

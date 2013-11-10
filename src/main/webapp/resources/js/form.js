@@ -2,24 +2,10 @@
 var boolChanalClick;
 var refreshIntervalId;
 
-
 documentReady = function(basePath){
 	boolFeedClick = true;
 	boolChanalClick = false;
 	$('#loading').show();
-	$.get(basePath + "source/fetch", function(data, status, xhr) {
-		if(data) {
-			var d = jQuery.parseJSON(data);
-			for(var i = 0; i<d.length; i++) {
-				if(d){
-					var newValue = d[i].id;
-					var newSourceName = d[i].type; 
-					$('#rss_source').append("<option value='"+newValue+"'>"+newSourceName+"</option>");
-				}
-			}
-			$('#loading').hide();
-		}
-	});
 	var definitionWindowWidth = $( window ).width();
 	var definitionWindowHeight = $( window ).height();
 	$('#content').css('width', definitionWindowWidth);
@@ -27,67 +13,25 @@ documentReady = function(basePath){
 	addListElement(1);
 };
 
-$(document).ready(function(){
-	$('#rss_source_new').keypress(function (event) {
-		if (event.which == 13) {
-			useSourceFormValue();
-		}
-	});
-});
-
-function useSourceFormValue() {
-	var newSourceName = $('#rss_source_new').val();
-	var newValue = parseInt($('#rss_source option:last-child').val())+1;
-	if(newSourceName.length == 0) {
-		alert("Insert value name!");
-	}
-	else {
-		$('#loading').show();
-		$.post(_basePath +"", { source_name: newSourceName }, function(rez, status, xhr) {
-			if(rez == "success"){
-					$('#rss_source').append("<option value='"+newValue+"'>"+newSourceName+"</option>");
-					$('#rss_source_new').val("");
-					$('#rss_source').val(newValue);
-					$('#rss_uri').val("");
-					$('#rss_description').val("");
-					$('#loading').hide();
-					$('#rss_uri').prop('disabled', false);
-					$('#rss_description').prop('disabled', false);
-					
-					alert("New RSS source is inserted");
-				}
-				else {
-					$('#loading').hide();
-					alert("Fail");
-				}				
-		});
-	}
-}
-
-function useSelectValue() {
-	var selectValue = parseInt($('#rss_source').val());
-	if(selectValue != 0) {
-		$('#rss_uri').prop('disabled', false);
-		$('#rss_description').prop('disabled', false);
-	}
-	else {
-		$('#rss_uri').prop('disabled', true);
-		$('#rss_description').prop('disabled', true);
-	}
-		
-}
-
-function useAddFormValue() {
-	//var selectValue = parseInt($('#rss_source').val());
+function addNewFeed() {
 	var rssUri = $('#rss_uri').val();
 	var rssDescription = $('#rss_description').val();
 	var rssJson = new Object();
-		//rssJson.rss_fk = selectValue;
-		if(rssUri.length !=0 && rssDescription.length !=0) {
-			rssJson.rss_uri = rssUri;
-			rssJson.rss_description = rssDescription;
-			$('#loading').show();
-			$.post(_basePath +"feed/add", { rss_adress: JSON.stringify(rssJson) }, function(rez, status, xhr) {
+	if(rssUri.length !=0 && rssDescription.length !=0) {
+		rssJson.rssUrl = rssUri;
+		rssJson.description = rssDescription;
+		$('#loading').show();
+		$.ajax({
+		    url: _basePath +"feed/add",
+		    headers: { 
+		    	'X-AppEngine-Cron': true,
+		        'Accept': 'text/plain',
+		        'Content-Type': 'application/json' 
+		    },
+		    method: 'POST',
+		    contentType: 'application/json',
+		    data: JSON.stringify(rssJson),
+		    success:  function(rez, status, xhr) {
 				if(rez == "success"){
 						$('#rss_source_new').val("");
 						$('#rss_uri').val("");
@@ -97,46 +41,66 @@ function useAddFormValue() {
 						addListElement(1);
 						$('#loading').hide();
 						alert("New RSS adress is inserted");
-					}
-					else {
-						$('#loading').hide();
-						alert("Fail");
-					}
-
-			});
-		}
-		else {
-			$('#loading').hide();
-			alert("Fields are required ");
-		}
-/*	}
-	else {
-		$('#loading').hide();
-		alert("Insert all values!");
-	}*/
-}
-
-function addNewCanal() {
-	var chaneelTitle = $('#title').val();
-	var chaneelDescription = $('#chaneel_description').val();
-	if (chaneelTitle.length != 0 ) {
-		var chaneelJson = new Object();
-		chaneelJson.title = chaneelTitle;
-		chaneelJson.description = chaneelDescription;
-		$('#loading').show();
-		$.post(_basePath +"channel/add", { rss_chaneel: JSON.stringify(chaneelJson) }, function(rez, status, xhr) {
-			if(rez == "success"){
-					$('#title').val("");
-					$('#chaneel_description').val("");
-					addListElement(2);
-					changeTab(2);
-					$('#loading').hide();
-					alert("New chaneel is inserted");
 				}
 				else {
 					$('#loading').hide();
-					alert("Fail");
-				}
+					alert("Fail add feed");
+				}	
+		    }
+		});
+	}
+	else {
+		$('#loading').hide();
+		alert("Fields are required ");
+	}			
+}
+
+
+function addNewChannel() {
+	var channelTitle = $('#title').val();
+	var chaneelDescription = $('#chaneel_description').val();
+	if (channelTitle.length != 0 ) {
+		chanName = channelTitle;
+		chanDesc = chaneelDescription;
+		/*$.ajax({
+		    url: _basePath +"channel/add",
+		    headers: { 
+		    	'X-AppEngine-Cron': true,
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json' 
+		    },
+		    method: 'POST',
+		    contentType: 'application/json',
+		    data: JSON.stringify(channelJson),
+		    success:  function(rez, status, xhr) {
+      			if(rez == "success"){
+      					$('#title').val("");
+      					$('#chaneel_description').val("");
+      					addListElement(2);
+      					changeTab(2);
+      					$('#loading').hide();
+      					alert("New chaneel is inserted");
+      			}
+  				else {
+  					$('#loading').hide();
+  					alert("Fail add channel");
+  				}
+		    }
+		});*/
+		$('#loading').show();
+		$.post(_basePath +"channel/add",{channel: chanName.toString()}, function(rez, status, xhr) {
+      			if(rez == "success"){
+      					$('#title').val("");
+      					$('#chaneel_description').val("");
+      					addListElement(2);
+      					changeTab(2);
+      					$('#loading').hide();
+      					alert("New chaneel is inserted");
+      			}
+  				else {
+  					$('#loading').hide();
+  					alert("Fail add channel");
+  				}
 		});
 	}
 	else {
@@ -189,16 +153,14 @@ function changeTab(value) {
 
 function addListElement(value) {
 	if(value == 1){
-		$('#loading').show();
-		$.get(_basePath +"feed/fetch",{value:value},  function(data, status, xhr) {
-			if(data != ""){
-				list = jQuery.parseJSON(data);
+	//	$('#loading').show();
+		$.get(_basePath +"feed/fetch", function(data, status, xhr) {
+			if(JSON.stringify(data) != ""){
 				$('#list_view').html("");
-				for(var i = 0; i<list.length; i++) {
-					var rssId = list[i].id;
-					var rssName = list[i].Rss;
-					var rssDescription = list[i].rss_opis;
-					$('#list_view').append("<li title='"+rssName+" - "+ rssDescription +"'>"+rssName.substr(0,40)+" - "+ rssDescription.substr(0,15) +"<label id='"+rssId+"' class='removeList' onclick='removeRssFeed(this)'>Remove<label> </li>");
+				for(var i = 0; i<data[0].length; i++) {
+					var rssName = data[0][i].rssUrl;
+					var rssDescription = data[0][i].description;
+					$('#list_view').append("<li title='"+rssName+" - "+ rssDescription +"'>"+rssName.substr(0,40)+" - "+ rssDescription.substr(0,15) +"<label id='"+rssName+"' class='removeList' onclick='removeRssFeed(this)'>Remove<label> </li>");
 					$('#loading').hide();
 				}
 			
@@ -212,31 +174,29 @@ function addListElement(value) {
 	else if (value == 2) {
 		$('#loading').show();
 		$.get(_basePath +"channel/fetch",  function(data, status, xhr) {
-			alert(data);
-			/*if(data != ""){
+
+			if(JSON.stringify(data) != ""){
 				$('#list_view').html("");
-				list = data;
-				for(var i = 0; i<list.length; i++) {
-					var chaneelName = list[i].name;
-					//var chaneelDescription = list[i].description;	
-					var chaneelCounter = list[i].counter;
+				for(var i = 0; i<data.length; i++) {
+					var chaneelCounter = data[i].counter;
+					var chaneelName = data[i].channelModel.name;				
+					
 					$('#loading').hide();
-					$('#list_view').append("<li title='"+chaneelName+"'>"+chaneelName.substr(0,40)+"  <label id='"+chaneelName+"' class='removeList' onclick='removeChannel(this)'>Remove</label> <span class='badge'>"+chaneelCounter+"</span></li>");
+				$('#list_view').append("<li title='"+chaneelName+"'>"+chaneelName.substr(0,40)+"  <label id='"+chaneelName+"' class='removeList' onclick='removeChannel(this)'>Remove</label> <span class='badge'>"+chaneelCounter+"</span></li>");
 				}
 			}
 			else {
 				alert('Error');
-			}*/
+			}
 		});
 	}
 }
 
 function removeRssFeed(listElement){
-	
-	if(!(isNaN(listElement.id))){
+	if((isNaN(listElement.id))){
 		if(confirm('Are you sure you want to delete RSS Feed?')){
 			$('#loading').show();
-			$.post(_basePath +"feed/delete", { id: listElement.id }, function(data, status, xhr) {
+			$.post(_basePath +"feed/delete", { feedName: listElement.id }, function(data, status, xhr) {
 				if(data == 'success'){
 					$('#list_view').html("");
 					addListElement(1);

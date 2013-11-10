@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.infobip.campus.rsstopush.channels.ChannelModel;
 import com.infobip.campus.rsstopush.channels.DefaultChannelService;
 import com.infobip.campus.rsstopush.services.DefaultFeedToPushService;
@@ -46,10 +48,15 @@ public class ChannelController {
 		return resultArray;
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public String addChannel(@RequestBody ChannelModel model) {
+	public String addChannel(@RequestBody String str) {
 
+	
+		String [] nameSpllit = str.split("=");
+		String name = nameSpllit[1].toString();
+
+		ChannelModel model = new ChannelModel(name.replace('+', ' '), "");
 		if (defaultChannelService.addChannel(model) == true) {
 			return "success";
 		} else {
@@ -61,9 +68,11 @@ public class ChannelController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public String deleteChannel(@RequestBody String value) {
-		ChannelModel model = new ChannelModel(value, "");
-
+		String [] chanalName = value.split("=");
+		ChannelModel model = new ChannelModel(chanalName[1].toString().replace('+', ' '), "");
+		
 		if (defaultChannelService.deleteChannel(model) == true) {
+			defaultFeedToPush.deleteChannelFromMap(model);
 			return "success";
 		} else {
 			return "false";
