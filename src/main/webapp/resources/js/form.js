@@ -73,7 +73,7 @@ function addNewChannel() {
 		        'Content-Type': 'application/json' 
 		    },
 		    method: 'POST',
-		    contentType: 'application/json',
+		    contentType: 'application/json; charset=utf-8',
 		    data: JSON.stringify(channelJson),
 		    success:  function(rez, status, xhr) {
       			if(rez == "success"){
@@ -82,7 +82,7 @@ function addNewChannel() {
       					addListElement(2);
       					changeTab(2);
       					$('#loading').hide();
-      					alert("New chaneel is inserted");
+      					alert("New channel is inserted");
       			}
   				else {
   					$('#loading').hide();
