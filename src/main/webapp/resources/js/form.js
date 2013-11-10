@@ -63,12 +63,12 @@ function addNewChannel() {
 	var channelTitle = $('#title').val();
 	var chaneelDescription = $('#chaneel_description').val();
 	if (channelTitle.length != 0 ) {
-		chanName = channelTitle;
-		chanDesc = chaneelDescription;
-		/*$.ajax({
+		channelJson = new Object();
+		channelJson.name = channelTitle;
+		channelJson.description = chaneelDescription;
+		$.ajax({
 		    url: _basePath +"channel/add",
-		    headers: { 
-		    	'X-AppEngine-Cron': true,
+		    headers: {		    	
 		        'Accept': 'text/plain',
 		        'Content-Type': 'application/json' 
 		    },
@@ -89,21 +89,6 @@ function addNewChannel() {
   					alert("Fail add channel");
   				}
 		    }
-		});*/
-		$('#loading').show();
-		$.post(_basePath +"channel/add",{channel: chanName.toString()}, function(rez, status, xhr) {
-      			if(rez == "success"){
-  					$('#title').val("");
-  					$('#chaneel_description').val("");
-  					addListElement(2);
-  					changeTab(2);
-  					$('#loading').hide();
-  					alert("New chaneel is inserted");
-      			}
-  				else {
-  					$('#loading').hide();
-  					alert("Fail add channel");
-  				}
 		});
 	}
 	else {
@@ -205,7 +190,6 @@ function removeRssFeed(listElement){
 			$.ajax({
 		    url: _basePath +"feed/delete",
 		    headers: { 
-		    	'X-AppEngine-Cron': true,
 		        'Accept': 'text/plain',
 		        'Content-Type': 'application/json' 
 		    },
@@ -225,7 +209,7 @@ function removeRssFeed(listElement){
 				}
 		   }
 		});
-			}
+		}
 	}
 	else {
 		$('#loading').hide();
@@ -237,16 +221,31 @@ function removeChannel(listElement){
 	if(isNaN(listElement.id)){
 		if(confirm('Are you sure you want to delete '+ listElement.id +'?')){
 			$('#loading').show();
-			$.post(_basePath +"channel/delete", { channel_name: listElement.id }, function(data, status, xhr) {
-				if(data == 'success'){
+			var channelJson = new Object();
+			channelJson.name = listElement.id;
+			channelJson.description = "";
+			$('#loading').show();
+			$.ajax({
+		    url: _basePath +"channel/delete",
+		    headers: { 
+		        'Accept': 'text/plain',
+		        'Content-Type': 'application/json' 
+		    },
+		    method: 'POST',
+		    contentType: 'application/json',
+		    data: JSON.stringify(channelJson),
+		    success:  function(rez, status, xhr) {
+      			if(rez == 'success'){
 					$('#list_view').html("");
 					addListElement(2);
+					changeTab(2);
 					$('#loading').hide();
 				}
 				else {
 					$('#loading').hide();
 					alert('Error');
 				}
+		   }
 		});
 		}
 	}

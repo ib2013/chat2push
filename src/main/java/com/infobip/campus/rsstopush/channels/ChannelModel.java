@@ -1,10 +1,22 @@
 package com.infobip.campus.rsstopush.channels;
 
-public class ChannelModel {
+import java.io.Serializable;
 
+
+
+public class ChannelModel implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String name;
 	String description;
 
+	public ChannelModel() {
+		
+	}
+	
 	public ChannelModel(String name, String description) {
 		super();
 		this.name = name;
