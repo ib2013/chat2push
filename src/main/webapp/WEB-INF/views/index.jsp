@@ -29,6 +29,7 @@
 		<tr><td>RSS link:</td><td><input type='text' id='rss_uri' class='text_value' name='rss_uri' placeholder='http://example.rss' /></td></tr>
 		<tr><td>RSS description:</td><td><input id='rss_description' class='text_value' name='rss_description'  ></td></tr>
 		<tr><td colspan='2'><input type='button' value='Submit' class='submitBtn ' onclick='addNewFeed()' /></td></tr>					
+
 	</table>
 		
 		<table>

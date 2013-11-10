@@ -1,5 +1,6 @@
 package com.infobip.campus.rsstopush.services;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
@@ -7,11 +8,19 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.google.appengine.api.urlfetch.HTTPHeader;
+import com.google.appengine.api.urlfetch.HTTPMethod;
+import com.google.appengine.api.urlfetch.HTTPRequest;
+import com.google.appengine.api.urlfetch.HTTPResponse;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.infobip.campus.rsstopush.adapters.*;
 import com.infobip.campus.rsstopush.adapters.models.MessageModel;
 import com.infobip.campus.rsstopush.configuration.Configuration;
+import com.infobip.campus.rsstopush.web.CronJobController;
 
 public class PushNotification {
 
@@ -24,7 +33,8 @@ public class PushNotification {
 	String mimeType = "text/html";
 	ArrayList<String> channelNames = new ArrayList<String>();
 	ArrayList<String> OSTypes = new ArrayList<String>();
-
+	
+	private static final Logger LOG = LoggerFactory.getLogger(CronJobController.class);
 	public PushNotification() {
 
 	}
@@ -46,21 +56,26 @@ public class PushNotification {
 		}
 
 		channelNames.add(channelName);
+		
+		
 	}
 
 	public void notifyChannel(String channelName) {
 		Gson gson = new Gson();
 		try {
-			StringEntity parms = new StringEntity(gson.toJson(this));
-			HttpClient client = new DefaultHttpClient();
-			HttpPost request = new HttpPost(
-					"https://pushapi.infobip.com/3/application/"+ Configuration.APPLICATION_ID +"/message");
-			request.addHeader("Authorization", Configuration.AUTHORIZATION_INFO);
-			request.addHeader("content-type", "application/json");
-			request.setEntity(parms);
-			HttpResponse response = client.execute(request);
+			URL url = new URL("https://pushapi.infobip.com/3/application/"
+					+ Configuration.APPLICATION_ID + "/message");
+			HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
 
-			System.out.println(this.toString());
+			request.addHeader(new HTTPHeader("Authorization",
+					Configuration.AUTHORIZATION_INFO));
+			request.addHeader(new HTTPHeader("content-type", "application/json"));
+			request.setPayload(gson.toJson(this).getBytes());
+
+			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
+					.fetch(request);
+
+			LOG.info("POSLANA NOTIFIKACIJA NA: " + channelName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,15 +89,20 @@ public class PushNotification {
 
 		Gson gson = new Gson();
 		try {
-			StringEntity parms = new StringEntity(gson.toJson(this));
-			HttpClient client = new DefaultHttpClient();
-			HttpPost request = new HttpPost(
-					"https://pushapi.infobip.com/3/application/"+ Configuration.APPLICATION_ID +"/message");
-			request.addHeader("Authorization", Configuration.AUTHORIZATION_INFO);
-			request.addHeader("content-type", "application/json");
-			request.setEntity(parms);
 
-			HttpResponse response = client.execute(request);
+			URL url = new URL("https://pushapi.infobip.com/3/application/"
+					+ Configuration.APPLICATION_ID + "/message");
+			HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
+
+			request.addHeader(new HTTPHeader("Authorization",
+					Configuration.AUTHORIZATION_INFO));
+			request.addHeader(new HTTPHeader("content-type", "application/json"));
+			request.setPayload(gson.toJson(this).getBytes());
+
+			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
+					.fetch(request);
+
+			LOG.info("POSLANA BROADCAST NOTIFIKACIJA");
 
 		} catch (Exception e) {
 			e.printStackTrace();
