@@ -2,38 +2,39 @@ package com.infobip.campus.chattopush.models;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import java.util.ArrayList;
-import java.util.List;
+
 import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
+
 import java.util.Date;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
-public class UserChannel {
+public class MessageModel {
 
     /**
      */
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<UserModel> users = new ArrayList<UserModel>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private UserModel user = new UserModel();
+    
+    /**
+     */
+    @OneToMany(cascade = CascadeType.ALL)
+    private ChannelModel channel = new ChannelModel();
 
     /**
      */
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<ChannelModel> channels = new ArrayList<ChannelModel>();
-
-    /**
-     */
-    private String status;
+    private String message;
 
     /**
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
+    @DateTimeFormat(style = "MM")
     private Date lastMessageDate;
 }
