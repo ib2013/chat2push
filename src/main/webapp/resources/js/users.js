@@ -11,13 +11,13 @@ function showAllUsers() {
 								var username = data[0][i].username;
 								$('#list_view_users')
 										.append(
-												"<li draggable='true' ondragstart='drag(event)' id='"
+												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
 														+ username
 														+ "'>"
 														+ username
 														+ "'<label id='"
 														+ username
-														+ "' class='removeList' onclick='deleteUser(this)'>Remove<label></li>");
+														+ "' class='removeList' onclick='deleteUser(this)'>Remove<label></p>");
 							}
 						}
 					});
