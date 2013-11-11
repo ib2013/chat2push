@@ -19,6 +19,7 @@
 			</div>
 		</div>
 		<div id='lists' style="clear: both;">
+
 			<div id='list_rooms' class='listContent' style="float: left;"
 				ondrop="drop(event)" ondragover="allowDrop(event)">
 				<!--<ul id='list_view_rooms'  class='listview'>
@@ -40,47 +41,50 @@
 				<p draggable="true" ondragstart="drag(event)" id="User3">User3</p>	
 			</div>
 			</div>
+
+
+
+
+
+
+
+
+
+		<div id='forms'>
+
+
+			<table>
+				<tr>
+					<th colspan='2'><h3>Add new channel</h3></th>
+				</tr>
+				<tr>
+					<td>Title:</td>
+					<td><input type='text' id='title' class='text_value'
+						name='title' /></td>
+				</tr>
+				<tr>
+					<td>Description:</td>
+					<td><input id='chaneel_description' class='text_value'
+						name='canal_description'></td>
+				</tr>
+				<tr>
+					<td>Type:</td>
+					<td><select id="typeOfChannel">
+							<option value="public">Public</option>
+							<option value="private">Private</option>
+					</select></td>
+				<tr>
+					<td colspan='2'><input type='button' id='addNewChanelBtn'
+						value='Add' class='submitBtn ' onclick='addNewChannel()' /></td>
+				</tr>
+			</table>
 		</div>
-	</div>
 </div>
-<div id='forms'>
-	<!-- Privremeno ova opcija nije dostupna. Ukoliko se implementira dinamicko dodavanje
-	adaptera ova opcija bice omogucena 
-	<table  >
-		<tr><th colspan='2'><h3>Add new RSS source name</h3></th></tr>
-		<tr><td>Source name:</td><td> <input type='text' id='rss_source_new' class='text_value' name='rss_source_new' /></td></tr>
-		<tr><td colspan='2'><input type='button' value='Insert' class='submitBtn' onclick='useSourceFormValue()' /></td></tr>
-	</table>
-	-->
-	<!-- <table>
-		<tr><th colspan='2'><h3>Add new RSS adress</h3></th></tr>
-		<tr><td>RSS link:</td><td><input type='text' id='rss_uri' class='text_value' name='rss_uri' placeholder='http://example.rss' /></td></tr>
-		<tr><td>RSS description:</td><td><input id='rss_description' class='text_value' name='rss_description'  ></td></tr>
-		<tr><td colspan='2'><input type='button' value='Submit' class='submitBtn ' onclick='addNewFeed()' /></td></tr>					
+	<br/>
+	<br/>
 
-	</table> -->
+</div>
 
-	<table>
-		<tr>
-			<th colspan='2'><h3>Add new channel</h3></th>
-		</tr>
-		<tr>
-			<td>Title:</td>
-			<td><input type='text' id='title' class='text_value'
-				name='title' /></td>
-		</tr>
-		<tr>
-			<td>Description:</td>
-			<td><input id='chaneel_description' class='text_value'
-				name='canal_description'></td>
-		</tr>
-		<tr>
-			<td colspan='2'><input type='button' id='addNewChanelBtn'
-				value='Submit' class='submitBtn ' onclick='addNewChannel()' /></td>
-		</tr>
-	</table>
-</div>
-</div>
 <script type="text/javascript">
 	//var _basePath = '${_basePath}';
 
