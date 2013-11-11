@@ -24,7 +24,7 @@ function showAllUsers() {
 	$('#loading').hide();
 }
 
-function deleteUser(value) {
+function deleteUser(user) {
 	$('#loading').show();
 
 	$('#loading').hide();

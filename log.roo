@@ -68,7 +68,7 @@ field string --fieldName payload
 hint
 hint logging
 logging setup --level INFO 
-<<<<<<< HEAD
+
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-09 17:27:53
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 17:29:08
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-09 17:32:02
