@@ -5,37 +5,42 @@
 <!-- <div id="loading">
 	  <img id="loading-image" src="resources/images/loading.gif" alt="Loading..." />
 </div> -->
-<div id='central' >
-	<div id ='centralContent'>
-	<div id='headers'>
-		<!-- <label id='rss_feed_list_tab' class='listOptions' onclick='changeTab(1)' >List of RSS feed</label> -->
-		<!-- <label id='rss_chanal_tab' class='listOptions' onclick='changeTab(2)' >List of channel</label> -->
-		<div id='room_header' style="float: left;">
-			<label id='room_list_tab' class='listOptions'>List
-				of Chat Rooms</label>
+<div id='central'>
+	<div id='centralContent'>
+		<div id='headers'>
+			<!-- <label id='rss_feed_list_tab' class='listOptions' onclick='changeTab(1)' >List of RSS feed</label> -->
+			<!-- <label id='rss_chanal_tab' class='listOptions' onclick='changeTab(2)' >List of channel</label> -->
+			<div id='room_header' style="float: left;">
+				<label id='room_list_tab' class='listOptions'>List of Chat
+					Rooms</label>
+			</div>
+			<div id='user_header'>
+				<label id='user_list_tab' class='listOptions'>List of Users</label>
+			</div>
 		</div>
-		<div id='user_header'>
-			<label id='user_list_tab' class='listOptions'>List
-				of Users</label>
-		</div>
-	</div>
-	<div id='lists' style="clear:both; ">
-		<div id='list_rooms' class='listContent' style="float: left;">
-			<ul id='list_view_rooms'  class='listview'>
-				<li>ChatRoom1 asdasdasdasd</li>
+		<div id='lists' style="clear: both;">
+			<div id='list_rooms' class='listContent' style="float: left;"
+				ondrop="drop(event)" ondragover="allowDrop(event)">
+				<!--<ul id='list_view_rooms'  class='listview'>
+			 	<li>ChatRoom1 asdasdasdasd</li>
 				<li>ChatRoom2 asdasdasdasda</li>
 				<li>ChatRoom3 asdadda</li>
-			</ul>
-		</div>
+			</ul> -->
+			</div>
 
-		<div id='list_users' class="listContent">
-			<ul id='list_view_users' class='listview'>
-				<li>User1&nbsp;&nbsp;&nbsp;5</li>
-				<li>User 2</li>
-				<li>User 3</li>
-			</ul>
+			<div id='list_users' class="listContent" ondrop="drop(event)"
+				ondragover="allowDrop(event)">
+			<!-- 	<ul id='list_view_users' class='listview'>
+					<li  dragondragstart="drag(event)" draggable="true" id="user1">User1&nbsp;&nbsp;&nbsp;5</li>
+					<li>User 2</li>
+					<li>User 3</li>
+				</ul> -->
+				<p draggable="true" ondragstart="drag(event)" id="User1">User1</p>
+				<p draggable="true" ondragstart="drag(event)" id="User2">User2</p>
+				<p draggable="true" ondragstart="drag(event)" id="User3">User3</p>	
+			</div>
+			</div>
 		</div>
-	</div>
 	</div>
 </div>
 <div id='forms'>
@@ -77,9 +82,23 @@
 </div>
 </div>
 <script type="text/javascript">
-	var _basePath = '${_basePath}';
+	//var _basePath = '${_basePath}';
 
-	$(document).ready(function() {
-		documentReady(_basePath);
-	});
+	//$(document).ready(function() {
+	//	documentReady(_basePath);
+	//});
+
+	function allowDrop(ev) {
+		ev.preventDefault();
+	}
+
+	function drag(ev) {
+		ev.dataTransfer.setData("Text", ev.target.id);
+	}
+
+	function drop(ev) {
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("Text");
+		ev.target.appendChild(document.getElementById(data));
+	}
 </script>
