@@ -13,9 +13,14 @@
 	margin-left: auto;
 	margin-right: auto;
 	background-color: white;
-	height: 510px;
+	/*height: 510px; */
 }
 
+#centralContent{
+	border: solid 0px;
+	display: table;
+    margin: 0 auto;
+}
 #footer{
 	height: 60px;
 	background-color: #F0F0F0;
@@ -48,9 +53,36 @@
 #list_content{
 	border: solid 1px;
 	height: 450px;
+	width:  100px;
 	box-shadow: 8px 8px 5px #888888;
 	overflow-x:auto;
 	border: solid 1px;
+}
+
+.listContent{
+	border: solid 1px;
+	padding: 10px;
+	height: 450px;
+	width:  200px;
+	margin-left:50px;
+	margin-right:50px;
+	box-shadow: 8px 8px 5px #888888;
+	overflow-x:auto;
+	border: solid 1px;
+}
+
+
+.listOptions {
+	border: solid 1px;
+	padding: 10px;
+	width: 200px;
+	height: 40px;
+	margin-left:50px;
+	margin-right:0px;"
+	text-align: center;
+	font-size: 16px;
+	border-radius: 10px 10px 0px 0px;
+	margin-bottom: 10px;
 }
 
 .text_value {
@@ -83,17 +115,6 @@
 	margin-top: 10px;
 }
 
-.listOptions {
-	border: solid 1px;
-	padding-top: 10px;
-	width: 180px;
-	height: 40px;
-	text-align: center;
-	font-size: 16px;
-	border-radius: 10px 10px 0px 0px;
-	cursor: pointer;
-	margin-bottom: 10px;
-}
 
 .removeList {
 	float: right;
@@ -126,6 +147,10 @@
 }
 
 #list_view  {
+	padding: 0px;
+}
+
+.listview {
 	padding: 0px;
 }
 
