@@ -118,3 +118,10 @@ hint
 hint relationships
 field reference --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel
 // [failed] field set --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel
+// [failed] field list --fieldName UserModel --type com.infobip.campus.chattopush.models.UserModel
+field list --fieldName users --type com.infobip.campus.chattopush.models.UserModel
+field list --fieldName channels --type com.infobip.campus.chattopush.models.ChannelModel
+field string --fieldName status
+// [failed] field date --fieldName timeStamp --type java.util.Date
+// [failed] field date --fieldName timeStamp --type java.util.Date
+field date --fieldName lastMessageDate --type java.util.Date
