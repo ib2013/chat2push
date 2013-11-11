@@ -3,78 +3,78 @@
 
 package com.infobip.campus.chattopush.models;
 
-import com.infobip.campus.chattopush.models.UserChannel;
+import com.infobip.campus.chattopush.models.MessageModel;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-privileged aspect UserChannel_Roo_Jpa_ActiveRecord {
+privileged aspect MessageModel_Roo_Jpa_ActiveRecord {
     
     @PersistenceContext
-    transient EntityManager UserChannel.entityManager;
+    transient EntityManager MessageModel.entityManager;
     
-    public static final EntityManager UserChannel.entityManager() {
-        EntityManager em = new UserChannel().entityManager;
+    public static final EntityManager MessageModel.entityManager() {
+        EntityManager em = new MessageModel().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
     @Transactional
-    public static long UserChannel.countUserChannels() {
-        return findAllUserChannels().size();
+    public static long MessageModel.countMessageModels() {
+        return findAllMessageModels().size();
     }
     
     @Transactional
-    public static List<UserChannel> UserChannel.findAllUserChannels() {
-        return entityManager().createQuery("SELECT o FROM UserChannel o", UserChannel.class).getResultList();
+    public static List<MessageModel> MessageModel.findAllMessageModels() {
+        return entityManager().createQuery("SELECT o FROM MessageModel o", MessageModel.class).getResultList();
     }
     
     @Transactional
-    public static UserChannel UserChannel.findUserChannel(Long id) {
+    public static MessageModel MessageModel.findMessageModel(Long id) {
         if (id == null) return null;
-        return entityManager().find(UserChannel.class, id);
+        return entityManager().find(MessageModel.class, id);
     }
     
     @Transactional
-    public static List<UserChannel> UserChannel.findUserChannelEntries(int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM UserChannel o", UserChannel.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    public static List<MessageModel> MessageModel.findMessageModelEntries(int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM MessageModel o", MessageModel.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void UserChannel.persist() {
+    public void MessageModel.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
-    public void UserChannel.remove() {
+    public void MessageModel.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            UserChannel attached = UserChannel.findUserChannel(this.id);
+            MessageModel attached = MessageModel.findMessageModel(this.id);
             this.entityManager.remove(attached);
         }
     }
     
     @Transactional
-    public void UserChannel.flush() {
+    public void MessageModel.flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
-    public void UserChannel.clear() {
+    public void MessageModel.clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
     @Transactional
-    public UserChannel UserChannel.merge() {
+    public MessageModel MessageModel.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
-        UserChannel merged = this.entityManager.merge(this);
+        MessageModel merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
     }

@@ -3,7 +3,7 @@
 
 package com.infobip.campus.chattopush.models;
 
-import com.infobip.campus.chattopush.models.UserChannel;
+import com.infobip.campus.chattopush.models.MessageModel;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,32 +11,32 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-privileged aspect UserChannel_Roo_Jpa_Entity {
+privileged aspect MessageModel_Roo_Jpa_Entity {
     
-    declare @type: UserChannel: @Entity;
+    declare @type: MessageModel: @Entity;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long UserChannel.id;
+    private Long MessageModel.id;
     
     @Version
     @Column(name = "version")
-    private Integer UserChannel.version;
+    private Integer MessageModel.version;
     
-    public Long UserChannel.getId() {
+    public Long MessageModel.getId() {
         return this.id;
     }
     
-    public void UserChannel.setId(Long id) {
+    public void MessageModel.setId(Long id) {
         this.id = id;
     }
     
-    public Integer UserChannel.getVersion() {
+    public Integer MessageModel.getVersion() {
         return this.version;
     }
     
-    public void UserChannel.setVersion(Integer version) {
+    public void MessageModel.setVersion(Integer version) {
         this.version = version;
     }
     

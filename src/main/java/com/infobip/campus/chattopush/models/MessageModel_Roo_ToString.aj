@@ -3,13 +3,13 @@
 
 package com.infobip.campus.chattopush.models;
 
-import com.infobip.campus.chattopush.models.UserChannel;
+import com.infobip.campus.chattopush.models.MessageModel;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-privileged aspect UserChannel_Roo_ToString {
+privileged aspect MessageModel_Roo_ToString {
     
-    public String UserChannel.toString() {
+    public String MessageModel.toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     

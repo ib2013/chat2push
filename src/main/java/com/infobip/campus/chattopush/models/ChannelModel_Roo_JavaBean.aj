@@ -4,6 +4,9 @@
 package com.infobip.campus.chattopush.models;
 
 import com.infobip.campus.chattopush.models.ChannelModel;
+import com.infobip.campus.chattopush.models.UserModel;
+import java.util.Date;
+import java.util.List;
 
 privileged aspect ChannelModel_Roo_JavaBean {
     
@@ -29,6 +32,22 @@ privileged aspect ChannelModel_Roo_JavaBean {
     
     public void ChannelModel.setDescription(String description) {
         this.description = description;
+    }
+    
+    public Date ChannelModel.getLastMessageDate() {
+        return this.lastMessageDate;
+    }
+    
+    public void ChannelModel.setLastMessageDate(Date lastMessageDate) {
+        this.lastMessageDate = lastMessageDate;
+    }
+    
+    public List<UserModel> ChannelModel.getUsers() {
+        return this.users;
+    }
+    
+    public void ChannelModel.setUsers(List<UserModel> users) {
+        this.users = users;
     }
     
 }

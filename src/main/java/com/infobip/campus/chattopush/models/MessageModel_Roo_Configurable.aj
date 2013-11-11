@@ -3,11 +3,11 @@
 
 package com.infobip.campus.chattopush.models;
 
-import com.infobip.campus.chattopush.models.UserChannel;
+import com.infobip.campus.chattopush.models.MessageModel;
 import org.springframework.beans.factory.annotation.Configurable;
 
-privileged aspect UserChannel_Roo_Configurable {
+privileged aspect MessageModel_Roo_Configurable {
     
-    declare @type: UserChannel: @Configurable;
+    declare @type: MessageModel: @Configurable;
     
 }
