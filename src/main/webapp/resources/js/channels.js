@@ -3,7 +3,7 @@ function addNewChannel() {
 	var channelTitle = $('#title').val();
 	var chaneelDescription = $('#channel_description').val();
 	var typeOfChannel = $("#typeOfChannel option:selected").text();
-	
+
 	if (channelTitle.length != 0) {
 		channelJson = new Object();
 		channelJson.name = channelTitle;

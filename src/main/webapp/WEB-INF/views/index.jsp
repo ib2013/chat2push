@@ -48,6 +48,7 @@
 				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User1">User1</p>
 				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User2">User2</p>
 				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User3">User3</p>
+	
 			</div>
 		</div>
 
