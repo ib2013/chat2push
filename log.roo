@@ -73,6 +73,13 @@ logging setup --level INFO
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 17:29:08
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-09 17:32:02
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 19:23:59
+<<<<<<< HEAD
+=======
+>>>>>>> 853e7e9463bd000d84a6581cddb1f93de7cb0d09
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 21:25:46
+>>>>>>> cbe10b6e4d4b3e0bea7858b440fa99cf506606d1
+=======
+>>>>>>> 17faeda5fc93de1ffce478b472cb897afb1b2d43
 
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-10 13:08:16
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-10 18:09:49
@@ -106,4 +113,23 @@ hint
 hint relationships
 field reference --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel
 // [failed] field set --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel
+<<<<<<< HEAD
+// [failed] field list --fieldName UserModel --type com.infobip.campus.chattopush.models.UserModel
+field list --fieldName users --type com.infobip.campus.chattopush.models.UserModel
+field list --fieldName channels --type com.infobip.campus.chattopush.models.ChannelModel
+field string --fieldName status
+// [failed] field date --fieldName timeStamp --type java.util.Date
+// [failed] field date --fieldName timeStamp --type java.util.Date
+field date --fieldName lastMessageDate --type java.util.Date
+entity jpa --class ChannelMessageModel
+field list --fieldName channels --type com.infobip.campus.chattopush.models.ChannelModel
+field string --fieldName message
+field date --fieldName lastMessageDate --type java.util.Date
+// [failed] field list --fieldName channels --type com.infobip.campus.chattopush.models.ChannelModel
+hint
+// [failed] field list --fieldName channels --type com.infobip.campus.chattopush.models.ChannelModel
+// [failed] field date --fieldName lastMessageDate --type java.util.Date
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 17:29:49
+=======
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-11 14:55:49
+>>>>>>> 17faeda5fc93de1ffce478b472cb897afb1b2d43
