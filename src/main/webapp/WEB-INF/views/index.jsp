@@ -64,13 +64,13 @@
 				</tr>
 				<tr>
 					<td>Description:</td>
-					<td><input id='chaneel_description' class='text_value'
-						name='canal_description'></td>
+					<td><input id='channel_description' class='text_value'
+						name='channel_description'></td>
 				</tr>
 				<tr>
 					<td>Type:</td>
 					<td><select id="typeOfChannel">
-							<option value="public">Public</option>
+							<option value="public" selected="selected">Public</option>
 							<option value="private">Private</option>
 					</select></td>
 				<tr>
