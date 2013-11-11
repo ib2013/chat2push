@@ -88,3 +88,33 @@ logging setup --level INFO
 >>>>>>> cbe10b6e4d4b3e0bea7858b440fa99cf506606d1
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-10 13:08:16
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-10 18:09:49
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-11 14:13:26
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 14:14:32
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-11 14:15:48
+hint
+hint entites
+hint entities
+entity jpa --class ~.models.UserModel
+entity jpa --class com.infobip.campus.chattopush.UserModel
+entity jpa --class com.infobip.campus.chattopush.models.UserModel
+entity jpa --class com.infobip.campus.chattopush.models.UserModel
+field number --fieldName id --type long
+field number --fieldName googleId --type long 
+// [failed] field string --fieldName googleId
+// [failed] field string --fieldName googleId
+field string --fieldName googleId
+field string --fieldName userName
+field string --fieldName password
+entity jpa --class com.infobip.campus.chattopush.models.ChannelModel
+field string --fieldName name
+field boolean --fieldName isPublic
+field string --fieldName description
+entity jpa --class com.infobip.campus.chattopush.models.UserChannel
+hint
+hint relation
+hint relationship
+hint entities
+hint
+hint relationships
+field reference --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel
+// [failed] field set --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel

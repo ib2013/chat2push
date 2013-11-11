@@ -1,9 +1,0 @@
-ovdje idu servisi.
-
-
-servis je klasa koja implementira neki interface i ima na sebi anotaciju @Service/
-
-dobro je razdvojiti same interface-ove od implementacije, npr. interface-ovi idu u uvaj paket, dok konkretne implementacije idu u podpaket ".impl"
-
-
-dobro je da ime servisa ima i "Service" sufiks
