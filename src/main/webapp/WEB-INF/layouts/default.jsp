@@ -19,9 +19,8 @@
 <spring:url value="resources/css/style.css" var="cssStyle" />
 <spring:url value="resources/css/bootstrap.css" var="cssBootstrap" />
 
-
+    <script type="text/javascript" src="${jsJquery}"> </script>
 	<script type="text/javascript" src="${jsForm}"> </script>
-	<script type="text/javascript" src="${jsJquery}"> </script>
 	<script type="text/javascript" src="${main}"> </script>
 	<script type="text/javascript" src="${jsForm2}"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="${cssStyle}" />
