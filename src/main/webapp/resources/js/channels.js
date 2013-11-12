@@ -2,10 +2,9 @@ function addNewChannel() {
 	var channelTitle = $('#title').val();
 	var channelDescription = $('#channel_description').val();
 	var typeOfChannel = $("#typeOfChannel option:selected").text();
-	//var channelList = $("#select_room_list");
+
 	var ind = false;
 	$("#select_room_list option").each(function(i){
-        //alert($(this).text() + " : " + $(this).val());
 		if ($(this).val() == channelTitle) {
 			ind = true;
 		} 
