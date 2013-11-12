@@ -16,6 +16,7 @@ import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.DefaultChannelService;
@@ -74,9 +75,12 @@ public class ChannelController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/addUserToRoom", consumes = "application/json")
 	@ResponseBody
-	public String addUserToChannel(@RequestBody JsonObject object) {
-
-		if (defaultChannelService.addUserToRoom(object) == true) {
+	public String addUserToChannel(@RequestBody String object) {
+		//JsonObject obj = new JsonObject(object.);
+		JsonParser jsonParser = new JsonParser();
+		JsonObject obj = (JsonObject) jsonParser.parse(object);
+		
+		if (defaultChannelService.addUserToRoom(obj) == true) {
 			return "success";
 		} else {
 			return "fail";

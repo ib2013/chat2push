@@ -196,7 +196,6 @@ public class DefaultChannelService implements ChannelService {
 		String userName = "";
 		channelName = object.get("name").toString();
 		userName = object.get("username").toString();
-
 		List<UserModel> users = UserModel.findAllUserModels();
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 
