@@ -1,7 +1,5 @@
 package com.infobip.campus.chattopush.configuration;
 
-import java.util.Date;
-
 public class Configuration {
 
 
