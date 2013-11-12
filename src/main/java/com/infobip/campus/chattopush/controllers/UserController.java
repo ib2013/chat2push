@@ -1,5 +1,6 @@
 package com.infobip.campus.chattopush.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,12 +11,11 @@ import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.DefaultUserService;
 
 
-
-
 @RequestMapping("/user/**")
 @Controller
 public class UserController {
-
+	
+	@Autowired
 	DefaultUserService defaultUserService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login")

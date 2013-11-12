@@ -61,31 +61,26 @@ entity jpa --class ~.models.NoviModel
 field string --fieldName title
 field string --fieldName payload
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 11:21:21
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 82d82f4a576f4357ae58666467d0f5d1fb89b281
-// Spring Roo UNKNOWN VERSION log opened at 2013-11-09 15:28:56
-=======
->>>>>>> 9141bd2b6e6917c0ad187f9550194d989bdb2861
-=======
+
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 16:05:16
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-09 16:08:47
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 16:10:30
 hint
 hint logging
 logging setup --level INFO 
-<<<<<<< HEAD
+
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-09 17:27:53
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 17:29:08
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-09 17:32:02
-=======
->>>>>>> 595aa2c4a759f4beed754a9bea3d5d222a656de7
-<<<<<<< HEAD
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 19:23:59
+<<<<<<< HEAD
 =======
 >>>>>>> 853e7e9463bd000d84a6581cddb1f93de7cb0d09
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 21:25:46
 >>>>>>> cbe10b6e4d4b3e0bea7858b440fa99cf506606d1
+=======
+>>>>>>> 17faeda5fc93de1ffce478b472cb897afb1b2d43
+
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-10 13:08:16
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-10 18:09:49
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-11 14:13:26
@@ -118,6 +113,7 @@ hint
 hint relationships
 field reference --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel
 // [failed] field set --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel
+<<<<<<< HEAD
 // [failed] field list --fieldName UserModel --type com.infobip.campus.chattopush.models.UserModel
 field list --fieldName users --type com.infobip.campus.chattopush.models.UserModel
 field list --fieldName channels --type com.infobip.campus.chattopush.models.ChannelModel
@@ -133,6 +129,7 @@ field date --fieldName lastMessageDate --type java.util.Date
 hint
 // [failed] field list --fieldName channels --type com.infobip.campus.chattopush.models.ChannelModel
 // [failed] field date --fieldName lastMessageDate --type java.util.Date
+<<<<<<< HEAD
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-11 16:19:14
 hint
 hint controller
@@ -145,3 +142,12 @@ entity jpa --class com.infobip.campus.chattopush.channels.ProbaModel
 field string --fieldName probaStr
 field number --fieldName probaBr --type int
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 20:32:30
+=======
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 17:29:49
+=======
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-11 14:55:49
+>>>>>>> 17faeda5fc93de1ffce478b472cb897afb1b2d43
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-11 18:02:52
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 20:32:48
+>>>>>>> 8a2ef9ab05b316750ddf2d5a40e4fbc6a79bba18
+
