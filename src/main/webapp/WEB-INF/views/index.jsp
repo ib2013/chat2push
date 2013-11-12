@@ -36,7 +36,7 @@
 		</div>
 		<div id='lists' style="clear: both;">
 
-			<div id='list_rooms' class='listContent' style="float: left;"
+			<div id='list_rooms_users' class='listContent' style="float: left;"
 				ondrop="drop(event)" ondragover="allowDrop(event)">
 				<!--<ul id='list_view_rooms'  class='listview'>
 			 	<li>ChatRoom1 asdasdasdasd</li>
