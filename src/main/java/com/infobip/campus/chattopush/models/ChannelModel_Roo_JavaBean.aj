@@ -10,28 +10,12 @@ import java.util.List;
 
 privileged aspect ChannelModel_Roo_JavaBean {
     
-    public String ChannelModel.getName() {
-        return this.name;
-    }
-    
-    public void ChannelModel.setName(String name) {
-        this.name = name;
-    }
-    
-    public Boolean ChannelModel.getIsPublic() {
+    public boolean ChannelModel.isIsPublic() {
         return this.isPublic;
     }
     
-    public void ChannelModel.setIsPublic(Boolean isPublic) {
+    public void ChannelModel.setIsPublic(boolean isPublic) {
         this.isPublic = isPublic;
-    }
-    
-    public String ChannelModel.getDescription() {
-        return this.description;
-    }
-    
-    public void ChannelModel.setDescription(String description) {
-        this.description = description;
     }
     
     public Date ChannelModel.getLastMessageDate() {
