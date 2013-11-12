@@ -64,3 +64,42 @@ function deleteUser(user) {
 	$('#loading').hide();
 
 }
+
+function showUsersByRoom() {
+	var roomname = $("#select_room_list option:selected").Text();
+	var room = new Object();
+	room.name = roomname;
+	$('#loading').show();
+	$.ajax({
+		url : _basePath + "user/fetch",
+		headers : {
+			'Accept' : 'text/plain',
+			'Content-Type' : 'application/json'
+		},
+		method : 'GET',
+		contentType : 'application/json',
+		data : JSON.stringify(room),
+		success : function(rez, status, xhr) {
+			if (rez == 'success') {
+				$('#list_rooms_users').html("");
+
+				for (var i = 0; i < data.length; i++) {
+					var username = data[i].username;
+					$('#list_rooms_users')
+							.append(
+									"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
+											+ username
+											+ "'>"
+											+ username
+											+ "'<label id='"
+											+ username
+											+ "' class='removeList' onclick='deleteUser(this)'>Remove<label></p>");
+				}
+				$('#loading').hide();
+			} else {
+				$('#loading').hide();
+				alert('Error');
+			}
+		}
+	});
+}
