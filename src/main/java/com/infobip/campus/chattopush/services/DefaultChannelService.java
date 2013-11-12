@@ -7,17 +7,19 @@ import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.infobip.campus.chattopush.configuration.Configuration;
-
 import com.infobip.campus.chattopush.models.ChannelModel;
+
+
+import com.infobip.campus.chattopush.models.UserModel;
 
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-
-@SuppressWarnings("deprecation")
 @Service
 public class DefaultChannelService implements ChannelService {
 
@@ -56,7 +58,10 @@ public class DefaultChannelService implements ChannelService {
 	@Override
 	public boolean addChannel(ChannelModel channel) {
 		
-		//channel.persist();
+		Date d = new Date();
+		channel.setLastMessageDate(d);
+		channel.setUsers(new ArrayList<UserModel>());
+		channel.persist();
 		
 		Gson gson = new Gson();
 		try {
@@ -90,7 +95,14 @@ public class DefaultChannelService implements ChannelService {
 	 */
 	@Override
 	public boolean deleteChannel(ChannelModel channel) {
+		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 		
+		for (ChannelModel channelElement : channels){
+			if (channelElement.getName().equals(channel.getName())){
+				channelElement.remove();
+				break;
+			}
+		}
 		Gson gson = new Gson();
 		try {
 			String channelName = channel.getName().replaceAll(" ", "%20");
