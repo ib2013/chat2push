@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
@@ -45,7 +47,7 @@ public class ChannelModel {
     /**
      */
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<UserModel> users = new ArrayList<UserModel>();
+    private Set<UserModel> users = new HashSet<UserModel>();
     
     public ChannelModel() {
     	
