@@ -14,11 +14,13 @@
 	
 	<spring:url value="resources/js/jquery.js" var='jsJquery' />
 	<spring:url value="resources/js/form.js" var='jsForm' />
+	<spring:url value="resources/js/main.js" var='main'/>
 	<spring:url value="resources/css/style.css" var="cssStyle" />
 	<spring:url value="resources/css/bootstrap.css" var="cssBootstrap" />
 	
 	<script type="text/javascript" src="${jsForm}"> </script>
 	<script type="text/javascript" src="${jsJquery}"> </script>
+	<script type="text/javascript" src="${main}"> </script>
 	<link rel="stylesheet" type="text/css" media="screen" href="${cssStyle}" />
 	<link rel="stylesheet" type="text/css" media="screen" href="${cssBootstrap}" />
 	
