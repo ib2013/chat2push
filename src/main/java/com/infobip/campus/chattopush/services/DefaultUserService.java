@@ -94,15 +94,15 @@ public class DefaultUserService implements UserService {
 		return false;
 	}
 
-	public boolean fetchAllUsers() {
+	public List<UserModel> fetchAllUsers() {
 		// TODO Auto-generated method stub
 		try {
-
+			return UserModel.findAllUserModels();
 		} catch (Exception e) {
 			// TODO: handle exception
-			return false;
+			return null;
 		}
-		return false;
+
 	}
 
 }
