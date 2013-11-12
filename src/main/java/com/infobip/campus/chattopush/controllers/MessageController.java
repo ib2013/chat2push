@@ -34,7 +34,7 @@ public class MessageController {
 			@RequestParam(value = "username") String un,
 			@RequestParam(value = "channel") String ch,
 			@RequestParam(value = "start-time") String startTime,
-			@RequestParam(value = "start-time") String endTime) {
+			@RequestParam(value = "end-time") String endTime) {
 		
 		JsonArray jsonArray = new JsonArray();
 		List<MessageModel> messages = defaultMessageService.fetchMessageList();
