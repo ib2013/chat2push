@@ -3,11 +3,16 @@ function addNewChannel() {
 	var channelTitle = $('#title').val();
 	var chaneelDescription = $('#channel_description').val();
 	var typeOfChannel = $("#typeOfChannel option:selected").text();
-
+	if (typeOfChannel == "Public") {
+		isPublic = true;
+	} else {
+		isPublic = false;
+	}
 	if (channelTitle.length != 0) {
 		channelJson = new Object();
 		channelJson.name = channelTitle;
 		channelJson.description = chaneelDescription;
+		channelJson.isPublic = isPublic;
 		$.ajax({
 			url : _basePath + "channel/add",
 			headers : {
@@ -22,18 +27,18 @@ function addNewChannel() {
 					$('#title').val("");
 					$('#channel_description').val("");
 					addListElement(2);
-					changeTab(2);
 					$('#loading').hide();
-					alert("New channel is inserted");
+					alert("New room is added.");
 				} else {
 					$('#loading').hide();
-					alert("Fail add channel");
+					alert("Error in adding channel.");
 				}
 			}
 		});
 	} else {
 		$('#loading').hide();
-		alert("Title required ");
+		alert("Title required!");
 	}
 
 }
+

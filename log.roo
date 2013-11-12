@@ -107,3 +107,4 @@ hint relationships
 field reference --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel
 // [failed] field set --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-11 14:55:49
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 21:48:36
