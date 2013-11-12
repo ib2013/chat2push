@@ -3,6 +3,7 @@ project --topLevelPackage com.infobip.campus.rsstopush --projectName RssToPush -
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-08 13:56:42
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 13:56:59
 persistence setup --database GOOGLE_APP_ENGINE --provider DATANUCLEUS 
+
 entity jpa --class com.infobip.campus.rsstopush.models.PushModel
 field string --fieldName title 
 hint
@@ -157,8 +158,8 @@ field number --fieldName probaBr --type int
 <<<<<<< HEAD
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 20:32:30
 =======
->>>>>>> c4df03f7000402f56a8ecc92e2bb15c6e0e62eb8
->>>>>>> fce5ec319c0053116ac72a85ee350713a052676f
+
+
 =======
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 17:29:49
 =======
@@ -171,5 +172,15 @@ field number --fieldName probaBr --type int
 
 =======
 >>>>>>> f51ce5b77ce35cc53174a0cc59afa2c07b5f3635
->>>>>>> fce5ec319c0053116ac72a85ee350713a052676f// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-12 11:10:29
+
+<<<<<<< HEAD
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-12 10:27:17
+
+hint
+// [failed] perform clean
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-12 10:46:57
+=======
+>>>>>>> fce5ec319c0053116ac72a85ee350713a052676f
+>>>>>>> 534b312462c01dcf7c03b4a143fc0ecf404302b9
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-12 12:19:49
 

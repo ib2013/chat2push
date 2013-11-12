@@ -17,6 +17,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @RooToString
 @RooJpaActiveRecord
 public class MessageModel {
+	public MessageModel(){
+		
+	}
 
     /**
      */
