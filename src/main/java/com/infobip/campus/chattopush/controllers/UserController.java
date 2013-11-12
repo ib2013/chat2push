@@ -41,7 +41,7 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/delete", consumes = "application/json")
 	@ResponseBody
-	public boolean deleteUser(@RequestBody UserModel model) {
+	public String deleteUser(@RequestBody UserModel model) {
 
 		return defaultUserService.deleteUser(model);
 
