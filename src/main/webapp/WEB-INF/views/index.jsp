@@ -29,6 +29,7 @@
 						onclick='deleteChannel()' class='removeList' style="float: right;" />
 				</div>
 			</div>
+			
 			<div id='user_header'>
 				<label id='user_list_tab' class='listOptions'>List of ALL
 					Users</label>
@@ -38,8 +39,6 @@
 
 			<div id='list_rooms_users'  class='listContent' style="float: left;"
 				ondrop="drop(event)" ondragover="allowDrop(event)">
-	
-	
 			</div>
 
 			<div id='list_users' class="listContent">
