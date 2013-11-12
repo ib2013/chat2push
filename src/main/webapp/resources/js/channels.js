@@ -49,13 +49,13 @@ function addNewChannel() {
 
 function deleteChannel(channel) {
 
-	if (isNaN(listElement.name)) {
+	if (isNaN(channel.name)) {
 		if (confirm('Are you sure you want to delete ' + channel.name + '?')) {
 			$('#loading').show();
 			var channelJson = new Object();
 			channelJson.name = channel.name;
 			channelJson.description = channel.description;
-			channelJson.isPublic=channel.isPublic;
+			channelJson.isPublic = channel.isPublic;
 			$('#loading').show();
 			$.ajax({
 				url : _basePath + "channel/delete",
@@ -69,7 +69,8 @@ function deleteChannel(channel) {
 				success : function(rez, status, xhr) {
 					if (rez == 'success') {
 						$('#select_room_list').html("");
-						//addListElement(2); ponovo ucitati kanale, tj izvrsiti update liste
+						// addListElement(2); ponovo ucitati kanale, tj izvrsiti
+						// update liste
 						$('#loading').hide();
 					} else {
 						$('#loading').hide();
