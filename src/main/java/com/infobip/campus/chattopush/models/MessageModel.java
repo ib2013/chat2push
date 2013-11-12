@@ -4,7 +4,7 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import java.util.Date;
 
@@ -17,15 +17,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 @RooToString
 @RooJpaActiveRecord
 public class MessageModel {
+	public MessageModel(){
+		
+	}
 
     /**
      */
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private UserModel user = new UserModel();
     
     /**
      */
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private ChannelModel channel = new ChannelModel();
 
     /**

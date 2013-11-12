@@ -21,10 +21,6 @@ privileged aspect ChannelModel_Roo_Jpa_Entity {
     @Column(name = "version")
     private Integer ChannelModel.version;
     
-    public ChannelModel.new() {
-        super();
-    }
-
     public Long ChannelModel.getId() {
         return this.id;
     }

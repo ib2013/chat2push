@@ -25,6 +25,10 @@ public class UserModel {
 		this.password = password;
 	}
 
+	public UserModel(String username) {
+		this.username = username;
+	}
+
 	/**
      */
 	private String googleId;

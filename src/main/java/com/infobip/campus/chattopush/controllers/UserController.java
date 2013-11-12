@@ -17,31 +17,46 @@ public class UserController {
 	@Autowired
 	DefaultUserService defaultUserService;
 
-	@RequestMapping(method = RequestMethod.POST, value = "/login")
+	@RequestMapping(method = RequestMethod.POST, value = "/login", consumes = "application/json")
 	@ResponseBody
-	public boolean loginUser(@RequestBody String username, String password) {
-		return defaultUserService.loginUser(username, password);
+	public String loginUser(@RequestBody UserModel model) {
+
+		return defaultUserService.loginUser(model);
+
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/register", consumes = "application/json")
 	@ResponseBody
-	public boolean registerUser(@RequestBody final UserModel model) {
-		if (defaultUserService.registerUser() == true) {
-			return true;
+	public String registerUser(@RequestBody UserModel model) {
+
+		if (defaultUserService.registerUser(model) == "success") {
+			return "success";
 		} else {
-			return false;
+			return "exists";
 		}
+
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/test")
+	@RequestMapping(method = RequestMethod.POST, value = "/delete", consumes = "application/json")
 	@ResponseBody
-	public UserModel testUser() {
-		UserModel model = new UserModel();
-		model.setGoogleId("asdfasdasdf");
-		model.setPassword("jakk");
-		model.setUsername("affdasfas");
+	public boolean deleteUser(@RequestBody UserModel model) {
 
-		return model;
+		return defaultUserService.deleteUser(model);
+
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/fetchAllUsers")
+	@ResponseBody
+	public boolean fetchAllUsers() {
+
+		return defaultUserService.fetchAllUsers();
+
+	}
+
+	/* samo za testiranje, ne implementirati u aplikacije */
+	@RequestMapping(method = RequestMethod.POST, value = "/purge")
+	public boolean deleteAll() {
+		defaultUserService.deleteAll();
+		return true;
+	}
 }
