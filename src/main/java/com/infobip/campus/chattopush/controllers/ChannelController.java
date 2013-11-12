@@ -22,8 +22,9 @@ public class ChannelController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/fetch")
 	@ResponseBody
-	public List<List<ChannelModel>> fetchChannelList() {
-		return Arrays.asList(ChannelModel.findAllChannelModels());
+	public String fetchChannelList() {
+		//return defaultChannelService.fetchChannelList();
+		return "asdasd";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/add", consumes = "application/json")
@@ -42,9 +43,6 @@ public class ChannelController {
 	public String deleteChannel(@RequestBody final ChannelModel model) {
 
 		if (defaultChannelService.deleteChannel(model) == true) {
-			
-		/*	PushNotification broadcast = new PushNotification();
-			broadcast.broadcastDeletedChannel(model.getName());*/
 			
 			return "success";
 		} else {
