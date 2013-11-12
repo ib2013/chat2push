@@ -24,10 +24,7 @@
 					Rooms</label>  -->
 					<div id="room_list_tab" class='listRoom'>
 				<select id="select_room_list" style="width: 160px;">
-					<option value="room1">Room1&nbsp;&nbsp;PR</option>
-					<option value="room2">Room2&nbsp;&nbsp;PR</option>
-					<option value="room3">Room3</option>
-					<option value="room4">Room4</option>
+
 				</select>
 				<input type='button' id='deleteRoom'
 						value='Delete'  onclick='' class='removeList' style="float:right;"/>
