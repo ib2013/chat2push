@@ -2,11 +2,20 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <spring:url value="/" var="_basePath" />
-<!-- <div id="loading">
+<div id="loading">
 	  <img id="loading-image" src="resources/images/loading.gif" alt="Loading..." />
-</div> -->
+</div>
+
+<script type="text/javascript">
+	var _basePath = '${_basePath}';
+
+	$(document).ready(function() {
+		documentReady(_basePath);
+	});
+</script>
+
 <div id='central'>
-	<div id='centralContent'>
+	<div id='centralContent' class="centralContent">
 		<div id='headers'>
 			<!-- <label id='rss_feed_list_tab' class='listOptions' onclick='changeTab(1)' >List of RSS feed</label> -->
 			<!-- <label id='rss_chanal_tab' class='listOptions' onclick='changeTab(2)' >List of channel</label> -->
@@ -14,9 +23,9 @@
 				<!-- <label id='room_list_tab' class='listOptions'>List of Chat
 					Rooms</label>  -->
 					<div id="room_list_tab" class='listRoom'>
-				<select id="select_room_list" >
-					<option value="room1">Room1</option>
-					<option value="room2">Room2</option>
+				<select id="select_room_list" style="width: 160px;">
+					<option value="room1">Room1&nbsp;&nbsp;PR</option>
+					<option value="room2">Room2&nbsp;&nbsp;PR</option>
 					<option value="room3">Room3</option>
 					<option value="room4">Room4</option>
 				</select>
@@ -48,6 +57,7 @@
 				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User1">User1</p>
 				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User2">User2</p>
 				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User3">User3</p>
+	
 			</div>
 		</div>
 
@@ -59,7 +69,7 @@
 
 
 
-		<div id='forms'>
+		<div id='forms' class="centralContent">
 
 
 			<table>
@@ -93,24 +103,3 @@
 
 </div>
 
-<script type="text/javascript">
-	//var _basePath = '${_basePath}';
-
-	//$(document).ready(function() {
-	//	documentReady(_basePath);
-	//});
-
-	function allowDrop(ev) {
-		ev.preventDefault();
-	}
-
-	function drag(ev) {
-		ev.dataTransfer.setData("Text", ev.target.id);
-	}
-
-	function drop(ev) {
-		ev.preventDefault();
-		var data = ev.dataTransfer.getData("Text");
-		ev.target.appendChild(document.getElementById(data));
-	}
-</script>

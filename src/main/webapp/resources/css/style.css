@@ -1,13 +1,13 @@
-
-#content{
-	background-color: #F0F0F0 ;
+#content {
+	background-color: #F0F0F0;
 	width: 950px;
 }
 
-#header{
+#header {
 	height: 80px;
 	background-color: white;
 }
+
 #central {
 	width: 950px;
 	margin-left: auto;
@@ -16,69 +16,72 @@
 	/*height: 510px; */
 }
 
-#centralContent{
+.centralContent {
 	border: solid 0px;
 	display: table;
-    margin: 0 auto;
+	margin: 0 auto;
 }
-#footer{
+
+#footer {
 	height: 60px;
 	background-color: #F0F0F0;
 }
+
 .logo {
 	margin-top: 20px;
 	margin-left: 80px;
 }
+
 .title {
 	font-size: 38px;
 	margin-top: 10px;
 	margin-right: 600px;
-	float:right;
+	float: right;
 	color: #FF6600;
 }
+
 #forms {
 	width: 40%;
 	margin-top: 20px;
 	margin-left: 20px;
-	
+	border: solid 0px;
+	display: table;
+	margin: 0 auto;
 }
 
 #list_options {
 	float: right;
 	width: 55%;
-	
-	
 }
 
-#list_content{
+#list_content {
 	border: solid 1px;
 	height: 450px;
-	width:  100px;
+	width: 100px;
 	box-shadow: 8px 8px 5px #888888;
-	overflow-x:auto;
+	overflow-x: auto;
 	border: solid 1px;
 }
 
-.listContent{
+.listContent {
 	border: solid 1px;
 	padding: 10px;
 	height: 450px;
-	width:  200px;
-	margin-left:50px;
-	margin-right:50px;
+	width: 250px;
+	margin-left: 50px;
+	margin-right: 50px;
 	box-shadow: 8px 8px 5px #888888;
-	overflow-x:auto;
+	overflow-x: auto;
 	border: solid 1px;
 }
-
 
 .listOptions {
 	border: solid 1px;
 	padding: 10px;
-	width: 200px;
+	width: 250px;
 	height: 40px;
-	margin-left:50px;
-	margin-right:0px;"
+	margin-left: 50px;
+	margin-right: 0px; "
 	text-align: center;
 	font-size: 16px;
 	border-radius: 10px 10px 0px 0px;
@@ -88,10 +91,10 @@
 .listRoom {
 	border: solid 1px;
 	padding: 10px;
-	width: 200px;
+	width: 250px;
 	height: 40px;
-	margin-left:50px;
-	margin-right:0px;"
+	margin-left: 50px;
+	margin-right: 0px; "
 	text-align: center;
 	font-size: 16px;
 	border-radius: 10px 10px 0px 0px;
@@ -99,7 +102,7 @@
 }
 
 .plistelem {
-	cursor: pointer; 
+	cursor: pointer;
 }
 
 .text_value {
@@ -109,29 +112,28 @@
 	margin: 5px 0px;
 	opacity: 0.6;
 }
+
 .text_value:focus {
 	opacity: 1;
 	border: solid 1px #FF6600;
-	transform:scale(1.05);
-    -ms-transform:scale(1.05);
-    -moz-transform:scale(1.05);
-    -webkit-transform:scale(1.05); 
-    -o-transform:scale(1.05); 
+	transform: scale(1.05);
+	-ms-transform: scale(1.05);
+	-moz-transform: scale(1.05);
+	-webkit-transform: scale(1.05);
+	-o-transform: scale(1.05);
 }
 
 .select_fld {
 	width: 250px;
 	height: 25px;
-	
 }
 
 .submitBtn {
 	width: 140px;
-	height: 30px; 
+	height: 30px;
 	margin-left: 220px;
 	margin-top: 10px;
 }
-
 
 .removeList {
 	float: right;
@@ -145,6 +147,7 @@
 	background-color: #FF6600;
 	color: white;
 }
+
 .removeList:hover {
 	cursor: pointer;
 	border: solid 1px #F0F0F0;
@@ -156,14 +159,14 @@
 	padding: 5px;
 	margin-top: -5px;
 	font-size: 11px;
-/*	transform:scale(1.1);
+	/*	transform:scale(1.1);
     -ms-transform:scale(1.1);
     -moz-transform:scale(1.1);
     -webkit-transform:scale(1.1); 
     -o-transform:scale(1.1); */
 }
 
-#list_view  {
+#list_view {
 	padding: 0px;
 }
 
@@ -175,8 +178,8 @@
 	padding: 0px;
 	list-style: none;
 	height: 40px;
-	border-top: solid 1px #B0B0B0 ;
-	border-bottom: solid 1px #B0B0B0 ;
+	border-top: solid 1px #B0B0B0;
+	border-bottom: solid 1px #B0B0B0;
 	margin: 0px;
 	padding: 10px;
 }
@@ -190,20 +193,20 @@
 }
 
 #loading {
-  width: 100%;
-  height: 100%;
-  top: 0px;
-  left: 0px;
-  position: fixed;
-  display: block;
-  opacity: 0.8;
-  background-color: #fff ;
-  z-index: 99;
-  text-align: center;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	position: fixed;
+	display: block;
+	opacity: 0.8;
+	background-color: #fff;
+	z-index: 99;
+	text-align: center;
 }
 
 #loading-image {
-  margin-top: 0px;
-  margin-left: auto;  
-  z-index: 100;
+	margin-top: 0px;
+	margin-left: auto;
+	z-index: 100;
 }

@@ -61,6 +61,13 @@ entity jpa --class ~.models.NoviModel
 field string --fieldName title
 field string --fieldName payload
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 11:21:21
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 82d82f4a576f4357ae58666467d0f5d1fb89b281
+// Spring Roo UNKNOWN VERSION log opened at 2013-11-09 15:28:56
+=======
+>>>>>>> f51ce5b77ce35cc53174a0cc59afa2c07b5f3635
 
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-09 16:05:16
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-09 16:08:47
@@ -114,6 +121,12 @@ hint relationships
 field reference --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel
 // [failed] field set --fieldName UserModel --type com.infobip.campus.chattopush.models.ChannelModel
 <<<<<<< HEAD
+<<<<<<< HEAD
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-11 14:55:49
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 21:48:36
+=======
+=======
+>>>>>>> f51ce5b77ce35cc53174a0cc59afa2c07b5f3635
 // [failed] field list --fieldName UserModel --type com.infobip.campus.chattopush.models.UserModel
 field list --fieldName users --type com.infobip.campus.chattopush.models.UserModel
 field list --fieldName channels --type com.infobip.campus.chattopush.models.ChannelModel
@@ -141,7 +154,11 @@ persistence setup --provider DATANUCLEUS --database GOOGLE_APP_ENGINE
 entity jpa --class com.infobip.campus.chattopush.channels.ProbaModel 
 field string --fieldName probaStr
 field number --fieldName probaBr --type int
+<<<<<<< HEAD
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 20:32:30
+=======
+>>>>>>> c4df03f7000402f56a8ecc92e2bb15c6e0e62eb8
+>>>>>>> fce5ec319c0053116ac72a85ee350713a052676f
 =======
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 17:29:49
 =======
@@ -149,5 +166,9 @@ field number --fieldName probaBr --type int
 >>>>>>> 17faeda5fc93de1ffce478b472cb897afb1b2d43
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-11 18:02:52
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 20:32:48
+<<<<<<< HEAD
 >>>>>>> 8a2ef9ab05b316750ddf2d5a40e4fbc6a79bba18
 
+=======
+>>>>>>> f51ce5b77ce35cc53174a0cc59afa2c07b5f3635
+>>>>>>> fce5ec319c0053116ac72a85ee350713a052676f
