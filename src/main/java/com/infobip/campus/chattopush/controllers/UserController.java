@@ -31,7 +31,7 @@ public class UserController {
 		}*/
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/login")
+	@RequestMapping(method = RequestMethod.POST, value = "/register")
 	@ResponseBody
 	public boolean registerUser(@RequestBody final UserModel model) {
 		
