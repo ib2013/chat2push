@@ -1,7 +1,7 @@
 function addNewChannel() {
 
 	var channelTitle = $('#title').val();
-	var chaneelDescription = $('#channel_description').val();
+	var channelDescription = $('#channel_description').val();
 	var typeOfChannel = $("#typeOfChannel option:selected").text();
 	if (typeOfChannel == "Public") {
 		isPublic = true;
@@ -11,8 +11,8 @@ function addNewChannel() {
 	if (channelTitle.length != 0) {
 		channelJson = new Object();
 		channelJson.name = channelTitle;
-		channelJson.description = chaneelDescription;
 		channelJson.isPublic = isPublic;
+		channelJson.description = channelDescription;
 		$.ajax({
 			url : _basePath + "channel/add",
 			headers : {
@@ -23,6 +23,8 @@ function addNewChannel() {
 			contentType : 'application/json; charset=utf-8',
 			data : JSON.stringify(channelJson),
 			success : function(rez, status, xhr) {
+				alert(status);
+				alert(rez);
 				if (rez == "success") {
 					$('#title').val("");
 					$('#channel_description').val("");
