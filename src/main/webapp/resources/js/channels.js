@@ -43,13 +43,12 @@ function addNewChannel() {
 }
 
 function deleteChannel() {
-	var channelName = $("#select_room_list option:selected").text();
-	if (isNaN(channel)) {
+	var channelName = $("#select_room_list option:selected").val();
+	if (isNaN(channelName)) {
+		$('#loading').hide();
 		if (confirm('Are you sure you want to delete ' + channelName + '?')) {
-			$('#loading').show();
 			var channelJson = new Object();
-			channelJson.name = channeName;
-			$('#loading').show();
+			channelJson.name = channelName;
 			$.ajax({
 				url : _basePath + "channel/delete",
 				headers : {
@@ -107,6 +106,5 @@ function fetchAllChannels() {
 							alert('Error loading channel.');
 						}
 					});
-	$('#loading').hide();
 }
 
