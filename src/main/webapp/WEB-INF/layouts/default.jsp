@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=8" />
 <head>
-<title>Feed to Push</title>
+<title>Chat to Push</title>
 
 <spring:url value="resources/js/jquery.js" var='jsJquery' />
 <spring:url value="resources/js/form.js" var='jsForm' />
