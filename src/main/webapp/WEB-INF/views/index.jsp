@@ -2,17 +2,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <spring:url value="/" var="_basePath" />
-<!-- <div id="loading">
+<div id="loading">
 	  <img id="loading-image" src="resources/images/loading.gif" alt="Loading..." />
-</div> -->
+</div>
 
 <script type="text/javascript">
-	//var _basePath = '${_basePath}';
+	var _basePath = '${_basePath}';
 
-	//$(document).ready(function() {
-	//	documentReady(_basePath);
-	//});
-
+	$(document).ready(function() {
+		documentReady(_basePath);
+	});
 </script>
 
 <div id='central'>
@@ -58,6 +57,7 @@
 				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User1">User1</p>
 				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User2">User2</p>
 				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User3">User3</p>
+	
 			</div>
 		</div>
 

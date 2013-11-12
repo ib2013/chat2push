@@ -1,5 +1,8 @@
 package com.infobip.campus.chattopush.services;
 
-public interface UserService {
+import com.infobip.campus.chattopush.models.ChannelModel;
 
+public interface UserService {
+	
+	public abstract boolean  loginUser();
 }
