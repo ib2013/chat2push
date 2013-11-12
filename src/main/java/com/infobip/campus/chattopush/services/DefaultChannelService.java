@@ -189,21 +189,13 @@ public class DefaultChannelService implements ChannelService {
 		}
 		return channelsArray;
 	}
-<<<<<<< HEAD
 
-	public boolean addUserToRoom(JSONObject objekat) {
+
+	public boolean addUserToRoom(JsonObject object) {
 		String channelName = "";
 		String userName = "";
-		try {
-			channelName = objekat.getString("name");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		try {
-			userName = objekat.getString("username");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		channelName = object.get("name").toString();
+		userName = object.get("username").toString();
 
 		List<UserModel> users = UserModel.findAllUserModels();
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
@@ -219,10 +211,9 @@ public class DefaultChannelService implements ChannelService {
 			}
 		}
 		return false;
-=======
-	
+	}
 	public ArrayList<UserModel> fetchUserByChannel(ChannelModel channelName) {
 		return (ArrayList<UserModel>) channelName.getUsers();
->>>>>>> 5d7339d62802e6bc59a6894909d0d4c7c595183d
+
 	}
 }
