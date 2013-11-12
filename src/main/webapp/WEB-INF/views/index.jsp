@@ -64,7 +64,7 @@
 <div id='headers'>
 			
 		<div id='room_header' class="centralContent">
-<label id='user_list_tab' class='listOptions'>Add new room</label>
+<label id='user_list_tab' class='listOptions2'>Add new room</label>
 </div>
 			<div id='lists' class="listContent2">
 			<table>

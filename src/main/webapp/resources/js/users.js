@@ -74,13 +74,13 @@ function fetchUsersByRoom(roomname) {
 	//var roomname = $("#select_room_list option:selected").val();
 	//
 	if (isNaN(roomname)) {
-		alert(roomname);
+		//alert(roomname);
 		var room = new Object();
 		room.name = roomname;
-		$('#loading').show();
+		//$('#loading').show();
 		$
 				.ajax({
-					url : _basePath + "user/fetchUsersByRoom",
+					url : _basePath + "channel/fetchUsersByRoom",
 					headers : {
 						'Accept' : 'text/plain',
 						'Content-Type' : 'application/json'
@@ -111,6 +111,7 @@ function fetchUsersByRoom(roomname) {
 						}
 					}
 				});
+		alert(roomname);
 	} else {
 		// $('#loading').hide();
 		// alert('Error show users by room.');
