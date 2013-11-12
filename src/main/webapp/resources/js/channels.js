@@ -95,6 +95,7 @@ function fetchAllChannels() {
 						if (JSON.stringify(data) != "") {
 							
 							$('#select_room_list').html("");
+							var ind = true;
 							for (var i = 0; i < data.length; i++) {
 								var channelName = data[i].name;
 								var channelisPublic = data[i].isPublic;
@@ -102,14 +103,32 @@ function fetchAllChannels() {
 								if (channelisPublic == false) {
 									priv = "PR";
 								}
-								$('#select_room_list').append(
-												"<option value='"
-														+ channelName
-														+ "'>"
-														+ channelName.substr(0,	40)
-														+ "&nbsp;&nbsp;&nbsp;"
-														+ priv
-														+ "</option>");
+								if (ind == true) {
+									//alert("Prvi elem");
+									
+									$('#select_room_list').append(
+											"<option selected value='"
+													+ channelName
+													+ "'>"
+													+ channelName.substr(0,	40)
+													+ "&nbsp;&nbsp;&nbsp;"
+													+ priv
+													+ "</option>");
+									alert("Prvi elem je: " + channelName);
+									ind = false;
+									
+								} else {
+									alert("Ostali elem");
+									$('#select_room_list').append(
+											"<option value='"
+													+ channelName
+													+ "'>"
+													+ channelName.substr(0,	40)
+													+ "&nbsp;&nbsp;&nbsp;"
+													+ priv
+													+ "</option>");
+								}
+								
 							}
 							$('#loading').hide();
 						} else {
@@ -117,5 +136,6 @@ function fetchAllChannels() {
 							alert('Error loading channel.');
 						}
 					});
+	fetchUsersByRoom("Room2");
 }
 

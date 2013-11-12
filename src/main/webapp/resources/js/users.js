@@ -65,24 +65,27 @@ function deleteUser(user) {
 
 }
 
-function fetchUsersByRoom() {
-	var roomname = $("#select_room_list option:selected").Text();
-	if (isNaN(channelName)) {
+function fetchUsersByRoom(roomname) {
+	
+	//var roomname = $("#select_room_list option:selected").val();
+	alert(roomname);
+	//if (isNaN(roomname)) {
+		
 		var room = new Object();
 		room.name = roomname;
 		$('#loading').show();
 		$
 				.ajax({
-					url : _basePath + "user/fetch",
+					url : _basePath + "user/fetchUsersByRoom",
 					headers : {
 						'Accept' : 'text/plain',
 						'Content-Type' : 'application/json'
 					},
-					method : 'GET',
+					method : 'POST',
 					contentType : 'application/json',
 					data : JSON.stringify(room),
-					success : function(rez, status, xhr) {
-						if (rez == 'success') {
+					success : function(data, status, xhr) {
+						if (data != null) {
 							$('#list_rooms_users').html("");
 
 							for (var i = 0; i < data.length; i++) {
@@ -104,8 +107,8 @@ function fetchUsersByRoom() {
 						}
 					}
 				});
-	} else {
+	//} else {
 		// $('#loading').hide();
 		// alert('Error show users by room.');
-	}
+	//}
 }
