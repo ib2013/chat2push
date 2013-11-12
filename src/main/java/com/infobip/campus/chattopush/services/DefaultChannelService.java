@@ -169,7 +169,7 @@ public class DefaultChannelService implements ChannelService {
 		}
 	}
 
-	public JsonArray fetchSubscribedUserByChannelListService(String username) {
+	public JsonArray fetchUserByChannelListService(String username) {
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 		JsonArray channelsArray = new JsonArray();
 		for (ChannelModel channelElement : channels) {
@@ -189,7 +189,6 @@ public class DefaultChannelService implements ChannelService {
 		}
 		return channelsArray;
 	}
-<<<<<<< HEAD
 
 	public boolean addUserToRoom(JSONObject objekat) {
 		String channelName = "";
@@ -219,10 +218,5 @@ public class DefaultChannelService implements ChannelService {
 			}
 		}
 		return false;
-=======
-	
-	public ArrayList<UserModel> fetchUserByChannel(ChannelModel channelName) {
-		return (ArrayList<UserModel>) channelName.getUsers();
->>>>>>> 5d7339d62802e6bc59a6894909d0d4c7c595183d
 	}
 }

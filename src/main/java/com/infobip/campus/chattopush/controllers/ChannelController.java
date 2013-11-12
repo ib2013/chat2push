@@ -70,7 +70,6 @@ public class ChannelController {
 
 	}
 	
-<<<<<<< HEAD
 	@RequestMapping(method = RequestMethod.POST, value = "/addUserToRoom", consumes = "application/json")
 	@ResponseBody
 	public String addUserToChannel(@RequestBody JSONObject objekat) {
@@ -81,7 +80,5 @@ public class ChannelController {
 			return "fail";
 		}
 	}
-=======
-	
->>>>>>> 5d7339d62802e6bc59a6894909d0d4c7c595183d
+
 }
