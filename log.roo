@@ -18,6 +18,7 @@ hint logging
 logging setup --level DEBUG
 hint
 perform clean 
+
 perform package 
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-08 14:38:40
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 14:42:22
