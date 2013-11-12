@@ -63,7 +63,7 @@ public class DefaultUserService implements UserService {
 		return false;
 	}
 
-	public boolean deleteUser(UserModel _model) {
+	public String deleteUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
@@ -71,14 +71,14 @@ public class DefaultUserService implements UserService {
 			for (UserModel model : list) {
 				if (model.getUsername().contentEquals(_model.getUsername().toString())) {
 					model.remove();
-					return true;
+					return "success";
 				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			return false;
+			return "fail";
 		}
-		return false;
+		return "fail";
 
 	}
 

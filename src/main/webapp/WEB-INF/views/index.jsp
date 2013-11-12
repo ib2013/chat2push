@@ -44,18 +44,7 @@
 
 			<div id='list_users' class="listContent">
 			
-				<p class="plistelem" draggable="true" ondragstart="drag(event)"
-					id="test">
-					test<label id="test" onClick="deleteUser(this)" class="removeList">&nbsp;x&nbsp;</label>
-				</p>
-				<p class="plistelem" draggable="true" ondragstart="drag(event)"
-					id="User2">
-					User2<label class="removeList">&nbsp;x&nbsp;</label>
-				</p>
-				<p class="plistelem" draggable="true" ondragstart="drag(event)"
-					id="User3">
-					User3<label class="removeList">&nbsp;x&nbsp;</label>
-				</p>
+			
 
 			</div>
 		</div>

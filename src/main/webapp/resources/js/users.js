@@ -1,25 +1,26 @@
 function showAllUsers() {
 	$('#loading').show();
+	
 	$
 			.get(
-					_basePath + "user/fetch",
+					_basePath + "user/fetchAllUsers",
 					function(data, status, xhr) {
-						if (status = "succes") {
-							$('#list_view_users').html("");
+						$('#list_users').html("");
 
-							for (var i = 0; i < data.length; i++) {
-								var username = data[i].username;
-								$('#list_view_users')
-										.append(
-												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
-														+ username
-														+ "'>"
-														+ username
-														+ "'<label id='"
-														+ username
-														+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>");
-							}
+						for (var i = 0; i < data.length; i++) {
+							var username = data[i].username;
+						
+							$('#list_users')
+									.append(
+											"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
+													+ username
+													+ "'>"
+													+ username
+													+ "<label id='"
+													+ username
+													+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>");
 						}
+
 					});
 	$('#loading').hide();
 }
@@ -31,7 +32,7 @@ function deleteUser(user) {
 			$('#loading').show();
 			var userJson = new Object();
 			userJson.username = user.id;
-			
+
 			$.ajax({
 				url : _basePath + "user/delete",
 				headers : {
@@ -42,10 +43,9 @@ function deleteUser(user) {
 				contentType : 'application/json',
 				data : JSON.stringify(userJson),
 				success : function(rez, status, xhr) {
-					if (rez == 'true') {
+					if (status == "success") {
 						$('#list_users').html("");
-						// addListElement(2); ponovo ucitati usere, tj izvrsiti
-						// update liste
+						showAllUsers();
 						$('#loading').hide();
 					} else {
 						$('#loading').hide();
@@ -53,6 +53,7 @@ function deleteUser(user) {
 					}
 				}
 			});
+		
 		}
 	} else {
 		$('#loading').hide();
@@ -64,18 +65,18 @@ function deleteUser(user) {
 }
 function onChangeFetchUsersByRoom() {
 	var roomname = $("#select_room_list option:selected").val();
-	//alert(roomname);
+	// alert(roomname);
 	fetchUsersByRoom(roomname);
 }
 function fetchUsersByRoom(roomname) {
-	
-	//var roomname = $("#select_room_list option:selected").val();
+
+	// var roomname = $("#select_room_list option:selected").val();
 	//
 	if (isNaN(roomname)) {
-		//alert(roomname);
+		// alert(roomname);
 		var room = new Object();
 		room.name = roomname;
-		//$('#loading').show();
+		// $('#loading').show();
 		$
 				.ajax({
 					url : _basePath + "channel/fetchUsersByRoom",
@@ -109,7 +110,7 @@ function fetchUsersByRoom(roomname) {
 						}
 					}
 				});
-		alert(roomname);
+		//alert(roomname);
 	} else {
 		// $('#loading').hide();
 		// alert('Error show users by room.');
