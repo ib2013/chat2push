@@ -3,7 +3,8 @@
 
 <spring:url value="/" var="_basePath" />
 <div id="loading">
-	  <img id="loading-image" src="resources/images/loading.gif" alt="Loading..." />
+	<img id="loading-image" src="resources/images/loading.gif"
+		alt="Loading..." />
 </div>
 
 <script type="text/javascript">
@@ -17,64 +18,57 @@
 <div id='central'>
 	<div id='centralContent' class="centralContent">
 		<div id='headers'>
-			<!-- <label id='rss_feed_list_tab' class='listOptions' onclick='changeTab(1)' >List of RSS feed</label> -->
-			<!-- <label id='rss_chanal_tab' class='listOptions' onclick='changeTab(2)' >List of channel</label> -->
+			
 			<div id='room_header' style="float: left;">
-				<!-- <label id='room_list_tab' class='listOptions'>List of Chat
-					Rooms</label>  -->
-					<div id="room_list_tab" class='listRoom'>
-				<select id="select_room_list" style="width: 160px;">
+				<div id="room_list_tab" class='listRoom'>
+					<select id="select_room_list" style="width: 160px;">
 
-				</select>
-				<input type='button' id='deleteRoom'
-						value='Delete'  onclick='deleteChannel()' class='removeList' style="float:right;"/>
+					</select> <input type='button' id='deleteRoom' value='Delete'
+						onclick='deleteChannel()' class='removeList' style="float: right;" />
 				</div>
 			</div>
 			<div id='user_header'>
-				<label id='user_list_tab' class='listOptions'>List of ALL Users</label>
+				<label id='user_list_tab' class='listOptions'>List of ALL
+					Users</label>
 			</div>
 		</div>
 		<div id='lists' style="clear: both;">
 
-			<div id='list_rooms_users' class='listContent' style="float: left;"
+			<div id='list_rooms_users'  class='listContent' style="float: left;"
 				ondrop="drop(event)" ondragover="allowDrop(event)">
-				<!--<ul id='list_view_rooms'  class='listview'>
-			 	<li>ChatRoom1 asdasdasdasd</li>
-				<li>ChatRoom2 asdasdasdasda</li>
-				<li>ChatRoom3 asdadda</li>
-			</ul> -->
+	
+	
 			</div>
 
 			<div id='list_users' class="listContent">
-				<!-- 	<ul id='list_view_users' class='listview'>
-					<li  dragondragstart="drag(event)" draggable="true" id="user1">User1&nbsp;&nbsp;&nbsp;5</li>
-					<li>User 2</li>
-					<li>User 3</li>
-				</ul> -->
-				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User1">User1<label class="removeList">&nbsp;x&nbsp;</label></p>
-				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User2">User2<label class="removeList">&nbsp;x&nbsp;</label></p>
-				<p class="plistelem" draggable="true" ondragstart="drag(event)" id="User3">User3<label class="removeList">&nbsp;x&nbsp;</label></p>
-	
+			
+				<p class="plistelem" draggable="true" ondragstart="drag(event)"
+					id="User1">
+					User1<label class="removeList">&nbsp;x&nbsp;</label>
+				</p>
+				<p class="plistelem" draggable="true" ondragstart="drag(event)"
+					id="User2">
+					User2<label class="removeList">&nbsp;x&nbsp;</label>
+				</p>
+				<p class="plistelem" draggable="true" ondragstart="drag(event)"
+					id="User3">
+					User3<label class="removeList">&nbsp;x&nbsp;</label>
+				</p>
+
 			</div>
 		</div>
 
-
-
-
-
-
-
-
-
-		<div id='forms' class="centralContent">
-
-
+<br/><br/>
+<div id='headers'>
+			
+		<div id='room_header' class="centralContent">
+<label id='user_list_tab' class='listOptions'>Add new room</label>
+</div>
+			<div id='lists' class="listContent2">
 			<table>
+				
 				<tr>
-					<th colspan='2'><h3>Add new room</h3></th>
-				</tr>
-				<tr>
-					<td>Title:</td>
+					<td>Name:</td>
 					<td><input type='text' id='title' class='text_value'
 						name='title' /></td>
 				</tr>
@@ -94,6 +88,7 @@
 						value='Add' class='submitBtn ' onclick='addNewChannel()' /></td>
 				</tr>
 			</table>
+		</div>
 		</div>
 	</div>
 	<br /> <br />

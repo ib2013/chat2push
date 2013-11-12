@@ -5,7 +5,7 @@
 
 #header {
 	height: 80px;
-	background-color: white;
+	background-color: #F0F0F0;
 }
 
 #central {
@@ -74,6 +74,17 @@
 	overflow-x: auto;
 	border: solid 1px;
 }
+.listContent2 {
+	border: solid 1px;
+	padding: 10px;
+	height: 160px;
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 8px 8px 5px #888888;
+	overflow-x: auto;
+	border: solid 1px;
+}
 
 .listOptions {
 	border: solid 1px;
@@ -86,6 +97,7 @@
 	font-size: 16px;
 	border-radius: 10px 10px 0px 0px;
 	margin-bottom: 10px;
+	background-color: #F0F0F0;
 }
 
 .listRoom {
@@ -103,6 +115,7 @@
 
 .plistelem {
 	cursor: pointer;
+	background-color:#F0F0F0;
 	border: solid 1px  #F0F0F0; 
 	padding: 5px;
 }
