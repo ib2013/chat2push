@@ -5,17 +5,15 @@ import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
+import com.google.appengine.labs.repackaged.org.json.JSONException;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.configuration.Configuration;
 import com.infobip.campus.chattopush.models.ChannelModel;
 
-
 import com.infobip.campus.chattopush.models.UserModel;
-
-
-
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,7 +25,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class DefaultChannelService implements ChannelService {
 
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -36,7 +33,8 @@ public class DefaultChannelService implements ChannelService {
 	 */
 	@Override
 	public ArrayList<ChannelModel> fetchChannelList() {
-		ArrayList<ChannelModel> channelList = new ArrayList<ChannelModel>(ChannelModel.findAllChannelModels());
+		ArrayList<ChannelModel> channelList = new ArrayList<ChannelModel>(
+				ChannelModel.findAllChannelModels());
 		return channelList;
 	}
 
@@ -47,10 +45,11 @@ public class DefaultChannelService implements ChannelService {
 	 * com.infobip.campus.chattopush.channels.ChannelService#parseJson(java.lang
 	 * .String)
 	 */
-	/*@Override
-	public ArrayList<ChannelModel> parseJson(String jsonResponse) {
-
-	}*/
+	/*
+	 * @Override public ArrayList<ChannelModel> parseJson(String jsonResponse) {
+	 * 
+	 * }
+	 */
 
 	/*
 	 * (non-Javadoc)
@@ -61,12 +60,12 @@ public class DefaultChannelService implements ChannelService {
 	 */
 	@Override
 	public boolean addChannel(ChannelModel channel) {
-		
+
 		Date d = new Date();
 		channel.setLastMessageDate(d);
 		channel.setUsers(new ArrayList<UserModel>());
 		channel.persist();
-		
+
 		Gson gson = new Gson();
 		try {
 			URL url = new URL("https://pushapi.infobip.com/1/application/"
@@ -100,9 +99,9 @@ public class DefaultChannelService implements ChannelService {
 	@Override
 	public boolean deleteChannel(ChannelModel channel) {
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
-		
-		for (ChannelModel channelElement : channels){
-			if (channelElement.getName().equals(channel.getName())){
+
+		for (ChannelModel channelElement : channels) {
+			if (channelElement.getName().equals(channel.getName())) {
 				channelElement.remove();
 				break;
 			}
@@ -173,25 +172,57 @@ public class DefaultChannelService implements ChannelService {
 	public JsonArray fetchSubscribedUserByChannelListService(String username) {
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 		JsonArray channelsArray = new JsonArray();
-		for (ChannelModel channelElement : channels){
+		for (ChannelModel channelElement : channels) {
 			JsonObject obj = new JsonObject();
 			obj.addProperty("name", channelElement.getName());
 			obj.addProperty("description", channelElement.getDescription());
 			boolean findUser = false;
-			for(UserModel user : channelElement.getUsers()){
-				if(user.getUsername().equals(username)){
+			for (UserModel user : channelElement.getUsers()) {
+				if (user.getUsername().equals(username)) {
 					obj.addProperty("isSubscribed", true);
 					findUser = true;
 				}
 			}
-			if(!findUser){
+			if (!findUser) {
 				obj.addProperty("isSubscribed", false);
 			}
 		}
 		return channelsArray;
 	}
+<<<<<<< HEAD
+
+	public boolean addUserToRoom(JSONObject objekat) {
+		String channelName = "";
+		String userName = "";
+		try {
+			channelName = objekat.getString("name");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		try {
+			userName = objekat.getString("username");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		List<UserModel> users = UserModel.findAllUserModels();
+		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+
+		for (ChannelModel ch : channels) {
+			if (ch.getName().equals(channelName)) {
+				for (UserModel user : users) {
+					if (user.getUsername().equals(userName))
+						ch.getUsers().add(user);
+					
+					return true;
+				}
+			}
+		}
+		return false;
+=======
 	
 	public ArrayList<UserModel> fetchUserByChannel(ChannelModel channelName) {
 		return (ArrayList<UserModel>) channelName.getUsers();
+>>>>>>> 5d7339d62802e6bc59a6894909d0d4c7c595183d
 	}
 }

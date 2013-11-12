@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.gson.JsonArray;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
@@ -69,5 +70,18 @@ public class ChannelController {
 
 	}
 	
+<<<<<<< HEAD
+	@RequestMapping(method = RequestMethod.POST, value = "/addUserToRoom", consumes = "application/json")
+	@ResponseBody
+	public String addUserToChannel(@RequestBody JSONObject objekat) {
+
+		if (defaultChannelService.addUserToRoom(objekat) == true) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+=======
 	
+>>>>>>> 5d7339d62802e6bc59a6894909d0d4c7c595183d
 }
