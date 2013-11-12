@@ -5,7 +5,7 @@
 
 #header {
 	height: 80px;
-	background-color: white;
+	background-color: #F0F0F0;
 }
 
 #central {
@@ -74,6 +74,17 @@
 	overflow-x: auto;
 	border: solid 1px;
 }
+.listContent2 {
+	border: solid 1px;
+	padding: 10px;
+	height: 160px;
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 8px 8px 5px #888888;
+	overflow-x: auto;
+	border: solid 1px;
+}
 
 .listOptions {
 	border: solid 1px;
@@ -86,8 +97,21 @@
 	font-size: 16px;
 	border-radius: 10px 10px 0px 0px;
 	margin-bottom: 10px;
+	background-color: #F0F0F0;
 }
-
+.listOptions2 {
+	border: solid 1px;
+	padding: 10px;
+	width: 350px;
+	height: 40px;
+	margin-left: auto;
+	margin-right: auto; "
+	text-align: center;
+	font-size: 16px;
+	border-radius: 10px 10px 0px 0px;
+	margin-bottom: 10px;
+	background-color: #F0F0F0;
+}
 .listRoom {
 	border: solid 1px;
 	padding: 10px;
@@ -99,16 +123,18 @@
 	font-size: 16px;
 	border-radius: 10px 10px 0px 0px;
 	margin-bottom: 10px;
+	background-color: #F0F0F0;
 }
 
 .plistelem {
 	cursor: pointer;
+	background-color:#F0F0F0;
 	border: solid 1px  #F0F0F0; 
 	padding: 5px;
 }
 
 .text_value {
-	width: 250px;
+	width: 200px;
 	height: 25px;
 	border-radius: 5px 5px 5px 5px;
 	margin: 5px 0px;
@@ -131,9 +157,9 @@
 }
 
 .submitBtn {
-	width: 140px;
+	width: 100px;
 	height: 30px;
-	margin-left: 220px;
+	margin-left: 180px;
 	margin-top: 10px;
 }
 

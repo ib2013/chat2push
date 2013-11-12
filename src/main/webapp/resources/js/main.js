@@ -16,6 +16,10 @@ function drop(ev) {
 	ev.target.appendChild(document.getElementById(data));
 }
 
+function izmjeni(){
+	var channelName = $("#select_room_list option:selected").val();
+	alert(channelName);
+}
 documentReady = function(basePath) {
 	boolFeedClick = true;
 	boolChanalClick = false;
@@ -26,4 +30,5 @@ documentReady = function(basePath) {
 	//$('#content').css('height', definitionWindowHeight);
 	//addListElement(1);
 	fetchAllChannels();
+	
 };
