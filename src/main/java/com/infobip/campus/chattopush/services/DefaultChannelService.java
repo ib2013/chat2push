@@ -170,7 +170,7 @@ public class DefaultChannelService implements ChannelService {
 		}
 	}
 
-	public JsonArray fetchUserByChannelListService(String username) {
+	public JsonArray fetchSubscribedUserByChannelListService(String username) {
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 		JsonArray channelsArray = new JsonArray();
 		for (ChannelModel channelElement : channels){
@@ -189,5 +189,9 @@ public class DefaultChannelService implements ChannelService {
 			}
 		}
 		return channelsArray;
+	}
+	
+	public ArrayList<UserModel> fetchUserByChannel(ChannelModel channelName) {
+		return (ArrayList<UserModel>) channelName.getUsers();
 	}
 }
