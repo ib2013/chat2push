@@ -27,6 +27,40 @@ function showAllUsers() {
 function deleteUser(user) {
 	$('#loading').show();
 
+	if (isNaN(user.username)) {
+		if (confirm('Are you sure you want to delete ' + user.username + '?')) {
+			$('#loading').show();
+			var userJson = new Object();
+			userlJson.name = user.username;
+
+			$('#loading').show();
+			$.ajax({
+				url : _basePath + "user/delete",
+				headers : {
+					'Accept' : 'text/plain',
+					'Content-Type' : 'application/json'
+				},
+				method : 'POST',
+				contentType : 'application/json',
+				data : JSON.stringify(userJson),
+				success : function(rez, status, xhr) {
+					if (rez == 'success') {
+						$('#list_users').html("");
+						// addListElement(2); ponovo ucitati usere, tj izvrsiti
+						// update liste
+						$('#loading').hide();
+					} else {
+						$('#loading').hide();
+						alert('Error!');
+					}
+				}
+			});
+		}
+	} else {
+		$('#loading').hide();
+		alert('Error to delete user.');
+	}
+
 	$('#loading').hide();
 
 }
