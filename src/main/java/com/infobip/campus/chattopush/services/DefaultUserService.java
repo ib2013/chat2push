@@ -41,7 +41,7 @@ public class DefaultUserService implements UserService {
 	public String registerUser(UserModel model) {
 		// TODO Auto-generated method stub
 		try {
-			if (checkUserExists(model) == false) {
+			if (checkUserExists(model) == "fail") {
 				model.persist();
 				return "success";
 			}
@@ -53,14 +53,14 @@ public class DefaultUserService implements UserService {
 
 	}
 
-	public boolean deleteAll() {
+	public String deleteAll() {
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
 			model.remove();
 		}
-		return false;
+		return "success";
 	}
 
 	public String deleteUser(UserModel _model) {
@@ -82,16 +82,16 @@ public class DefaultUserService implements UserService {
 
 	}
 
-	public boolean checkUserExists(UserModel _model) {
+	public String checkUserExists(UserModel _model) {
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
 			if (model.getUsername().contentEquals(_model.getUsername().toString())) {
-				return true;
+				return "success";
 			}
 		}
 
-		return false;
+		return "fail";
 	}
 
 	public List<UserModel> fetchAllUsers() {
