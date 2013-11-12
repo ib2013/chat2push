@@ -20,16 +20,18 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login")
 	@ResponseBody
-	public boolean loginUser(@RequestBody final UserModel model) {
-		
+	public String loginUser(@RequestBody final UserModel model) {
+	
+		return "aaaa";
+		/*
 		if (defaultUserService.loginUser() == true) {
 			return true;
 		} else {
 			return false;
-		}
+		}*/
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/login")
+	@RequestMapping(method = RequestMethod.POST, value = "/register")
 	@ResponseBody
 	public boolean registerUser(@RequestBody final UserModel model) {
 		
