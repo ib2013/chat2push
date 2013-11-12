@@ -116,6 +116,7 @@ function fetchAllChannels() {
 													+ "</option>");
 									//alert("Prvi elem je: " + channelName);
 									ind = false;
+									fetchUsersByRoom(channelName);
 									
 								} else {
 									//alert("Ostali elem");
@@ -136,6 +137,6 @@ function fetchAllChannels() {
 							//alert('Error loading channel.');
 						}
 					});
-	fetchUsersByRoom("Room2");
+	
 }
 
