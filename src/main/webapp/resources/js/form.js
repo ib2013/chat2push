@@ -55,14 +55,14 @@ function addNewFeed() {
 		alert("Fields are required ");
 	}
 }
-
+/*
 function addNewChannel() {
 	var channelTitle = $('#title').val();
 	var chaneelDescription = $('#channel_description').val();
 	var typeOfChannel = $("#typeOfChannel option:selected").text();
 
 	alert(typeOfChannel);
-	/*
+	
 	 * if (channelTitle.length != 0 ) { channelJson = new Object();
 	 * channelJson.name = channelTitle; channelJson.description =
 	 * chaneelDescription; $.ajax({ url: _basePath +"channel/add", headers: {
@@ -73,9 +73,9 @@ function addNewChannel() {
 	 * addListElement(2); changeTab(2); $('#loading').hide(); alert("New channel
 	 * is inserted"); } else { $('#loading').hide(); alert("Fail add channel"); } }
 	 * }); } else { $('#loading').hide(); alert("Title required "); }
-	 */
+	 
 }
-
+*/
 function changeTab(value) {
 	clearInterval(refreshIntervalId);
 	if (value == 1) {
