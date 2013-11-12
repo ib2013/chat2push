@@ -45,7 +45,7 @@ function deleteUser(user) {
 				success : function(rez, status, xhr) {
 					if (status == "success") {
 						$('#list_users').html("");
-						showAllUsers();
+						user.parent.remove();
 						$('#loading').hide();
 					} else {
 						$('#loading').hide();
