@@ -22,9 +22,8 @@ public class ChannelController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/fetch")
 	@ResponseBody
-	public String fetchChannelList() {
-		//return defaultChannelService.fetchChannelList();
-		return "asdasd";
+	public List<ChannelModel> fetchChannelList() {
+		return defaultChannelService.fetchChannelList();
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/add", consumes = "application/json")
