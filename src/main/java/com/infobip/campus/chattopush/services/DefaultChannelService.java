@@ -26,7 +26,7 @@ public class DefaultChannelService implements ChannelService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.infobip.campus.rsstopush.channels.ChannelService#fetchChannelList()
+	 * com.infobip.campus.chattopush.channels.ChannelService#fetchChannelList()
 	 */
 	@Override
 	public ArrayList<ChannelModel> fetchChannelList() {
@@ -38,7 +38,7 @@ public class DefaultChannelService implements ChannelService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.infobip.campus.rsstopush.channels.ChannelService#parseJson(java.lang
+	 * com.infobip.campus.chattopush.channels.ChannelService#parseJson(java.lang
 	 * .String)
 	 */
 	/*@Override

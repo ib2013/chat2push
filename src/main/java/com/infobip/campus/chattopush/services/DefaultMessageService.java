@@ -7,7 +7,6 @@ import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.infobip.campus.chattopush.configuration.Configuration;
-import com.infobip.campus.chattopush.models.ChannelModel;
 
 
 import com.infobip.campus.chattopush.models.MessageModel;
@@ -55,24 +54,9 @@ public class DefaultMessageService implements MessageService {
 	 * .campus.rsstopush.channels.ChannelModel)
 	 */
 	@Override
-	public boolean addMessage(MessageModel channel) {
-		channel.persist();
-		Gson gson = new Gson();
+	public boolean addMessage(MessageModel message) {
 		try {
-			URL url = new URL("https://pushapi.infobip.com/1/application/"
-					+ Configuration.APPLICATION_ID + "/channel");
-			HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
-
-			request.addHeader(new HTTPHeader("Authorization",
-					Configuration.AUTHORIZATION_INFO));
-			request.addHeader(new HTTPHeader("content-type",
-					"application/json; charset=utf-8"));
-			request.setPayload(gson.toJson(channel).getBytes());
-
-			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
-					.fetch(request);
-			String responseText = new String(response.getContent());
-
+			message.persist();
 			return true; // response.getResponseCode() == 200;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,11 +72,9 @@ public class DefaultMessageService implements MessageService {
 	 * .infobip.campus.rsstopush.channels.ChannelModel)
 	 */
 	@Override
-	public boolean deleteMessage(MessageModel channel) {
-		Gson gson = new Gson();
+	public boolean deleteMessage(MessageModel message) {
 		try {
-	
-
+			// OVO TREBA SKONTAT KAKO CEMO
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
