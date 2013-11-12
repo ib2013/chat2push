@@ -44,3 +44,31 @@ function addNewChannel() {
 
 }
 
+function fetchAllChannels() {
+	$('#loading').show();
+	$.get(_basePath + "channel/fetch", function(data, status, xhr) {
+						if (JSON.stringify(data) != "") {
+							$('#select_room_list').html("");
+							for (var i = 0; i < data.length; i++) {
+								//var chaneelCounter = data[i].counter;
+								var channelName = data[i].channelModel.name;
+								//var channelDescription = data[i].channelModel.description;
+								//var channelisPublic = data[i].channelModel.isPublic;
+								$('#loading').hide();
+								$('#select_room_list').append(
+												"<option value='"
+														+ channelName
+														+ "'>"
+														+ channelName.substr(0,	40)
+														//+ "  <label id='"
+														//+ chaneelName
+														//+ "' class='removeList' onclick='removeChannel(this)'>Remove</label> <span class='badge'>"
+														//+ chaneelCounter
+														//+ "</span></li>"
+														+ "</option>");
+							}
+						} else {
+							alert('Error loading channel.');
+						}
+					});
+}

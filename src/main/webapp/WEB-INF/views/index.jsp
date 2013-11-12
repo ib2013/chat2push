@@ -2,17 +2,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <spring:url value="/" var="_basePath" />
-<!-- <div id="loading">
+<div id="loading">
 	  <img id="loading-image" src="resources/images/loading.gif" alt="Loading..." />
-</div> -->
+</div>
 
 <script type="text/javascript">
-	//var _basePath = '${_basePath}';
+	var _basePath = '${_basePath}';
 
-	//$(document).ready(function() {
-	//	documentReady(_basePath);
-	//});
-
+	$(document).ready(function() {
+		documentReady(_basePath);
+	});
 </script>
 
 <div id='central'>
