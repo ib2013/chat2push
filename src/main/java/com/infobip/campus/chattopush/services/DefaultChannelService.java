@@ -6,11 +6,15 @@ import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.configuration.Configuration;
 import com.infobip.campus.chattopush.models.ChannelModel;
 
 
 import com.infobip.campus.chattopush.models.UserModel;
+
+
 
 
 import java.net.URL;
@@ -164,5 +168,26 @@ public class DefaultChannelService implements ChannelService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public JsonArray fetchUserByChannelListService(String username) {
+		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+		JsonArray channelsArray = new JsonArray();
+		for (ChannelModel channelElement : channels){
+			JsonObject obj = new JsonObject();
+			obj.addProperty("name", channelElement.getName());
+			obj.addProperty("description", channelElement.getDescription());
+			boolean findUser = false;
+			for(UserModel user : channelElement.getUsers()){
+				if(user.getUsername().equals(username)){
+					obj.addProperty("isSubscribed", true);
+					findUser = true;
+				}
+			}
+			if(!findUser){
+				obj.addProperty("isSubscribed", false);
+			}
+		}
+		return channelsArray;
 	}
 }
