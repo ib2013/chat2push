@@ -1,3 +1,4 @@
+
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
@@ -21,8 +22,8 @@
 			
 			<div id='room_header' style="float: left;">
 				<div id="room_list_tab" class='listRoom'>
-					<select id="select_room_list" style="width: 160px;" onChange="onChangeFetchUsersByRoom()">
 
+					<select id="select_room_list" style="width: 160px;" onChange="onChangeFetchUsersByRoom()">
 					</select> 
 					<input type='button' id='deleteRoom' value='Delete'
 						onclick='deleteChannel()' class='removeList' style="float: right;" />
@@ -95,4 +96,3 @@
 	<br /> <br />
 
 </div>
-
