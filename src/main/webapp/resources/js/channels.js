@@ -91,12 +91,12 @@ function fetchAllChannels() {
 	$.get(_basePath + "channel/fetch", function(data, status, xhr) {
 						if (JSON.stringify(data) != "") {
 							$('#select_room_list').html("");
-							for (var i = 0; i < data.length; i++) {
+							for (var i = 0; i < data[0].length; i++) {
 								//var chaneelCounter = data[i].counter;
-								var channelName = data[i].channelModel.name;
+								var channelName = data[0][i].name;
 								//var channelDescription = data[i].channelModel.description;
 								//var channelisPublic = data[i].channelModel.isPublic;
-								$('#loading').hide();
+								//$('#loading').hide();
 								$('#select_room_list').append(
 												"<option value='"
 														+ channelName
@@ -109,9 +109,12 @@ function fetchAllChannels() {
 														//+ "</span></li>"
 														+ "</option>");
 							}
+							$('#loading').hide();
 						} else {
+							$('#loading').hide();
 							alert('Error loading channel.');
 						}
 					});
+	$('#loading').hide();
 }
 
