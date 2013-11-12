@@ -37,4 +37,5 @@ public class MessageModel {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
     private Date lastMessageDate;
+    
 }
