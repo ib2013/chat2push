@@ -1,6 +1,5 @@
 package com.infobip.campus.chattopush.controllers;
 
-
 import java.util.List;
 
 
