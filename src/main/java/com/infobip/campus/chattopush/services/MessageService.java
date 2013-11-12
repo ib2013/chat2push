@@ -6,7 +6,7 @@ import com.infobip.campus.chattopush.models.MessageModel;
 
 public interface MessageService {
 
-	public abstract ArrayList<MessageModel> fetchChannelList();
+	public abstract ArrayList<MessageModel> fetchMessageList();
 
 //	public abstract ArrayList<ChannelModel> parseJson(String jsonResponse);
 

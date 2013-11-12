@@ -1,13 +1,5 @@
 package com.infobip.campus.chattopush.services;
 
-import com.google.appengine.api.urlfetch.HTTPHeader;
-import com.google.appengine.api.urlfetch.HTTPMethod;
-import com.google.appengine.api.urlfetch.HTTPRequest;
-import com.google.appengine.api.urlfetch.HTTPResponse;
-import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
-import com.google.gson.Gson;
-import com.infobip.campus.chattopush.configuration.Configuration;
-
 
 import com.infobip.campus.chattopush.models.MessageModel;
 
@@ -21,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class DefaultMessageService implements MessageService {
 
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -29,9 +20,9 @@ public class DefaultMessageService implements MessageService {
 	 * com.infobip.campus.rsstopush.channels.ChannelService#fetchChannelList()
 	 */
 	@Override
-	public ArrayList<MessageModel> fetchChannelList() {
-		ArrayList<MessageModel> channelList = new ArrayList<MessageModel>(MessageModel.findAllMessageModels());
-		return channelList;
+	public ArrayList<MessageModel> fetchMessageList() {
+		ArrayList<MessageModel> messageList = new ArrayList<MessageModel>(MessageModel.findAllMessageModels());
+		return messageList;
 	}
 
 	/*
