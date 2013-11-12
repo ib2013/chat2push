@@ -114,11 +114,11 @@ function fetchAllChannels() {
 													+ "&nbsp;&nbsp;&nbsp;"
 													+ priv
 													+ "</option>");
-									alert("Prvi elem je: " + channelName);
+									//alert("Prvi elem je: " + channelName);
 									ind = false;
 									
 								} else {
-									alert("Ostali elem");
+									//alert("Ostali elem");
 									$('#select_room_list').append(
 											"<option value='"
 													+ channelName
@@ -133,7 +133,7 @@ function fetchAllChannels() {
 							$('#loading').hide();
 						} else {
 							$('#loading').hide();
-							alert('Error loading channel.');
+							//alert('Error loading channel.');
 						}
 					});
 	fetchUsersByRoom("Room2");

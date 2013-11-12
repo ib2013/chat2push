@@ -64,13 +64,17 @@ function deleteUser(user) {
 	$('#loading').hide();
 
 }
-
+function onChangeFetchUsersByRoom() {
+	var roomname = $("#select_room_list option:selected").val();
+	//alert(roomname);
+	fetchUsersByRoom(roomname);
+}
 function fetchUsersByRoom(roomname) {
 	
 	//var roomname = $("#select_room_list option:selected").val();
-	alert(roomname);
-	//if (isNaN(roomname)) {
-		
+	//
+	if (isNaN(roomname)) {
+		alert(roomname);
 		var room = new Object();
 		room.name = roomname;
 		$('#loading').show();
@@ -107,8 +111,8 @@ function fetchUsersByRoom(roomname) {
 						}
 					}
 				});
-	//} else {
+	} else {
 		// $('#loading').hide();
 		// alert('Error show users by room.');
-	//}
+	}
 }
