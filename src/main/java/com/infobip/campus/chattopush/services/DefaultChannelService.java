@@ -9,16 +9,19 @@ import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.configuration.Configuration;
 import com.infobip.campus.chattopush.models.ChannelModel;
-
 import com.infobip.campus.chattopush.models.UserModel;
+
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Service;
 
@@ -192,20 +195,46 @@ public class DefaultChannelService implements ChannelService {
 
 
 	public boolean addUserToRoom(JsonObject object) {
+		
+
+		
 		String channelName = "";
 		String userName = "";
-		channelName = object.get("name").toString();
-		userName = object.get("username").toString();
+		JsonElement elename = object.get("name");
+		JsonElement eleusername = object.get("username");
+		channelName = elename.getAsString();
+		userName = eleusername.getAsString();
+		//userName = object.get("username")
 		List<UserModel> users = UserModel.findAllUserModels();
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 
 		for (ChannelModel ch : channels) {
 			if (ch.getName().equals(channelName)) {
 				for (UserModel user : users) {
-					if (user.getUsername().equals(userName))
+					if (user.getUsername().equals(userName)) {
+						
 						ch.getUsers().add(user);
+						ch.persist();
+						
+						/*ChannelModel cm = new ChannelModel();
+						cm.setDescription(new String(ch.getDescription()));
+						cm.setIsPublic(true);
+						cm.setLastMessageDate(new Date(ch.getLastMessageDate().getTime()));
+						
+						ArrayList<UserModel> list = new ArrayList<UserModel>();
+						list.addAll(ch.getUsers());
+						list.add(user);
+						
+						cm.setUsers(list);
+						
+						cm.persist();
+						ch.remove();*/
+						
+
+						return true;
+					}
 					
-					return true;
+					
 				}
 			}
 		}

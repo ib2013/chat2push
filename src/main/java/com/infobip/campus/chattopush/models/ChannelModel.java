@@ -1,10 +1,14 @@
 package com.infobip.campus.chattopush.models;
 import javax.persistence.Entity;
+
+import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,7 +44,7 @@ public class ChannelModel {
     
     /**
      */
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<UserModel> users = new ArrayList<UserModel>();
     
     public ChannelModel() {
@@ -51,6 +55,5 @@ public class ChannelModel {
     	this.name = name;
     	this.description = descriptopn;
     }
-
     
 }
