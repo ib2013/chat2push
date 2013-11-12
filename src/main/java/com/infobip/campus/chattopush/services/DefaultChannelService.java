@@ -88,6 +88,7 @@ public class DefaultChannelService implements ChannelService {
 	 */
 	@Override
 	public boolean deleteChannel(ChannelModel channel) {
+		
 		Gson gson = new Gson();
 		try {
 			String channelName = channel.getName().replaceAll(" ", "%20");
