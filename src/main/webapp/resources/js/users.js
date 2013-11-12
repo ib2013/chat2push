@@ -43,9 +43,9 @@ function deleteUser(user) {
 				contentType : 'application/json',
 				data : JSON.stringify(userJson),
 				success : function(rez, status, xhr) {
-					if (status == "success") {
-						$('#list_users').html("");
-						user.parent.remove();
+					if (rez == "success") {
+						var deleted=document.getElementById(user.id);
+						deleted.remove();
 						$('#loading').hide();
 					} else {
 						$('#loading').hide();
