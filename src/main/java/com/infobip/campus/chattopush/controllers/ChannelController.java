@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.DefaultChannelService;
@@ -34,7 +36,7 @@ public class ChannelController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/fetch/{username}")
 	@ResponseBody
-	public String fetchUserByChannelList(@PathVariable ("username") String username) {
+	public String fetchSubscribedUserByChannelListService(@PathVariable ("username") String username) {
 		return defaultChannelService.fetchSubscribedUserByChannelListService(username).toString();
 	}
 	
@@ -70,16 +72,5 @@ public class ChannelController {
 
 	}
 	
-/*
-	@RequestMapping(method = RequestMethod.POST, value = "/addUserToRoom", consumes = "application/json")
-	@ResponseBody
-	public String addUserToChannel(@RequestBody JSONObject objekat) {
 
-		if (defaultChannelService.addUserToRoom(objekat) == true) {
-			return "success";
-		} else {
-			return "fail";
-		}
-	}
-*/
 }
