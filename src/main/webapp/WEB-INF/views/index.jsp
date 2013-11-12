@@ -27,7 +27,7 @@
 
 				</select>
 				<input type='button' id='deleteRoom'
-						value='Delete'  onclick='' class='removeList' style="float:right;"/>
+						value='Delete'  onclick='deleteChannel()' class='removeList' style="float:right;"/>
 				</div>
 			</div>
 			<div id='user_header'>

@@ -42,13 +42,14 @@ function addNewChannel() {
 
 }
 
-function deleteChannel(channel) {
-
-	if (isNaN(channel.name)) {
-		if (confirm('Are you sure you want to delete ' + channel.name + '?')) {
+function deleteChannel() {
+	var channelName = $("#select_room_list option:selected").text();
+	alert(channelName);
+	if (isNaN(channel)) {
+		if (confirm('Are you sure you want to delete ' + channelName + '?')) {
 			$('#loading').show();
 			var channelJson = new Object();
-			channelJson.name = channel.name;
+			channelJson.name = channeName;
 			$('#loading').show();
 			$.ajax({
 				url : _basePath + "channel/delete",
