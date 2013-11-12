@@ -26,4 +26,5 @@ documentReady = function(basePath) {
 	//$('#content').css('height', definitionWindowHeight);
 	//addListElement(1);
 	fetchAllChannels();
+	
 };
