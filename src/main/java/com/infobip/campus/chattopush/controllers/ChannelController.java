@@ -1,6 +1,8 @@
 package com.infobip.campus.chattopush.controllers;
 
 import java.util.List;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.infobip.campus.chattopush.models.ChannelModel;
+
 import com.infobip.campus.chattopush.services.DefaultChannelService;
 
 
@@ -39,7 +42,7 @@ public class ChannelController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
 	public String deleteChannel(@RequestBody final ChannelModel model) {
-
+		
 		if (defaultChannelService.deleteChannel(model) == true) {
 			
 			return "success";

@@ -24,13 +24,10 @@
 					Rooms</label>  -->
 					<div id="room_list_tab" class='listRoom'>
 				<select id="select_room_list" style="width: 160px;">
-					<option value="room1">Room1&nbsp;&nbsp;PR</option>
-					<option value="room2">Room2&nbsp;&nbsp;PR</option>
-					<option value="room3">Room3</option>
-					<option value="room4">Room4</option>
+
 				</select>
 				<input type='button' id='deleteRoom'
-						value='Delete'  onclick='' class='removeList' style="float:right;"/>
+						value='Delete'  onclick='deleteChannel()' class='removeList' style="float:right;"/>
 				</div>
 			</div>
 			<div id='user_header'>
@@ -39,7 +36,7 @@
 		</div>
 		<div id='lists' style="clear: both;">
 
-			<div id='list_rooms' class='listContent' style="float: left;"
+			<div id='list_rooms_users' class='listContent' style="float: left;"
 				ondrop="drop(event)" ondragover="allowDrop(event)">
 				<!--<ul id='list_view_rooms'  class='listview'>
 			 	<li>ChatRoom1 asdasdasdasd</li>
