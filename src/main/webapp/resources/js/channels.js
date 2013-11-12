@@ -30,7 +30,8 @@ function addNewChannel() {
 				if (rez == "success") {
 					$('#title').val("");
 					$('#channel_description').val("");
-					//addListElement(2); ponovo ucitati kanale, tj izvrsiti update liste
+					// addListElement(2); ponovo ucitati kanale, tj izvrsiti
+					// update liste
 					$('#loading').hide();
 					alert("New room is added.");
 				} else {
@@ -45,7 +46,6 @@ function addNewChannel() {
 	}
 
 }
-
 
 function deleteChannel(channel) {
 
@@ -89,29 +89,31 @@ function deleteChannel(channel) {
 function fetchAllChannels() {
 	$('#loading').show();
 	$.get(_basePath + "channel/fetch", function(data, status, xhr) {
-						if (JSON.stringify(data) != "") {
-							$('#select_room_list').html("");
-							for (var i = 0; i < data.length; i++) {
-								//var chaneelCounter = data[i].counter;
-								var channelName = data[i].channelModel.name;
-								//var channelDescription = data[i].channelModel.description;
-								//var channelisPublic = data[i].channelModel.isPublic;
-								$('#loading').hide();
-								$('#select_room_list').append(
-												"<option value='"
-														+ channelName
-														+ "'>"
-														+ channelName.substr(0,	40)
-														//+ "  <label id='"
-														//+ chaneelName
-														//+ "' class='removeList' onclick='removeChannel(this)'>Remove</label> <span class='badge'>"
-														//+ chaneelCounter
-														//+ "</span></li>"
-														+ "</option>");
-							}
-						} else {
-							alert('Error loading channel.');
-						}
-					});
-}
+		if (JSON.stringify(data) != "") {
+			$('#select_room_list').html("");
+			for (var i = 0; i < data[0].length; i++) {
+				// var chaneelCounter = data[i].counter;
+				var channelName = data[0][i].name;
+				// var channelDescription = data[i].channelModel.description;
+				// var channelisPublic = data[i].channelModel.isPublic;
 
+				$('#select_room_list').append(
+						"<option value='" + channelName + "'>"
+								+ channelName.substr(0, 40)
+								// + " <label id='"
+								// + chaneelName
+								// + "' class='removeList'
+								// onclick='removeChannel(this)'>Remove</label>
+								// <span class='badge'>"
+								// + chaneelCounter
+								// + "</span></li>"
+								+ "</option>");
+			}
+			$('#loading').hide();
+		} else {
+			$('#loading').hide();
+			alert('Error loading channel.');
+		}
+	});
+$('#loading').hide();
+}
