@@ -144,3 +144,4 @@ persistence setup --provider DATANUCLEUS --database GOOGLE_APP_ENGINE
 entity jpa --class com.infobip.campus.chattopush.channels.ProbaModel 
 field string --fieldName probaStr
 field number --fieldName probaBr --type int
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 20:32:30
