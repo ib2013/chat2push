@@ -55,7 +55,9 @@ public class DefaultChannelService implements ChannelService {
 	 */
 	@Override
 	public boolean addChannel(ChannelModel channel) {
-		channel.persist();
+		
+		//channel.persist();
+		
 		Gson gson = new Gson();
 		try {
 			URL url = new URL("https://pushapi.infobip.com/1/application/"

@@ -43,33 +43,14 @@ public class ChannelModel {
     @OneToMany(cascade = CascadeType.ALL)
     private List<UserModel> users = new ArrayList<UserModel>();
     
-    private ChannelModel(String name, String descriptopn ) {
-    	this.setName(name);
-    	this.setDescription(descriptopn);	
+    public ChannelModel() {
+    	
+    }
+    
+    public ChannelModel(String name, String descriptopn ) {
+    	this.name = name;
+    	this.description = descriptopn;
     }
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Boolean getIsPublic() {
-		return isPublic;
-	}
-
-	public void setIsPublic(Boolean isPublic) {
-		this.isPublic = isPublic;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
     
 }
