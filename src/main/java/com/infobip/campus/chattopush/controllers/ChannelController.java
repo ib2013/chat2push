@@ -1,21 +1,8 @@
 package com.infobip.campus.chattopush.controllers;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
-=======
-
-import java.util.ArrayList;
-import java.util.List;
-
-
-
-
-
-
-
->>>>>>> 8e500ecc5767f513ae866e17ade3b468999976e8
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
