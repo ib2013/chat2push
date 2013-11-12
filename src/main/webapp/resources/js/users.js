@@ -7,8 +7,8 @@ function showAllUsers() {
 						if (status = "succes") {
 							$('#list_view_users').html("");
 
-							for (var i = 0; i < data[0].length; i++) {
-								var username = data[0][i].username;
+							for (var i = 0; i < data.length; i++) {
+								var username = data[i].username;
 								$('#list_view_users')
 										.append(
 												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
