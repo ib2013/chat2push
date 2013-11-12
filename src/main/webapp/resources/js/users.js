@@ -17,7 +17,7 @@ function showAllUsers() {
 														+ username
 														+ "'<label id='"
 														+ username
-														+ "' class='removeList' onclick='deleteUser(this)'>Remove<label></p>");
+														+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>");
 							}
 						}
 					});
@@ -25,15 +25,13 @@ function showAllUsers() {
 }
 
 function deleteUser(user) {
-	$('#loading').show();
 
-	if (isNaN(user.username)) {
-		if (confirm('Are you sure you want to delete ' + user.username + '?')) {
+	if (isNaN(user.id)) {
+		if (confirm('Are you sure you want to delete ' + user.id + '?')) {
 			$('#loading').show();
 			var userJson = new Object();
-			userlJson.name = user.username;
-
-			$('#loading').show();
+			userJson.username = user.id;
+			
 			$.ajax({
 				url : _basePath + "user/delete",
 				headers : {
@@ -44,7 +42,7 @@ function deleteUser(user) {
 				contentType : 'application/json',
 				data : JSON.stringify(userJson),
 				success : function(rez, status, xhr) {
-					if (rez == 'success') {
+					if (rez == 'true') {
 						$('#list_users').html("");
 						// addListElement(2); ponovo ucitati usere, tj izvrsiti
 						// update liste
