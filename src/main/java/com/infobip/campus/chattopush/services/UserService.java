@@ -4,22 +4,16 @@ import java.util.List;
 
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
+import com.infobip.campus.chattopush.services.enums.StatusAction;
+import com.infobip.campus.chattopush.services.enums.StatusUser;
 
 public interface UserService {
 
-	public enum statusUser {
-		SUCCESS, PASSERROR, NOUSER, EXISTS, EXC
-	}
+	public StatusUser loginUser(UserModel _model);
 
-	public enum statusAction {
-		SUCCESS, FAIL, EXC
-	}
+	public StatusUser registerUser(UserModel _model);
 
-	public statusUser loginUser(UserModel _model);
-
-	public statusUser registerUser(UserModel _model);
-
-	public statusAction deleteUser(UserModel _model);
+	public StatusAction deleteUser(UserModel _model);
 
 	public boolean checkUserExists(UserModel _model);
 
