@@ -23,16 +23,20 @@
 			<div id='room_header' style="float: left;">
 				<div id="room_list_tab" class='listRoom'>
 
-					<select id="select_room_list" style="width: 160px;" onChange="onChangeFetchUsersByRoom()">
+					<select id="select_room_list" style="width: 140px;" onChange="onChangeFetchUsersByRoom()">
 					</select> 
+					<img id="keyImage" src="resources/images/key.gif" />
 					<input type='button' id='deleteRoom' value='Delete'
 						onclick='deleteChannel()' class='removeList' style="float: right;" />
 				</div>
 			</div>
 			
 			<div id='user_header'>
-				<label id='user_list_tab' class='listOptions'>List of ALL
-					Users</label>
+				<label id='user_list_tab' class='listOptions'>List of
+					Users
+						<input type='button' id='deleteRoom' value='Refresh'
+						onclick='refreshUserList()' class='removeList' style="float: right;" />
+						</label>
 			</div>
 		</div>
 		<div id='lists' style="clear: both;">
