@@ -70,13 +70,13 @@ function onChangeFetchUsersByRoom() {
 }
 function fetchUsersByRoom(roomname) {
 
-	// var roomname = $("#select_room_list option:selected").val();
-	//
+
 	$('#list_rooms_users').html("");
 	if (isNaN(roomname)) {
 		// alert(roomname);
 		var room = new Object();
 		room.name = roomname;
+		showAllUsers();
 		// $('#loading').show();
 		$
 				.ajax({
@@ -95,18 +95,13 @@ function fetchUsersByRoom(roomname) {
 							
 							$('#list_rooms_users').html("");
 							//alert(data.length);
+						
 							for (var i = 0; i < data.length; i++) {
 								var username = data[i].username;
-								//alert(username);
+								var elementForRemove=document.getElementById(username);
+								elementForRemove.remove();
 								$('#list_rooms_users')
 										.append(
-												/*"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
-														+ username
-														+ "'>"
-														+ username
-														+ "'<label id='"
-														+ username
-														+ "' class='removeList' onclick='deleteUser(this)'>Remove<label></p>"*/
 												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
 												+ username
 												+ "'>"
@@ -123,7 +118,6 @@ function fetchUsersByRoom(roomname) {
 						}
 					}
 				});
-		//alert(roomname);
 	} else {
 		// $('#loading').hide();
 		// alert('Error show users by room.');
