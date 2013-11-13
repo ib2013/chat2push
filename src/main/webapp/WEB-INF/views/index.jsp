@@ -32,8 +32,11 @@
 			</div>
 			
 			<div id='user_header'>
-				<label id='user_list_tab' class='listOptions'>List of ALL
-					Users</label>
+				<label id='user_list_tab' class='listOptions'>List of
+					Users
+						<input type='button' id='deleteRoom' value='Refresh'
+						onclick='refreshUserList()' class='removeList' style="float: right;" />
+						</label>
 			</div>
 		</div>
 		<div id='lists' style="clear: both;">

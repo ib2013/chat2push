@@ -7,14 +7,13 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
-
 public class UserModel {
 
 	public UserModel() {
 	}
 
 	public UserModel(String username, String password) {
-		this.username = password;
+		this.username = username;
 		this.password = password;
 	}
 

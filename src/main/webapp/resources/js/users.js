@@ -124,3 +124,8 @@ function fetchUsersByRoom(roomname) {
 	}
 	$('#loading').hide();
 }
+
+function refershUserList(){
+	showAllUsers();
+	onChangeFetchUsersByRoom();
+}
