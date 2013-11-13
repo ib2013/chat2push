@@ -186,3 +186,4 @@ field string --fieldName channel
 field date --fieldName lastMessage --type java.util.Date
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-13 00:44:21
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-13 09:24:14
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-13 09:33:28
