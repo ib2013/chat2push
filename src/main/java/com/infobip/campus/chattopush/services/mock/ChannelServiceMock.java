@@ -104,7 +104,7 @@ public class ChannelServiceMock implements ChannelService {
 			if (UserConfiguration.cs.get(i).equals(channelName)) {
 				UserActivityModel x = new UserActivityModel();
 				x.setUsername(UserConfiguration.us.get(i));
-				x.setMessageCount((int) Math.random() * 100);
+				x.setMessageCount(0);
 				uAcM.add(x);
 			}
 		}
