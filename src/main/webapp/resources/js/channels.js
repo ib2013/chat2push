@@ -117,7 +117,6 @@ function fetchAllChannels() {
 									//alert("Prvi elem je: " + channelName);
 									fetchUsersByRoom(channelName);
 									ind = false;
-									fetchUsersByRoom(channelName);
 									
 								} else {
 									//alert("Ostali elem");
