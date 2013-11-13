@@ -44,7 +44,7 @@ public class DefaultUserService implements UserService {
   // TODO Auto-generated method stub
   try {
    if (checkUserExists(model) == "fail") {
-    model.persist();
+    model.merge();
     return "success";
    }
    return "exists";
