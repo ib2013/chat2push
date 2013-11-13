@@ -72,6 +72,7 @@ function fetchUsersByRoom(roomname) {
 
 	// var roomname = $("#select_room_list option:selected").val();
 	//
+	$('#list_rooms_users').html("");
 	if (isNaN(roomname)) {
 		// alert(roomname);
 		var room = new Object();
@@ -87,26 +88,32 @@ function fetchUsersByRoom(roomname) {
 					method : 'POST',
 					contentType : 'application/json',
 					data : JSON.stringify(room),
+					dataType: 'text json',
 					success : function(data, status, xhr) {
-						if (data != null) {
+						
+						if (data.length != 0) {
+							
 							$('#list_rooms_users').html("");
-
+							//alert(data.length);
 							for (var i = 0; i < data.length; i++) {
 								var username = data[i].username;
+								//alert(username);
 								$('#list_rooms_users')
 										.append(
-												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
+												/*"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
 														+ username
 														+ "'>"
 														+ username
 														+ "'<label id='"
 														+ username
-														+ "' class='removeList' onclick='deleteUser(this)'>Remove<label></p>");
+														+ "' class='removeList' onclick='deleteUser(this)'>Remove<label></p>"*/
+												"<p>"+username+"</p>"
+												);
 							}
 							$('#loading').hide();
 						} else {
 							$('#loading').hide();
-							alert('Error');
+							alert('Room is empty');
 						}
 					}
 				});
