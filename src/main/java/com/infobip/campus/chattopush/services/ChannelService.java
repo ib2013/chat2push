@@ -28,6 +28,8 @@ public interface ChannelService {
 	
 	public boolean removeUserFromRoom(UsersChannels object);
 
-	public List<UserActivityModel> fetchUserByChannel(ChannelModel channelName);
+	public List<UserActivityModel> fetchUserByChannel(ChannelModel channel);
+	
+	public List<UserActivityModel> fetchOpositeUserByChannel(ChannelModel channel);
 
 }

@@ -237,6 +237,8 @@ public class DefaultChannelService implements ChannelService {
 		return activityUsers;
 	}
 
+
+
 	private int countMessagesByUserAndChannel(String channelName,
 			String username) {
 		int counter = 0;
@@ -279,5 +281,22 @@ public class DefaultChannelService implements ChannelService {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public List<UserActivityModel> fetchOpositeUserByChannel(
+			ChannelModel channel) {
+		List<UserActivityModel> activityUsers = new ArrayList<UserActivityModel>();
+
+		for (UsersChannels relations : UsersChannels.findAllUsersChannelses()) {
+			if (!channel.getName().equals(relations.getChannel())) {
+				UserActivityModel userObject = new UserActivityModel();
+				userObject.setUsername(relations.getUsername());
+				userObject.setMessageCount(countMessagesByUserAndChannel(
+						relations.getChannel(), relations.getUsername()));
+				activityUsers.add(userObject);
+			}
+		}
+		return activityUsers;
 	}
 }
