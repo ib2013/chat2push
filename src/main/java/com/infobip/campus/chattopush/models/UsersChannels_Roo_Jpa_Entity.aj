@@ -5,15 +5,12 @@ package com.infobip.campus.chattopush.models;
 
 import com.infobip.campus.chattopush.models.UsersChannels;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
 privileged aspect UsersChannels_Roo_Jpa_Entity {
-    
-    declare @type: UsersChannels: @Entity;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

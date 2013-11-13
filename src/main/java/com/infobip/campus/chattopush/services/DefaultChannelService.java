@@ -239,15 +239,15 @@ public class DefaultChannelService implements ChannelService {
 		int counter = 0;
 		ArrayList<MessageModel> msgModel = null;
 		try{
-			msgModel = (ArrayList<MessageModel>)MessageModel.findAllMessageModels();
+			msgModel = new ArrayList<MessageModel>(MessageModel.findAllMessageModels());
 		}
 		catch(Exception e){
 			e.printStackTrace();
 			msgModel = new ArrayList<MessageModel>();
 		}
 		for (MessageModel msg : msgModel) {
-			if (msg.getUser().getUsername().equals(username)
-					&& msg.getChannel().getName().equals(channelName)) {
+			if (msg.getUser().equals(username)
+					&& msg.getChannel().equals(channelName)) {
 				counter++;
 			}
 		}
