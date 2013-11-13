@@ -45,11 +45,11 @@
 	<bean class="org.springframework.web.servlet.theme.CookieThemeResolver" id="themeResolver" p:cookieName="theme" p:defaultThemeName="standard" />
 
 	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="channelService" factory-method="getInstance" >
-		<constructor-arg value=""></constructor-arg>
+		<constructor-arg value="mock"></constructor-arg>
 	</bean>
 	
 	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="messageService" factory-method="getMessageServiceInstance" >
-		<constructor-arg value=""></constructor-arg>
+		<constructor-arg value="mock"></constructor-arg>
 	</bean>
 	
 	<bean class="com.infobip.campus.chattopush.controllers.ChannelController" id="channelController" >
