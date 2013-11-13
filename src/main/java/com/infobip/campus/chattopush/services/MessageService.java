@@ -6,10 +6,10 @@ import com.infobip.campus.chattopush.models.MessageModel;
 
 public interface MessageService {
 
-	public abstract List<MessageModel> fetchMessageList();
+	public List<MessageModel> fetchMessageList();
 
 //	public abstract ArrayList<ChannelModel> parseJson(String jsonResponse);
 
-	public abstract boolean addMessage(MessageModel message);
+	public boolean addMessage(MessageModel message);
 
 }
