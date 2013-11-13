@@ -36,18 +36,18 @@ public class MessageController {
 		this.messageService = mS;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/fetch/{username}/{channel})/{start-time}/{end-time}")
+	@RequestMapping(method = RequestMethod.GET, value = "/fetch/{username}/{channel}")///{start-time}/{end-time}")
 	@ResponseBody
 	public List<MessageModel> fetchMessageList(
 			@PathVariable("username") String un,
-			@PathVariable("channel") String ch,
+			@PathVariable("channel") String ch/*,
 			@PathVariable("start-time") String startTime,
-			@PathVariable("end-time") String endTime) {
+			@PathVariable("end-time") String endTime*/) {
 
 		List<MessageModel> messages = messageService.fetchMessageList();
 		List<MessageModel> result = new ArrayList<MessageModel>();
-		Date date1 = new Date(startTime);
-		Date date2 = new Date(endTime);
+		Date date1 = new Date(0);//startTime);
+		Date date2 = new Date();//endTime);
 
 		for (MessageModel msg : messages) {
 			if (msg.getChannel().equals(ch)
@@ -61,7 +61,7 @@ public class MessageController {
 		return result;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/send", consumes = "application/json", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/send", consumes = "application/json")
 	@ResponseBody
 	public String sendMessage(@RequestBody final ClientMessageModel msg) {
 

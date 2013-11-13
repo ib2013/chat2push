@@ -10,41 +10,34 @@ import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
+import com.infobip.campus.chattopush.configuration.*;
 
 public class ChannelServiceMock implements ChannelService {
 
-	List<ChannelModel> list = new ArrayList<ChannelModel>();
-	List<UserModel> users = new ArrayList<UserModel>();
-
-	List<String> usr = new ArrayList<String>();
-	List<String> chl = new ArrayList<String>();
-
 	public ChannelServiceMock() {
-		list.add(new ChannelModel("Soba za odmor", "room 1"));
-		list.add(new ChannelModel("Kuca za odmor", "room 2"));
-		list.add(new ChannelModel("Kafana", "cofee"));
-
-		users.add(new UserModel("user1", "user1"));
-		users.add(new UserModel("user2", "user2"));
-		users.add(new UserModel("user3", "user3"));
+		UserConfiguration.init();
 	}
 
 	@Override
 	public List<ChannelModel> fetchChannelList() {
-		return list;
+		return UserConfiguration.chnls;
 	}
 
 	@Override
 	public boolean addChannel(ChannelModel channel) {
-		list.add(channel);
-		return false;
+		try {
+			UserConfiguration.chnls.add(channel);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean deleteChannel(ChannelModel channel) {
-		for (ChannelModel ch : list) {
+		for (ChannelModel ch : UserConfiguration.chnls) {
 			if (ch.getName().equals(channel.getName())) {
-				list.remove(ch);
+				UserConfiguration.chnls.remove(ch);
 				return true;
 			}
 		}
@@ -53,10 +46,10 @@ public class ChannelServiceMock implements ChannelService {
 
 	@Override
 	public boolean updateChannel(ChannelModel oldModel, ChannelModel newModel) {
-		for (ChannelModel ch : list) {
+		for (ChannelModel ch : UserConfiguration.chnls) {
 			if (ch.getName().equals(oldModel.getName())) {
-				list.remove(ch);
-				list.add(newModel);
+				UserConfiguration.chnls.remove(ch);
+				UserConfiguration.chnls.add(newModel);
 				return true;
 			}
 		}
@@ -67,16 +60,16 @@ public class ChannelServiceMock implements ChannelService {
 	public List<ClientChannelModel> fetchSubscribedChannels(String username) {
 		List<ClientChannelModel> clientList = new ArrayList<ClientChannelModel>();
 
-		for (ChannelModel ch : list) {
+		for (ChannelModel ch : UserConfiguration.chnls) {
 			ClientChannelModel clChM = new ClientChannelModel();
 			clChM.setDescription(ch.getDescription());
 			clChM.setName(ch.getName());
 			clChM.setPublic(ch.isIsPublic());
 
 			boolean exists = false;
-			for (int i = 0; i < usr.size(); i++) {
-				if (usr.get(i).equals(username)
-						&& chl.get(i).equals(ch.getName())) {
+			for (int i = 0; i < UserConfiguration.us.size(); i++) {
+				if (UserConfiguration.us.get(i).equals(username)
+						&& UserConfiguration.cs.get(i).equals(ch.getName())) {
 					clChM.setSubscribed(true);
 					exists = true;
 					break;
@@ -92,19 +85,19 @@ public class ChannelServiceMock implements ChannelService {
 
 	@Override
 	public boolean addUserToRoom(UsersChannels object) {
-		usr.add(object.getUsername());
-		chl.add(object.getChannel());
+		UserConfiguration.us.add(object.getUsername());
+		UserConfiguration.cs.add(object.getChannel());
 
 		return true;
 	}
 
 	@Override
 	public boolean removeUserFromRoom(UsersChannels object) {
-		for (int i = 0; i < usr.size(); i++) {
-			if (usr.get(i).equals(object.getUsername())
-					&& chl.get(i).equals(object.getChannel())) {
-				usr.remove(i);
-				chl.remove(i);
+		for (int i = 0; i < UserConfiguration.us.size(); i++) {
+			if (UserConfiguration.us.get(i).equals(object.getUsername())
+					&& UserConfiguration.cs.get(i).equals(object.getChannel())) {
+				UserConfiguration.us.remove(i);
+				UserConfiguration.cs.remove(i);
 				return true;
 			}
 		}
@@ -115,10 +108,10 @@ public class ChannelServiceMock implements ChannelService {
 	public List<UserActivityModel> fetchUserByChannel(ChannelModel channelName) {
 		// TODO Auto-generated method stub
 		List<UserActivityModel> uAcM = new ArrayList<UserActivityModel>();
-		for (int i = 0; i < usr.size(); i++) {
-			if (chl.get(i).equals(channelName)) {
+		for (int i = 0; i < UserConfiguration.us.size(); i++) {
+			if (UserConfiguration.cs.get(i).equals(channelName)) {
 				UserActivityModel x = new UserActivityModel();
-				x.setUsername(usr.get(i));
+				x.setUsername(UserConfiguration.us.get(i));
 				x.setMessageCount((int) Math.random() * 100);
 				uAcM.add(x);
 			}
