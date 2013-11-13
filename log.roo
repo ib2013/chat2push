@@ -186,3 +186,11 @@ field string --fieldName channel
 field date --fieldName lastMessage --type java.util.Date
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-13 00:44:21
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-13 09:24:14
+entity jpa --class com.infobip.campus.chattopush.client 
+// [failed] field string --fieldName name
+entity jpa --class com.infobip.campus.chattopush.clients
+entity jpa --class ~.clients.ClientChannelModel
+field string --fieldName name
+field string --fieldName description
+field boolean --fieldName isSubscribed
+field boolean --fieldName isPublic
