@@ -5,28 +5,22 @@ import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
-import com.google.appengine.labs.repackaged.org.json.JSONException;
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
+
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.configuration.Configuration;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
-import com.infobip.campus.chattopush.models.UserModel;
+
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -55,33 +49,38 @@ public class DefaultChannelService implements ChannelService {
 	 */
 	@Override
 	public boolean addChannel(ChannelModel channel) {
-		Gson gson = new Gson();
-		try {
-			URL url = new URL("https://pushapi.infobip.com/1/application/"
-					+ Configuration.APPLICATION_ID + "/channel");
-			HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
-
-			request.addHeader(new HTTPHeader("Authorization",
-					Configuration.AUTHORIZATION_INFO));
-			request.addHeader(new HTTPHeader("content-type",
-					"application/json; charset=utf-8"));
-			request.setPayload(gson.toJson(channel).getBytes());
-
-			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
-					.fetch(request);
-			String responseText = new String(response.getContent());
+		if (isChannelExists(channel)) {
+			return false;
+		} else {
+			Gson gson = new Gson();
 			try {
-				channel.persist();
-				return true; // response.getResponseCode() == 200;
+				URL url = new URL("https://pushapi.infobip.com/1/application/"
+						+ Configuration.APPLICATION_ID + "/channel");
+				HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
+
+				request.addHeader(new HTTPHeader("Authorization",
+						Configuration.AUTHORIZATION_INFO));
+				request.addHeader(new HTTPHeader("content-type",
+						"application/json; charset=utf-8"));
+				request.setPayload(gson.toJson(channel).getBytes());
+
+				HTTPResponse response = URLFetchServiceFactory
+						.getURLFetchService().fetch(request);
+				String responseText = new String(response.getContent());
+				try {
+					channel.persist();
+					return true; // response.getResponseCode() == 200;
+				} catch (Exception e) {
+					e.printStackTrace();
+					return false;
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				channel.remove();
 				return false;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			channel.remove();
-			return false;
 		}
+
 	}
 
 	/*
@@ -201,15 +200,14 @@ public class DefaultChannelService implements ChannelService {
 
 	@Override
 	public boolean addUserToRoom(UsersChannels object) {
-		try {
-
-			/*
-			 * UsersChannels uC = new UsersChannels(); uC.setChannel(object.);
-			 * uC.setUsername(userName); uC.setLastMessage(new Date());
-			 */
-			object.persist();
-			return true;
-		} catch (Exception e) {
+		if (isExistsUserInChannel(object)) {
+			try {
+				object.persist();
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
+		} else {
 			return false;
 		}
 	}
@@ -260,4 +258,24 @@ public class DefaultChannelService implements ChannelService {
 		return counter;
 	}
 
+	public boolean isChannelExists(ChannelModel channel) {
+		List<ChannelModel> channels = new ArrayList<ChannelModel>(ChannelModel.findAllChannelModels());
+		
+		for (ChannelModel channelIterator : channels) {
+			if (channelIterator.getName().equals(channel.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isExistsUserInChannel(UsersChannels relations) {
+		List<UsersChannels> allRelations= new ArrayList<UsersChannels>(UsersChannels.findAllUsersChannelses());
+		for (UsersChannels userChannel : allRelations) {
+			if (userChannel.getChannel().equals(relations.getChannel())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

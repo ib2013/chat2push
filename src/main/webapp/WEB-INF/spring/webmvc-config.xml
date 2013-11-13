@@ -46,7 +46,6 @@
 
 	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="channelService" factory-method="getInstance" >
 		<constructor-arg value=""></constructor-arg>
-
 	</bean>
 	
 	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="messageService" factory-method="getMessageServiceInstance" >

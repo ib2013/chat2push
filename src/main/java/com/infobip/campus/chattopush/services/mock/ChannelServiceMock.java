@@ -2,11 +2,10 @@ package com.infobip.campus.chattopush.services.mock;
 
 import java.util.List;
 
-import com.google.gson.JsonObject;
+
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.models.ChannelModel;
-import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
 
@@ -58,6 +57,18 @@ public class ChannelServiceMock implements ChannelService {
 	public List<UserActivityModel> fetchUserByChannel(ChannelModel channelName) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean isChannelExists(ChannelModel channel) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isExistsUserInChannel(UsersChannels relations) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
