@@ -2,7 +2,8 @@ package com.infobip.campus.chattopush.configuration;
 
 import java.util.ArrayList;
 
-import com.infobip.campus.chattopush.models.*;
+import com.infobip.campus.chattopush.models.ChannelModel;
+import com.infobip.campus.chattopush.models.UserModel;
 
 public class UserConfiguration {
 	public static ArrayList<ChannelModel> chnls = new ArrayList<ChannelModel>();
@@ -24,5 +25,14 @@ public class UserConfiguration {
 		usrs.add(new UserModel("korisnik3", "pass3"));
 		usrs.add(new UserModel("korisnik4", "pass4"));
 		usrs.add(new UserModel("korisnik5", "pass5"));
+		
+		cs.add("kanal1");
+		us.add("korisnik1");
+		
+		cs.add("kanal1");
+		us.add("korisnik2");
+		
+		cs.add("kanal2");
+		us.add("korisnik4");
 	}
 }
