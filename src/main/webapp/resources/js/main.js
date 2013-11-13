@@ -23,6 +23,7 @@ function drop(ev) {
 		//alert("prvi div");
 		
 		addUserToChannel(data, channel);
+		
 	} else {
 		//alert("drugi div");
 		removeUserFromChannel(data, channel);
@@ -45,7 +46,7 @@ function addUserToChannel(userName, channel) {
 	
 	var channelUserJson=new Object();
 	channelUserJson.username=user.id;
-	channelUserJson.name=channel.val();
+	channelUserJson.channel=channel.val();
 	
 	$.ajax({
 		url: _basePath+ "channel/addUserToRoom",
@@ -78,7 +79,7 @@ function removeUserFromChannel(userName, channel) {
 	
 	var channelUserJson=new Object();
 	channelUserJson.username=user.id;
-	channelUserJson.name=channel.val();
+	channelUserJson.channel=channel.val();
 	
 	$.ajax({
 		url: _basePath+ "channel/removeUserFromRoom",
@@ -105,7 +106,7 @@ documentReady = function(basePath) {
 
 	fetchAllChannels();
 	showAllUsers();
-	
+	onChangeFetchUsersByRoom();
 	$('#loading').hide();
 
 

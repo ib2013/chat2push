@@ -259,8 +259,9 @@ public class DefaultChannelService implements ChannelService {
 	}
 
 	public boolean isChannelExists(ChannelModel channel) {
-		List<ChannelModel> channels = new ArrayList<ChannelModel>(ChannelModel.findAllChannelModels());
-		
+		List<ChannelModel> channels = new ArrayList<ChannelModel>(
+				ChannelModel.findAllChannelModels());
+
 		for (ChannelModel channelIterator : channels) {
 			if (channelIterator.getName().equals(channel.getName())) {
 				return true;
@@ -270,7 +271,8 @@ public class DefaultChannelService implements ChannelService {
 	}
 
 	public boolean isExistsUserInChannel(UsersChannels relations) {
-		List<UsersChannels> allRelations= new ArrayList<UsersChannels>(UsersChannels.findAllUsersChannelses());
+		List<UsersChannels> allRelations = new ArrayList<UsersChannels>(
+				UsersChannels.findAllUsersChannelses());
 		for (UsersChannels userChannel : allRelations) {
 			if (userChannel.getChannel().equals(relations.getChannel())) {
 				return true;
