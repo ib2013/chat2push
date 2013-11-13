@@ -10,10 +10,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=8" />
 <head>
-<title>Feed to Push</title>
+<title>Chat to Push</title>
 
 <spring:url value="resources/js/jquery.js" var='jsJquery' />
-<spring:url value="resources/js/form.js" var='jsForm' />
 <spring:url value="resources/js/main.js" var='main'/>
 <spring:url value="resources/js/channels.js" var='jsChannelsForm' />
 <spring:url value="resources/js/users.js" var='jsUsersForm' />
@@ -21,7 +20,6 @@
 <spring:url value="resources/css/bootstrap.css" var="cssBootstrap" />
 
     <script type="text/javascript" src="${jsJquery}"> </script>
-	<script type="text/javascript" src="${jsForm}"> </script>
 	<script type="text/javascript" src="${main}"> </script>
 	<script type="text/javascript" src="${jsChannelsForm}"></script>
 		<script type="text/javascript" src="${jsUsersForm}"></script>

@@ -43,6 +43,7 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/delete", consumes = "application/json")
 	@ResponseBody
+
 	public String deleteUser(@RequestBody UserModel model) {
 
 		return defaultUserService.deleteUser(model);
@@ -51,7 +52,9 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/fetchAllUsers")
 	@ResponseBody
+
 	public List<UserModel> fetchAllUsers() {
+
 
 		return defaultUserService.fetchAllUsers();
 
