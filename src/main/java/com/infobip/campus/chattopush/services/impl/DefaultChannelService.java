@@ -1,4 +1,4 @@
-package com.infobip.campus.chattopush.services;
+package com.infobip.campus.chattopush.services.impl;
 
 import com.google.appengine.api.urlfetch.HTTPHeader;
 import com.google.appengine.api.urlfetch.HTTPMethod;
@@ -16,6 +16,7 @@ import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
+import com.infobip.campus.chattopush.services.ChannelService;
 
 import java.net.URL;
 import java.util.ArrayList;

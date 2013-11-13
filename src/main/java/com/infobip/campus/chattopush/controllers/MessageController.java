@@ -20,7 +20,7 @@ import com.google.appengine.api.mail.MailService.Message;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.models.MessageModel;
-import com.infobip.campus.chattopush.services.DefaultMessageService;
+import com.infobip.campus.chattopush.services.impl.DefaultMessageService;
 
 @RequestMapping("/message/**")
 @Controller
