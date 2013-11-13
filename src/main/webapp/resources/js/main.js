@@ -29,18 +29,38 @@ function addUserToChannel(userName, channel) {
 	var child = $(":first-child", user);
 	child.get(0).onclick = ""; // dodati novu funkciju za brisanje usera iz
 	// sobe
+	
+	var channelUserJson=new Object();
+	channelUserJson.username=user.id;
+	channelUserJson.name=channel.val();
+	
+	$.ajax({
+		url: _basePath+ "channel/addUserToRoom",
+		headers: {
+			'Accept': 'text/plain',
+			'Content-type':'application/json',
+		},
+		method: 'POST',
+		contentType: 'application-json',
+		data: JSON.stringify(channelUserJson),
+		success:function(res, status,xhr){
+			if(res=="success"){
+				alert("User added to room.");
+			}else{
+				alert("Error.");
+			}
+		}
+	});
+
 
 }
 documentReady = function(basePath) {
-	boolFeedClick = true;
-	boolChanalClick = false;
 	$('#loading').show();
-	// var definitionWindowWidth = $(window).width();
-	// var definitionWindowHeight = $(window).height();
-	// $('#content').css('width', definitionWindowWidth);
-	// $('#content').css('height', definitionWindowHeight);
-	// addListElement(1);
+
 	fetchAllChannels();
 	showAllUsers();
+	
+	$('#loading').hide();
+
 
 };
