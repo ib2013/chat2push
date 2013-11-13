@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.infobip.campus.chattopush.models.UserModel;
-import com.infobip.campus.chattopush.services.DefaultUserService;
+import com.infobip.campus.chattopush.services.impl.DefaultUserService;
 
 @RequestMapping("/user/**")
 @Controller
