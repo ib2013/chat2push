@@ -52,8 +52,6 @@ public class UserController {
 	@ResponseBody
 
 	public List<UserModel> fetchAllUsers() {
-
-
 		return defaultUserService.fetchAllUsers();
 
 	}
