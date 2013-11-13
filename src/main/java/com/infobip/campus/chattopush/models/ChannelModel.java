@@ -1,4 +1,5 @@
 package com.infobip.campus.chattopush.models;
+import javax.jdo.annotations.Unique;
 import javax.persistence.Entity;
 
 import java.security.acl.Owner;
@@ -14,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+import javax.validation.Constraint;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
