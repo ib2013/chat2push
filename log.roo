@@ -152,3 +152,37 @@ field number --fieldName probaBr --type int
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-11 18:02:52
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-11 20:32:48
 
+entity jpa --class com.infobip.campus.chattopush.ChannelModel
+hint
+field string --fieldName name
+field string --fieldName description
+field boolean --fieldName isPublic
+field date --fieldName lastMessageDate --type java.util.Date
+entity jpa --class com.infobip.campus.chattopush.models.ChannelModel
+field string --fieldName name
+field string --fieldName description
+field boolean --fieldName isPublic
+field date --fieldName lastMessageDate --type java.util.Date
+entity jpa --class com.infobip.campus.chattopush.models.UserModel
+field string --fieldName username
+field string --fieldName password
+hint
+hint entities
+entity jpa --class com.infobip.campus.chattopush.models.UserModel
+field string --fieldName username
+field string --fieldName password
+entity jpa --class com.infobip.campus.chattopush.models.ChannelModel
+field string --fieldName name
+field string --fieldName description
+field boolean --fieldName isPublic
+field date --fieldName lastMessageDate --type java.util.Date
+field set --fieldName users --type ~.models.UserModel
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-12 23:18:49
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-12 23:37:01
+hint
+entity jpa --class com.infobip.campus.chattopush.models.UsersChannels
+field string --fieldName username
+field string --fieldName channel
+field date --fieldName lastMessage --type java.util.Date
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-13 00:44:21
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-13 09:24:14
