@@ -2,7 +2,7 @@ package com.infobip.campus.chattopush.services;
 
 public interface UserService {
 
-	public abstract boolean loginUser();
+	public boolean loginUser();
 
-	public abstract boolean registerUser();
+	public boolean registerUser();
 }

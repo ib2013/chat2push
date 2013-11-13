@@ -1,4 +1,5 @@
 package com.infobip.campus.chattopush.models;
+
 import javax.jdo.annotations.Unique;
 import javax.persistence.Entity;
 
@@ -16,7 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+<<<<<<< HEAD
 import javax.validation.Constraint;
+=======
+>>>>>>> 90f73c6828e21461fbf338e15123ba103542e701
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -29,27 +33,26 @@ import org.springframework.roo.addon.tostring.RooToString;
 @Entity
 public class ChannelModel {
 
-    /**
+	/**
      */
-    private String name;
+	@Unique
+	private String name;
 
-    /**
+	/**
      */
-    private boolean isPublic;
+	private boolean isPublic;
 
-    /**
+	/**
      */
-    private String description;
+	private String description;
 
-    
-    public ChannelModel() {
-    	
-    }
-    
-    public ChannelModel(String name, String descriptopn ) {
-    	this.name = name;
-    	this.description = descriptopn;
-    }
-    
-    
+	public ChannelModel() {
+
+	}
+
+	public ChannelModel(String name, String description) {
+		this.name = name;
+		this.description = description;
+	}
+
 }

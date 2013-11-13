@@ -31,12 +31,12 @@ import com.infobip.campus.chattopush.services.impl.DefaultMessageService;
 public class MessageController {
 
 	MessageService messageService;
-	
-	public void setMessageService(MessageService mS){
+
+	public void setMessageService(MessageService mS) {
 		this.messageService = mS;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/fetch/{username}/{channel}/{start-time}/{end-time}")
+	@RequestMapping(method = RequestMethod.GET, value = "/fetch/{username}/{channel})/{start-time}/{end-time}")
 	@ResponseBody
 	public List<MessageModel> fetchMessageList(
 			@PathVariable("username") String un,
@@ -57,6 +57,7 @@ public class MessageController {
 				result.add(msg);
 			}
 		}
+
 		return result;
 	}
 
@@ -65,19 +66,17 @@ public class MessageController {
 	public String sendMessage(@RequestBody final ClientMessageModel msg) {
 
 		MessageModel mmodel = new MessageModel();
-		
+
 		String username = msg.getUsername();
 		String channel = msg.getChannel();
 		String message = msg.getMessageText();
-		
+
 		mmodel.setChannel(channel);
 		mmodel.setMessage(message);
 		mmodel.setUser(username);
 		mmodel.setLastMessageDate(new Date());
 
 		if (messageService.addMessage(mmodel) == true) {
-			//PushNotification pN = new PushNotification(mmodel);
-			//pN.notifyChannel();
 			return "success";
 		} else {
 			return "error";
