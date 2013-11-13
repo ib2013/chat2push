@@ -37,17 +37,7 @@ public class ChannelModel {
     /**
      */
     private String description;
-    
-    /**
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
-    private Date lastMessageDate;
-    
-    /**
-     */
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<UserModel> users = new HashSet<UserModel>();
+
     
     public ChannelModel() {
     	
@@ -57,5 +47,6 @@ public class ChannelModel {
     	this.name = name;
     	this.description = descriptopn;
     }
+    
     
 }

@@ -3,12 +3,9 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-
 import java.util.Date;
 
+import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -18,29 +15,19 @@ import org.springframework.format.annotation.DateTimeFormat;
 @RooToString
 @RooJpaActiveRecord
 @Entity
-public class MessageModel {
-	public MessageModel(){
-		
-	}
+public class UsersChannels {
 
     /**
      */
-    @OneToOne(cascade = CascadeType.ALL)
-    private String user;
-    
+    private String username;
+
     /**
      */
-    @OneToOne(cascade = CascadeType.ALL)
     private String channel;
 
     /**
      */
-    private String message;
-
-    /**
-     */
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
-    private Date lastMessageDate;
-    
+    @DateTimeFormat(style = "M-")
+    private Date lastMessage;
 }

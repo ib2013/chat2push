@@ -3,26 +3,24 @@
 
 package com.infobip.campus.chattopush.models;
 
-import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
-import com.infobip.campus.chattopush.models.UserModel;
 import java.util.Date;
 
 privileged aspect MessageModel_Roo_JavaBean {
     
-    public UserModel MessageModel.getUser() {
+    public String MessageModel.getUser() {
         return this.user;
     }
     
-    public void MessageModel.setUser(UserModel user) {
+    public void MessageModel.setUser(String user) {
         this.user = user;
     }
     
-    public ChannelModel MessageModel.getChannel() {
+    public String MessageModel.getChannel() {
         return this.channel;
     }
     
-    public void MessageModel.setChannel(ChannelModel channel) {
+    public void MessageModel.setChannel(String channel) {
         this.channel = channel;
     }
     
