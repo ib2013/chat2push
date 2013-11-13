@@ -19,7 +19,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
-import com.infobip.campus.chattopush.services.DefaultChannelService;
+import com.infobip.campus.chattopush.services.impl.DefaultChannelService;
 
 
 @RequestMapping("/channel/**")

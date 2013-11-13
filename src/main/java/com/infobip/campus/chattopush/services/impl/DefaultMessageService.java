@@ -1,6 +1,7 @@
-package com.infobip.campus.chattopush.services;
+package com.infobip.campus.chattopush.services.impl;
 
 import com.infobip.campus.chattopush.models.MessageModel;
+import com.infobip.campus.chattopush.services.MessageService;
 
 import java.util.List;
 
