@@ -48,19 +48,6 @@ public class DefaultChannelService implements ChannelService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.infobip.campus.chattopush.channels.ChannelService#parseJson(java.lang
-	 * .String)
-	 */
-	/*
-	 * @Override public ArrayList<ChannelModel> parseJson(String jsonResponse) {
-	 * 
-	 * }
-	 */
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * com.infobip.campus.rsstopush.channels.ChannelService#addChannel(com.infobip
 	 * .campus.rsstopush.channels.ChannelModel)
 	 */
@@ -172,33 +159,36 @@ public class DefaultChannelService implements ChannelService {
 			return false;
 		}
 	}
-
-	public JsonArray fetchSubscribedUserByChannelListService(String username) {
-		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
-		JsonArray channelsArray = new JsonArray();
-		for (ChannelModel channelElement : channels) {
-			JsonObject obj = new JsonObject();
-			obj.addProperty("name", channelElement.getName());
-			obj.addProperty("description", channelElement.getDescription());
-			boolean findUser = false;
-			for (UsersChannels relations : UsersChannels
-					.findAllUsersChannelses()) {
-				if (relations.getUsername().equals(username)
-						&& relations.getChannel().equals(
-								channelElement.getName())) {
-					obj.addProperty("isSubscribed", true);
-					findUser = true;
-					break;
-				}
-			}
-			if (!findUser) {
-				obj.addProperty("isSubscribed", false);
-			}
-			channelsArray.add(obj);
-		}
-		return channelsArray;
+	
+	@Override
+	public List<ChannelModel> fetchSubscribedChannels(String username) {
+//		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+//		JsonArray channelsArray = new JsonArray();
+//		for (ChannelModel channelElement : channels) {
+//			JsonObject obj = new JsonObject();
+//			obj.addProperty("name", channelElement.getName());
+//			obj.addProperty("description", channelElement.getDescription());
+//			boolean findUser = false;
+//			for (UsersChannels relations : UsersChannels
+//					.findAllUsersChannelses()) {
+//				if (relations.getUsername().equals(username)
+//						&& relations.getChannel().equals(
+//								channelElement.getName())) {
+//					obj.addProperty("isSubscribed", true);
+//					findUser = true;
+//					break;
+//				}
+//			}
+//			if (!findUser) {
+//				obj.addProperty("isSubscribed", false);
+//			}
+//			channelsArray.add(obj);
+//		}
+//		return channelsArray;
+		return null;
 	}
 
+	@Override
 	public boolean addUserToRoom(JsonObject object) {
 		try {
 			String channelName = "";
@@ -218,21 +208,22 @@ public class DefaultChannelService implements ChannelService {
 		}
 	}
 
-	public JsonArray fetchUserByChannel(ChannelModel channel) {
-		JsonArray arr = new JsonArray();
-		for (UsersChannels relations : UsersChannels.findAllUsersChannelses()) {
-			if (channel.getName().equals(relations.getChannel())) {
-				JsonObject obj = new JsonObject();
-				obj.addProperty("username", relations.getUsername());
-				obj.addProperty(
-						"messageCount",
-						countMessagesByUserAndChannel(relations.getChannel(),
-								relations.getUsername()));
-				arr.add(obj);
-			}
-		}
-		return arr;
-
+	@Override
+	public List<UserModel> fetchUserByChannel(ChannelModel channel) {
+//		JsonArray arr = new JsonArray();
+//		for (UsersChannels relations : UsersChannels.findAllUsersChannelses()) {
+//			if (channel.getName().equals(relations.getChannel())) {
+//				JsonObject obj = new JsonObject();
+//				obj.addProperty("username", relations.getUsername());
+//				obj.addProperty(
+//						"messageCount",
+//						countMessagesByUserAndChannel(relations.getChannel(),
+//								relations.getUsername()));
+//				arr.add(obj);
+//			}
+//		}
+//		return arr;
+		return null;
 	}
 
 	private int countMessagesByUserAndChannel(String channelName,

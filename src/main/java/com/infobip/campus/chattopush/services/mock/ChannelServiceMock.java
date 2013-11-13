@@ -1,16 +1,16 @@
 package com.infobip.campus.chattopush.services.mock;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.models.ChannelModel;
+import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.ChannelService;
 
 public class ChannelServiceMock implements ChannelService {
 
 	@Override
-	public ArrayList<ChannelModel> fetchChannelList() {
+	public List<ChannelModel> fetchChannelList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -34,7 +34,7 @@ public class ChannelServiceMock implements ChannelService {
 	}
 
 	@Override
-	public JsonArray fetchSubscribedUserByChannelListService(String username) {
+	public List<ChannelModel> fetchSubscribedChannels(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -46,7 +46,7 @@ public class ChannelServiceMock implements ChannelService {
 	}
 
 	@Override
-	public JsonArray fetchUserByChannel(ChannelModel channelName) {
+	public List<UserModel> fetchUserByChannel(ChannelModel channelName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
