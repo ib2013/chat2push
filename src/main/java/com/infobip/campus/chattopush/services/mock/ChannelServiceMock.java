@@ -111,4 +111,16 @@ public class ChannelServiceMock implements ChannelService {
 		return uAcM;
 	}
 
+	@Override
+	public boolean isChannelExists(ChannelModel channel) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isExistsUserInChannel(UsersChannels relations) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -6,42 +6,45 @@ import com.infobip.campus.chattopush.configuration.UserConfiguration;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
+import com.infobip.campus.chattopush.services.enums.StatusAction;
+import com.infobip.campus.chattopush.services.enums.StatusUser;
 
 public class UserServiceMock implements UserService {
 
 	@Override
-	public statusLoginUser loginUser(UserModel _model) {
+	public StatusUser loginUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 
 		for (UserModel model : UserConfiguration.usrs) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
-					return statusLoginUser.SUCCESS;
+
+					return StatusUser.SUCCESS;
 				} else {
-					return statusLoginUser.PASSERROR;
+					return StatusUser.PASSERROR;
 
 				}
 			}
 		}
 
-		return statusLoginUser.NOUSER;
+		return StatusUser.NOUSER;
 	}
 
 	@Override
-	public statusLoginUser registerUser(UserModel _model) {
+	public StatusUser registerUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		if (checkUserExists(_model) == false) {
 			if (UserConfiguration.usrs.add(_model) == true) {
-				return statusLoginUser.SUCCESS;
+				return StatusUser.SUCCESS;
 			}
 		}
-		return statusLoginUser.EXISTS;
+		return StatusUser.EXISTS;
 
 	}
 
 	@Override
-	public boolean deleteUser(UserModel _model) {
+	public StatusAction deleteUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 
@@ -50,12 +53,11 @@ public class UserServiceMock implements UserService {
 					.contentEquals(_model.getUsername())) {
 				UserConfiguration.usrs.remove(i);
 
-				return true;
+				return StatusAction.SUCCESS;
 			}
 		}
 
-		return false;
-
+		return StatusAction.FAIL;
 	}
 
 	@Override

@@ -50,11 +50,13 @@
 	
 	-->
 	
-	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="channelService" factory-method="getInstance" >
+
+	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="channelService" factory-method="getChannelServiceInstance" >
 		<constructor-arg value="mock"></constructor-arg>
 	</bean>
 	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="userService" factory-method="getUserServiceInstance" >
 		<constructor-arg value="mock"></constructor-arg>
+
 	</bean>
 	
 	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="messageService" factory-method="getMessageServiceInstance" >

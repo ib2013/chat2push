@@ -73,7 +73,7 @@ public class ChannelController {
 	@RequestMapping(method = RequestMethod.POST, value = "/addUserToRoom", consumes = "application/json")
 	@ResponseBody
 	public String addUserToChannel(@RequestBody final UsersChannels object) {
-
+		
 		if (channelService.addUserToRoom(object) == true) {
 			return "success";
 		} else {
@@ -85,7 +85,7 @@ public class ChannelController {
 	@ResponseBody
 	public String removeUserFromChannel(@RequestBody final UsersChannels object) {
 
-		if (channelService.addUserToRoom(object) == true) {
+		if (channelService.removeUserFromRoom(object) == true) {
 			return "success";
 		} else {
 			return "fail";

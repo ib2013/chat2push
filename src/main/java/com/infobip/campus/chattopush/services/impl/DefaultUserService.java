@@ -8,11 +8,13 @@ import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
+import com.infobip.campus.chattopush.services.enums.StatusAction;
+import com.infobip.campus.chattopush.services.enums.StatusUser;
 
 @Service
 public class DefaultUserService implements UserService {
 
-	public statusLoginUser loginUser(UserModel _model) {
+	public StatusUser loginUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
@@ -21,29 +23,30 @@ public class DefaultUserService implements UserService {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
 
-					return statusLoginUser.SUCCESS;
+					return StatusUser.SUCCESS;
 				} else {
-					return statusLoginUser.PASSERROR;
-
+					return StatusUser.PASSERROR;
 				}
 			}
 		}
 
-		return statusLoginUser.NOUSER;
+
+		return StatusUser.NOUSER;
 	}
 
-	public statusLoginUser registerUser(UserModel _model) {
+	public StatusUser registerUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		try {
 			if (checkUserExists(_model) == false) {
 				_model.merge();
-				return statusLoginUser.SUCCESS;
+
+				return StatusUser.SUCCESS;
 			}
-			return statusLoginUser.EXISTS;
+			return StatusUser.EXISTS;
 		} catch (Exception e) {
 			// TODO: handle exception
-			return statusLoginUser.EXC;
+			return StatusUser.EXC;
 
 		}
 
@@ -59,7 +62,8 @@ public class DefaultUserService implements UserService {
 		return "success";
 	}
 
-	public boolean deleteUser(UserModel _model) {
+
+	public StatusAction deleteUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
@@ -69,15 +73,16 @@ public class DefaultUserService implements UserService {
 				if (model.getUsername().contentEquals(
 						_model.getUsername().toString())) {
 					model.remove();
-					return true;
 
+					return StatusAction.SUCCESS;
 				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			return false;
+
+			return StatusAction.EXC;
 		}
-		return false;
+		return StatusAction.FAIL;
 
 	}
 
