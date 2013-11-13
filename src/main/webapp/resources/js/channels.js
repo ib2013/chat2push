@@ -107,12 +107,10 @@ function fetchAllChannels() {
 									//alert("Prvi elem");
 									
 									$('#select_room_list').append(
-											"<option selected value='"
+											"<option selected id='"+priv+"' value='"
 													+ channelName
 													+ "'>"
 													+ channelName.substr(0,	40)
-													+ "&nbsp;&nbsp;&nbsp;"
-													+ priv
 													+ "</option>");
 									//alert("Prvi elem je: " + channelName);
 									fetchUsersByRoom(channelName);
@@ -121,12 +119,10 @@ function fetchAllChannels() {
 								} else {
 									//alert("Ostali elem");
 									$('#select_room_list').append(
-											"<option value='"
+											"<option id='"+priv+"' value='"
 													+ channelName
 													+ "'>"
 													+ channelName.substr(0,	40)
-													+ "&nbsp;&nbsp;&nbsp;"
-													+ priv
 													+ "</option>");
 								}
 								

@@ -64,8 +64,10 @@ function deleteUser(user) {
 
 }
 function onChangeFetchUsersByRoom() {
-	var roomname = $("#select_room_list option:selected").val();
-	// alert(roomname);
+	var room = $("#select_room_list option:selected");
+	if(room.attr("id")=="PR") $("#keyImage").show();
+	else $("#keyImage").hide();
+	var roomname=room.val();
 	fetchUsersByRoom(roomname);
 }
 function fetchUsersByRoom(roomname) {
