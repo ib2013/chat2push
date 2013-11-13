@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.infobip.campus.chattopush.clients.ClientChannelModel;
+import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.configuration.Configuration;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
@@ -161,7 +163,7 @@ public class DefaultChannelService implements ChannelService {
 	}
 	
 	@Override
-	public List<ChannelModel> fetchSubscribedChannels(String username) {
+	public List<ClientChannelModel> fetchSubscribedChannels(String username) {
 //		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 //		JsonArray channelsArray = new JsonArray();
 //		for (ChannelModel channelElement : channels) {
@@ -189,14 +191,10 @@ public class DefaultChannelService implements ChannelService {
 	}
 
 	@Override
-	public boolean addUserToRoom(JsonObject object) {
+	public boolean addUserToRoom(UsersChannels object) {
 		try {
-			String channelName = "";
-			String userName = "";
-			JsonElement elename = object.get("name");
-			JsonElement eleusername = object.get("username");
-			channelName = elename.getAsString();
-			userName = eleusername.getAsString();
+			String channelName = object.getUsername();
+			String userName = object.getChannel();
 			UsersChannels uC = new UsersChannels();
 			uC.setChannel(channelName);
 			uC.setUsername(userName);
@@ -207,9 +205,14 @@ public class DefaultChannelService implements ChannelService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean removeUserFromRoom(UsersChannels object){
+		return true;
+	}
 
 	@Override
-	public List<UserModel> fetchUserByChannel(ChannelModel channel) {
+	public List<UserActivityModel> fetchUserByChannel(ChannelModel channel) {
 //		JsonArray arr = new JsonArray();
 //		for (UsersChannels relations : UsersChannels.findAllUsersChannelses()) {
 //			if (channel.getName().equals(relations.getChannel())) {
