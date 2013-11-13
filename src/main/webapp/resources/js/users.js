@@ -74,12 +74,12 @@ function fetchUsersByRoom(roomname) {
 
 	$('#loading').show();
 	$('#list_rooms_users').html("");
-	
+	$('#list_users').html("");
+	showAllUsers();
 	if (isNaN(roomname)) {
 		var room = new Object();
-
 		room.name = roomname;
-		showAllUsers();
+		
 		$
 				.ajax({
 					url : _basePath + "channel/fetchUsersByRoom",
@@ -114,13 +114,11 @@ function fetchUsersByRoom(roomname) {
 						
 						} else {
 							$('#loading').hide();
-							alert('Room is empty');
 						}
 					}
 				});
 	} else {
-		// $('#loading').hide();
-		// alert('Error show users by room.');
+		
 	}
 	$('#loading').hide();
 }
