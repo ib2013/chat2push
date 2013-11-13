@@ -23,6 +23,7 @@ function drop(ev) {
 		//alert("prvi div");
 		
 		addUserToChannel(data, channel);
+		
 	} else {
 		//alert("drugi div");
 		removeUserFromChannel(data, channel);
