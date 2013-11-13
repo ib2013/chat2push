@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonObject;
+import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
 
 @Service
@@ -105,4 +107,16 @@ public class DefaultUserService implements UserService {
 
 	}
 
+	public String addChannelToUser(JsonObject object) {
+		// TODO Auto-generated method stub
+		List<ChannelModel> channelModel = ChannelModel.findAllChannelModels();
+
+		for (ChannelModel model : channelModel) {
+			if (model.getName().contentEquals(object.get("room").toString())) {
+				return model.getName();
+			}
+		}
+
+		return null;
+	}
 }
