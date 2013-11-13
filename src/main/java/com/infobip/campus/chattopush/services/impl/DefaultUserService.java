@@ -4,25 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
+import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
 
 @Service
 public class DefaultUserService implements UserService {
-
-	@Override
-	public boolean loginUser() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean registerUser() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	public String loginUser(UserModel _model) {
 		// TODO Auto-generated method stub
@@ -41,11 +29,11 @@ public class DefaultUserService implements UserService {
 		return "UserError";
 	}
 
-	public String registerUser(UserModel model) {
+	public String registerUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		try {
-			if (checkUserExists(model) == "fail") {
-				model.merge();
+			if (checkUserExists(_model) == "fail") {
+				_model.merge();
 				return "success";
 			}
 			return "exists";
@@ -108,15 +96,9 @@ public class DefaultUserService implements UserService {
 
 	}
 
-	public String addChannelToUser(JsonObject object) {
+	public String addChannelToUser(UsersChannels _model) {
 		// TODO Auto-generated method stub
 		List<ChannelModel> channelModel = ChannelModel.findAllChannelModels();
-
-		for (ChannelModel model : channelModel) {
-			if (model.getName().contentEquals(object.get("room").toString())) {
-				return model.getName();
-			}
-		}
 
 		return null;
 	}
