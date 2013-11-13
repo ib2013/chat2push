@@ -9,6 +9,7 @@ import com.infobip.campus.chattopush.services.enums.StatusUser;
 
 public interface UserService {
 
+
 	public StatusUser loginUser(UserModel _model);
 
 	public StatusUser registerUser(UserModel _model);
