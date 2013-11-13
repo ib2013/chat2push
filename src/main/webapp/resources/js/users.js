@@ -107,7 +107,13 @@ function fetchUsersByRoom(roomname) {
 														+ "'<label id='"
 														+ username
 														+ "' class='removeList' onclick='deleteUser(this)'>Remove<label></p>"*/
-												"<p>"+username+"</p>"
+												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
+												+ username
+												+ "'>"
+												+ username
+												+ "<label id='"
+												+ username
+												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"
 												);
 							}
 							$('#loading').hide();
