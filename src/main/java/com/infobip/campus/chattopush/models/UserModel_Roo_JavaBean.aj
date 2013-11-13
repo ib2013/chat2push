@@ -3,19 +3,9 @@
 
 package com.infobip.campus.chattopush.models;
 
-import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
-import java.util.Set;
 
 privileged aspect UserModel_Roo_JavaBean {
-    
-    public String UserModel.getGoogleId() {
-        return this.googleId;
-    }
-    
-    public void UserModel.setGoogleId(String googleId) {
-        this.googleId = googleId;
-    }
     
     public String UserModel.getUsername() {
         return this.username;
@@ -31,14 +21,6 @@ privileged aspect UserModel_Roo_JavaBean {
     
     public void UserModel.setPassword(String password) {
         this.password = password;
-    }
-    
-    public Set<ChannelModel> UserModel.getChannels() {
-        return this.channels;
-    }
-    
-    public void UserModel.setChannels(Set<ChannelModel> channels) {
-        this.channels = channels;
     }
     
 }

@@ -43,8 +43,8 @@ public class ChannelController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/fetchUsersByRoom", consumes = "application/json")
 	@ResponseBody
-	public ArrayList<UserModel> fetchUsersByChannel(@RequestBody final ChannelModel channelName) {
-		return defaultChannelService.fetchUserByChannel(channelName);
+	public String fetchUsersByChannel(@RequestBody final ChannelModel channelName) {
+		return defaultChannelService.fetchUserByChannel(channelName).toString();
 		
 	}
 	

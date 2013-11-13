@@ -1,6 +1,7 @@
 package com.infobip.campus.chattopush.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -23,6 +24,6 @@ public interface ChannelService {
 	
 	public abstract boolean addUserToRoom(JsonObject object);
 	
-	public ArrayList<UserModel> fetchUserByChannel(ChannelModel channelName);
+	public JsonArray fetchUserByChannel(ChannelModel channelName);
 
 }

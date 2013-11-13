@@ -1,15 +1,16 @@
 package com.infobip.campus.chattopush.models;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-import org.datanucleus.store.types.sco.simple.ArrayList;
-import org.datanucleus.store.types.sco.simple.List;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -34,19 +35,12 @@ public class UserModel {
 
 	/**
      */
-	private String googleId = new String();
-
-	/**
-     */
 	private String username;
 
 	/**
      */
 	private String password;
 
-	
-     
-	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "users")
-	private Set<ChannelModel> channels = new HashSet<ChannelModel>();
+
 	
 }
