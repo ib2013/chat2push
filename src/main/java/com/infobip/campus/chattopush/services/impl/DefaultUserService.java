@@ -12,34 +12,34 @@ import com.infobip.campus.chattopush.services.UserService;
 @Service
 public class DefaultUserService implements UserService {
 
-	public String loginUser(UserModel _model) {
+	public statusLoginUser loginUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
-					return "success";
+					return statusLoginUser.SUCCESS;
 				} else {
-					return "PwdError";
+					return statusLoginUser.PASSERROR;
 				}
 			}
 		}
 
-		return "UserError";
+		return statusLoginUser.NOUSER;
 	}
 
-	public String registerUser(UserModel _model) {
+	public statusLoginUser registerUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		try {
-			if (checkUserExists(_model) == "fail") {
+			if (checkUserExists(_model) == false) {
 				_model.merge();
-				return "success";
+				return statusLoginUser.SUCCESS;
 			}
-			return "exists";
+			return statusLoginUser.EXISTS;
 		} catch (Exception e) {
 			// TODO: handle exception
-			return e.toString();
+			return statusLoginUser.EXC;
 		}
 
 	}
@@ -54,7 +54,7 @@ public class DefaultUserService implements UserService {
 		return "success";
 	}
 
-	public String deleteUser(UserModel _model) {
+	public boolean deleteUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
@@ -62,27 +62,27 @@ public class DefaultUserService implements UserService {
 			for (UserModel model : list) {
 				if (model.getUsername().contentEquals(_model.getUsername().toString())) {
 					model.remove();
-					return "success";
+					return true;
 				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			return "fail";
+			return false;
 		}
-		return "fail";
+		return false;
 
 	}
 
-	public String checkUserExists(UserModel _model) {
+	public boolean checkUserExists(UserModel _model) {
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
 			if (model.getUsername().contentEquals(_model.getUsername().toString())) {
-				return "success";
+				return true;
 			}
 		}
 
-		return "fail";
+		return false;
 	}
 
 	public List<UserModel> fetchAllUsers() {
@@ -96,10 +96,10 @@ public class DefaultUserService implements UserService {
 
 	}
 
-	public String addChannelToUser(UsersChannels _model) {
+	public boolean addChannelToUser(UsersChannels _model) {
 		// TODO Auto-generated method stub
 		List<ChannelModel> channelModel = ChannelModel.findAllChannelModels();
 
-		return null;
+		return false;
 	}
 }

@@ -7,15 +7,19 @@ import com.infobip.campus.chattopush.models.UsersChannels;
 
 public interface UserService {
 
-	public String loginUser(UserModel _model);
+	public enum statusLoginUser {
+		SUCCESS, PASSERROR, NOUSER, EXISTS, EXC
+	}
 
-	public String registerUser(UserModel _model);
+	public statusLoginUser loginUser(UserModel _model);
 
-	public String deleteUser(UserModel _model);
+	public statusLoginUser registerUser(UserModel _model);
 
-	public String checkUserExists(UserModel _model);
+	public boolean deleteUser(UserModel _model);
+
+	public boolean checkUserExists(UserModel _model);
 
 	public List<UserModel> fetchAllUsers();
 
-	public String addChannelToUser(UsersChannels _model);
+	public boolean addChannelToUser(UsersChannels _model);
 }

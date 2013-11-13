@@ -16,7 +16,7 @@ public class UserModel {
 	}
 
 	public UserModel(String username, String password) {
-		this.username = password;
+		this.username = username;
 		this.password = password;
 	}
 

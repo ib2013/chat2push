@@ -44,14 +44,18 @@
 	<!-- Store preferred theme configuration in a cookie -->
 	<bean class="org.springframework.web.servlet.theme.CookieThemeResolver" id="themeResolver" p:cookieName="theme" p:defaultThemeName="standard" />
 	
-	<!-- Nase definicije -->
+	<!-- 
+		
+		Nase definicije 
+	
+	-->
 	
 	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="channelService" factory-method="getInstance" >
 		<constructor-arg value="mock"></constructor-arg>
 	</bean>
 	
 	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="userService" factory-method="getUserServiceInstance" >
-		<constructor-arg value=""></constructor-arg>
+		<constructor-arg value="mock"></constructor-arg>
 	</bean>
 	
 	<bean class="com.infobip.campus.chattopush.controllers.ChannelController" id="channelController" >

@@ -2,6 +2,7 @@ package com.infobip.campus.chattopush.services.mock;
 
 import java.util.List;
 
+import com.infobip.campus.chattopush.configuration.UserConfiguration;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
@@ -9,39 +10,68 @@ import com.infobip.campus.chattopush.services.UserService;
 public class UserServiceMock implements UserService {
 
 	@Override
-	public String loginUser(UserModel _model) {
+	public statusLoginUser loginUser(UserModel _model) {
 		// TODO Auto-generated method stub
-		return null;
+
+		for (UserModel model : UserConfiguration.listaKorisnika) {
+			if (model.getUsername().contentEquals(_model.getUsername())) {
+				if (model.getPassword().contentEquals(_model.getPassword())) {
+					return statusLoginUser.SUCCESS;
+				} else {
+					return statusLoginUser.PASSERROR;
+				}
+			}
+		}
+
+		return statusLoginUser.NOUSER;
 	}
 
 	@Override
-	public String registerUser(UserModel _model) {
+	public statusLoginUser registerUser(UserModel _model) {
 		// TODO Auto-generated method stub
-		return null;
+		if (checkUserExists(_model) == false) {
+			if (UserConfiguration.listaKorisnika.add(_model) == true) {
+				return statusLoginUser.SUCCESS;
+			}
+		}
+		return statusLoginUser.EXISTS;
+
 	}
 
 	@Override
-	public String deleteUser(UserModel _model) {
+	public boolean deleteUser(UserModel _model) {
 		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public String checkUserExists(UserModel _model) {
-		// TODO Auto-generated method stub
-		return null;
+		for (int i = 0; i < UserConfiguration.listaKorisnika.size(); i++) {
+			if (UserConfiguration.listaKorisnika.get(i).getUsername().contentEquals(_model.getUsername())) {
+				UserConfiguration.listaKorisnika.remove(i);
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
 	public List<UserModel> fetchAllUsers() {
 		// TODO Auto-generated method stub
-		return null;
+		return UserConfiguration.listaKorisnika;
 	}
 
 	@Override
-	public String addChannelToUser(UsersChannels _model) {
+	public boolean addChannelToUser(UsersChannels _model) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
+	@Override
+	public boolean checkUserExists(UserModel _model) {
+		// TODO Auto-generated method stub
+		for (UserModel model : UserConfiguration.listaKorisnika) {
+			if (model.getUsername().contentEquals(_model.getUsername())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
