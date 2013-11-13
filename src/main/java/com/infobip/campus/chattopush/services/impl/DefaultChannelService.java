@@ -259,4 +259,5 @@ public class DefaultChannelService implements ChannelService {
 
 		return counter;
 	}
+
 }
