@@ -2,9 +2,11 @@ package com.infobip.campus.chattopush.services;
 
 import java.util.List;
 
-import com.google.gson.JsonObject;
+import com.infobip.campus.chattopush.clients.ClientChannelModel;
+import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.models.ChannelModel;
-import com.infobip.campus.chattopush.models.UserModel;
+import com.infobip.campus.chattopush.models.UsersChannels;
+
 
 public interface ChannelService {
 
@@ -16,10 +18,12 @@ public interface ChannelService {
 
 	public boolean updateChannel(ChannelModel oldModel, ChannelModel newModel);
 
-	public List<ChannelModel> fetchSubscribedChannels(String username);
+	public List<ClientChannelModel> fetchSubscribedChannels(String username);
 
-	public boolean addUserToRoom(JsonObject object);
+	public boolean addUserToRoom(UsersChannels object);
+	
+	public boolean removeUserFromRoom(UsersChannels object);
 
-	public List<UserModel> fetchUserByChannel(ChannelModel channelName);
+	public List<UserActivityModel> fetchUserByChannel(ChannelModel channelName);
 
 }

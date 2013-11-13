@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.impl.DefaultUserService;
 
@@ -52,9 +54,17 @@ public class UserController {
 	@ResponseBody
 
 	public List<UserModel> fetchAllUsers() {
-
-
 		return defaultUserService.fetchAllUsers();
+
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/addChannelToUser", consumes = "application/json")
+	@ResponseBody
+	public String addChannelToUser(@RequestBody String user_Channel) {
+
+		JsonParser parser = new JsonParser();
+		JsonObject object = (JsonObject) parser.parse(user_Channel);
+		return defaultUserService.addChannelToUser(object);
 
 	}
 
