@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
-import com.infobip.campus.chattopush.services.UserService.statusLoginUser;
+import com.infobip.campus.chattopush.services.UserService.statusAction;
+import com.infobip.campus.chattopush.services.UserService.statusUser;
 
 @RequestMapping("/user/**")
 @Controller
@@ -25,7 +26,7 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/login", consumes = "application/json")
 	@ResponseBody
-	public statusLoginUser loginUser(@RequestBody UserModel model) {
+	public statusUser loginUser(@RequestBody UserModel model) {
 
 		return userService.loginUser(model);
 
@@ -33,7 +34,7 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/register", consumes = "application/json")
 	@ResponseBody
-	public statusLoginUser registerUser(@RequestBody UserModel model) {
+	public statusUser registerUser(@RequestBody UserModel model) {
 
 		return userService.registerUser(model);
 
@@ -41,12 +42,10 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/delete", consumes = "application/json")
 	@ResponseBody
-	public boolean deleteUser(@RequestBody UserModel model) {
+	public statusAction deleteUser(@RequestBody UserModel model) {
 
-		if (userService.deleteUser(model) == true) {
-			return true;
-		}
-		return false;
+		return userService.deleteUser(model);
+
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/fetchAllUsers")

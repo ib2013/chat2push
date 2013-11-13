@@ -10,46 +10,46 @@ import com.infobip.campus.chattopush.services.UserService;
 public class UserServiceMock implements UserService {
 
 	@Override
-	public statusLoginUser loginUser(UserModel _model) {
+	public statusUser loginUser(UserModel _model) {
 		// TODO Auto-generated method stub
 
 		for (UserModel model : UserConfiguration.usrs) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
-					return statusLoginUser.SUCCESS;
+					return statusUser.SUCCESS;
 				} else {
-					return statusLoginUser.PASSERROR;
+					return statusUser.PASSERROR;
 				}
 			}
 		}
 
-		return statusLoginUser.NOUSER;
+		return statusUser.NOUSER;
 	}
 
 	@Override
-	public statusLoginUser registerUser(UserModel _model) {
+	public statusUser registerUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		if (checkUserExists(_model) == false) {
 			if (UserConfiguration.usrs.add(_model) == true) {
-				return statusLoginUser.SUCCESS;
+				return statusUser.SUCCESS;
 			}
 		}
-		return statusLoginUser.EXISTS;
+		return statusUser.EXISTS;
 
 	}
 
 	@Override
-	public boolean deleteUser(UserModel _model) {
+	public statusAction deleteUser(UserModel _model) {
 		// TODO Auto-generated method stub
 
 		for (int i = 0; i < UserConfiguration.usrs.size(); i++) {
 			if (UserConfiguration.usrs.get(i).getUsername().contentEquals(_model.getUsername())) {
 				UserConfiguration.usrs.remove(i);
-				return true;
+				return statusAction.SUCCESS;
 			}
 		}
 
-		return false;
+		return statusAction.FAIL;
 	}
 
 	@Override
