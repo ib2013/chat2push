@@ -8,8 +8,6 @@ public interface MessageService {
 
 	public List<MessageModel> fetchMessageList();
 
-//	public abstract ArrayList<ChannelModel> parseJson(String jsonResponse);
-
 	public boolean addMessage(MessageModel message);
 
 }

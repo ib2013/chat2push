@@ -17,6 +17,7 @@ import com.google.appengine.api.mail.MailService.Message;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.infobip.campus.chattopush.clients.ClientMessageModel;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
@@ -29,8 +30,11 @@ import com.infobip.campus.chattopush.services.impl.DefaultMessageService;
 @Controller
 public class MessageController {
 
-	@Autowired
 	MessageService messageService;
+	
+	public void setMessageService(MessageService mS){
+		this.messageService = mS;
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/fetch/{username}/{channel}/{start-time}/{end-time}")
 	@ResponseBody
@@ -58,13 +62,13 @@ public class MessageController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/send", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public String sendMessage(@RequestBody JsonObject body) {
+	public String sendMessage(@RequestBody final ClientMessageModel msg) {
 
 		MessageModel mmodel = new MessageModel();
 		
-		String username = body.get("username").toString();
-		String channel = body.get("channel").toString();
-		String message = body.get("message").toString();
+		String username = msg.getUsername();
+		String channel = msg.getChannel();
+		String message = msg.getMessageText();
 		
 		mmodel.setChannel(channel);
 		mmodel.setMessage(message);
@@ -72,8 +76,8 @@ public class MessageController {
 		mmodel.setLastMessageDate(new Date());
 
 		if (messageService.addMessage(mmodel) == true) {
-			PushNotification pN = new PushNotification(mmodel);
-			pN.notifyChannel();
+			//PushNotification pN = new PushNotification(mmodel);
+			//pN.notifyChannel();
 			return "success";
 		} else {
 			return "error";
