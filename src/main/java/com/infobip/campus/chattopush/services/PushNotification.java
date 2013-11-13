@@ -32,8 +32,8 @@ public class PushNotification {
 	public PushNotification(MessageModel msg) {
 		JsonObject object = new JsonObject();
 		
-		object.addProperty("name", msg.getChannel().getName());
-		object.addProperty("sent-by", msg.getUser().getUsername());
+		object.addProperty("name", msg.getChannel());
+		object.addProperty("sent-by", msg.getUser());
 		object.addProperty("message", msg.getMessage());
 		object.addProperty("time", msg.getLastMessageDate().toString());
 		
@@ -44,7 +44,7 @@ public class PushNotification {
 
 		androidData = new Data("MESSAGE");
 
-		channelNames.add(msg.getChannel().getName());
+		channelNames.add(msg.getChannel());
 	}
 
 	public void notifyChannel() {

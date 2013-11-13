@@ -23,8 +23,8 @@ import com.google.gson.JsonParser;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
-import com.infobip.campus.chattopush.services.DefaultMessageService;
 import com.infobip.campus.chattopush.services.PushNotification;
+import com.infobip.campus.chattopush.services.impl.DefaultMessageService;
 
 @RequestMapping("/message/**")
 @Controller
@@ -77,12 +77,12 @@ public class MessageController {
 		Date date2 = new Date(endTime);
 
 		for (MessageModel msg : messages) {
-			if (msg.getChannel().getName().equals(ch)
+			if (msg.getChannel().equals(ch)
 					&& msg.getLastMessageDate().after(date1)
 					&& msg.getLastMessageDate().before(date2)) {
 				JsonObject jsonObject = new JsonObject();
 				jsonObject.addProperty("message-text", msg.getMessage());
-				jsonObject.addProperty("sent-by", msg.getUser().getUsername());
+				jsonObject.addProperty("sent-by", msg.getUser());
 				jsonObject.addProperty("time", msg.getLastMessageDate()
 						.toString());
 
@@ -116,9 +116,9 @@ public class MessageController {
 				break;
 			}
 		}
-		mmodel.setChannel(cmodel);
+		mmodel.setChannel("");
 		mmodel.setMessage("");
-		mmodel.setUser(umodel);
+		mmodel.setUser("");
 		mmodel.setLastMessageDate(new Date());
 		
 		JsonObject response = new JsonObject();

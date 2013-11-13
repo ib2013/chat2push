@@ -1,10 +1,10 @@
-package com.infobip.campus.chattopush.services;
+package com.infobip.campus.chattopush.services.impl;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
-import com.infobip.campus.chattopush.models.UserModel;
+import com.infobip.campus.chattopush.services.MessageService;
 
 import java.util.List;
 
@@ -25,25 +25,6 @@ public class DefaultMessageService implements MessageService {
 		return messageList;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.infobip.campus.rsstopush.channels.ChannelService#parseJson(java.lang
-	 * .String)
-	 */
-	/*@Override
-	public ArrayList<ChannelModel> parseJson(String jsonResponse) {
-
-	}*/
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.infobip.campus.rsstopush.channels.ChannelService#addChannel(com.infobip
-	 * .campus.rsstopush.channels.ChannelModel)
-	 */
 	@Override
 	public boolean addMessage(MessageModel message) {
 		try {
