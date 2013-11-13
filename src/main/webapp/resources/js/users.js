@@ -79,7 +79,6 @@ function fetchUsersByRoom(roomname) {
 		var room = new Object();
 
 		room.name = roomname;
-		alert(JSON.stringify(room));
 		showAllUsers();
 		$
 				.ajax({
