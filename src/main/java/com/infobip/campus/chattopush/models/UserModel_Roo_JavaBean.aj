@@ -5,7 +5,7 @@ package com.infobip.campus.chattopush.models;
 
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
-import java.util.List;
+import java.util.Set;
 
 privileged aspect UserModel_Roo_JavaBean {
     
@@ -33,11 +33,11 @@ privileged aspect UserModel_Roo_JavaBean {
         this.password = password;
     }
     
-    public List<ChannelModel> UserModel.getChannels() {
+    public Set<ChannelModel> UserModel.getChannels() {
         return this.channels;
     }
     
-    public void UserModel.setChannels(List<ChannelModel> channels) {
+    public void UserModel.setChannels(Set<ChannelModel> channels) {
         this.channels = channels;
     }
     

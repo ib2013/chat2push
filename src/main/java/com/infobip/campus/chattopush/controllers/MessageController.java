@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.appengine.api.mail.MailService.Message;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
@@ -96,26 +97,27 @@ public class MessageController {
 	public JsonObject sendMessage(
 		@RequestBody String body){
 		
+		
 		MessageModel mmodel = new MessageModel();
 		ChannelModel cmodel = new ChannelModel();
 		UserModel umodel = new UserModel();
 		
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 		for (ChannelModel c : channels) {
-			if (c.getName().equals(ch)) {
+			if (c.getName().equals("")) {
 				cmodel = c;
 				break;
 			}
 		}
 		List<UserModel> users = UserModel.findAllUserModels();
 		for (UserModel u : users) {
-			if (u.getUsername().equals(un)) {
+			if (u.getUsername().equals("")) {
 				umodel = u;
 				break;
 			}
 		}
 		mmodel.setChannel(cmodel);
-		mmodel.setMessage(message);
+		mmodel.setMessage("");
 		mmodel.setUser(umodel);
 		mmodel.setLastMessageDate(new Date());
 		

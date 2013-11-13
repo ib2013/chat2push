@@ -9,16 +9,19 @@ import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.configuration.Configuration;
 import com.infobip.campus.chattopush.models.ChannelModel;
-
 import com.infobip.campus.chattopush.models.UserModel;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Service;
 
@@ -63,7 +66,7 @@ public class DefaultChannelService implements ChannelService {
 
 		Date d = new Date();
 		channel.setLastMessageDate(d);
-		channel.setUsers(new ArrayList<UserModel>());
+		channel.setUsers(new HashSet<UserModel>());
 		channel.persist();
 
 		Gson gson = new Gson();
@@ -190,29 +193,53 @@ public class DefaultChannelService implements ChannelService {
 		return channelsArray;
 	}
 
-
 	public boolean addUserToRoom(JsonObject object) {
+
 		String channelName = "";
 		String userName = "";
-		channelName = object.get("name").toString();
-		userName = object.get("username").toString();
-
+		JsonElement elename = object.get("name");
+		JsonElement eleusername = object.get("username");
+		channelName = elename.getAsString();
+		userName = eleusername.getAsString();
+		// userName = object.get("username")
 		List<UserModel> users = UserModel.findAllUserModels();
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 
 		for (ChannelModel ch : channels) {
 			if (ch.getName().equals(channelName)) {
 				for (UserModel user : users) {
-					if (user.getUsername().equals(userName))
-						ch.getUsers().add(user);
-					
-					return true;
+					if (user.getUsername().equals(userName)) {
+						try {
+							ch.getUsers().add(user);
+							ch.merge();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						/*
+						 * ChannelModel cm = new ChannelModel();
+						 * cm.setDescription(new String(ch.getDescription()));
+						 * cm.setIsPublic(true); cm.setLastMessageDate(new
+						 * Date(ch.getLastMessageDate().getTime()));
+						 * 
+						 * ArrayList<UserModel> list = new
+						 * ArrayList<UserModel>(); list.addAll(ch.getUsers());
+						 * list.add(user);
+						 * 
+						 * cm.setUsers(list);
+						 * 
+						 * cm.persist(); ch.remove();
+						 */
+
+						return true;
+					}
+
 				}
 			}
 		}
 		return false;
 	}
-	
+
 	public ArrayList<UserModel> fetchUserByChannel(ChannelModel channelName) {
 		return (ArrayList<UserModel>) channelName.getUsers();
 
