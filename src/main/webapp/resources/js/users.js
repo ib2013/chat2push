@@ -21,8 +21,9 @@ function showAllUsers() {
 													+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>");
 						}
 
-					});
-	$('#loading').hide();
+					}).done(onChangeFetchUsersByRoom());
+	
+	
 }
 
 function deleteUser(user) {
@@ -64,18 +65,20 @@ function deleteUser(user) {
 
 }
 function onChangeFetchUsersByRoom() {
+	$('#loading').show();
 	var room = $("#select_room_list option:selected");
 	if(room.attr("id")=="PR") $("#keyImage").show();
 	else $("#keyImage").hide();
 	var roomname=room.val();
 	fetchUsersByRoom(roomname);
+	$('#loading').hide();
 }
 function fetchUsersByRoom(roomname) {
 
-	$('#loading').show();
+	
 	$('#list_rooms_users').html("");
-	$('#list_users').html("");
-	showAllUsers();
+	//$('#list_users').html("");
+	//showAllUsers();
 	if (isNaN(roomname)) {
 		var room = new Object();
 		room.name = roomname;
@@ -98,8 +101,9 @@ function fetchUsersByRoom(roomname) {
 						
 							for (var i = 0; i < data.length; i++) {
 								var username = data[i].username;
-								var elementForRemove=document.getElementById(username);
-								elementForRemove.remove();
+							//	var elementForRemove=document.getElementById(username);
+								//alert(username);
+								//elementForRemove.remove();
 								$('#list_rooms_users')
 										.append(
 												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
@@ -113,17 +117,16 @@ function fetchUsersByRoom(roomname) {
 							}
 						
 						} else {
-							$('#loading').hide();
+							
 						}
 					}
 				});
 	} else {
 		
 	}
-	$('#loading').hide();
+
 }
 
-function refershUserList(){
+function refreshUserList(){
 	showAllUsers();
-	onChangeFetchUsersByRoom();
 }

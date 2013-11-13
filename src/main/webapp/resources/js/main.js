@@ -106,7 +106,7 @@ documentReady = function(basePath) {
 
 	fetchAllChannels();
 	showAllUsers();
-	onChangeFetchUsersByRoom();
+	//onChangeFetchUsersByRoom();
 	$('#loading').hide();
 
 
