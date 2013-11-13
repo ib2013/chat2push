@@ -95,7 +95,6 @@ function fetchUsersByRoom(roomname) {
 						if (data.length != 0) {
 							
 							$('#list_rooms_users').html("");
-							alert(data);
 						
 							for (var i = 0; i < data.length; i++) {
 								var username = data[i].username;
