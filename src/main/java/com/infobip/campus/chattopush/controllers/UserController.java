@@ -47,10 +47,7 @@ public class UserController {
 
 	public StatusAction deleteUser(@RequestBody UserModel model) {
 
-		if (userService.deleteUser(model) == true) {
-			return true;
-		}
-		return false;
+		return userService.deleteUser(model) ;
 
 	}
 
