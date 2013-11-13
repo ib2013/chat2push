@@ -41,16 +41,16 @@ public class ChannelController {
 	@RequestMapping(method = RequestMethod.POST, value = "/fetchUsersByRoom", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public List<UserActivityModel> fetchUsersByChannel(
-			@RequestBody final ChannelModel channelName) {
-		return channelService.fetchUserByChannel(channelName);
+			@RequestBody final ChannelModel channel) {
+		return channelService.fetchUserByChannel(channel);
 
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/fetchUsersByRoom", consumes = "application/json", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/fetchOpositeUsersByRoom", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public List<UserActivityModel> fetchOpositeUsersByChannel(
-			@RequestBody final ChannelModel channelName) {
-		return channelService.fetchUserByChannel(channelName);
+			@RequestBody final ChannelModel channel) {
+		return channelService.fetchOpositeUserByChannel(channel);
 
 	}
 
