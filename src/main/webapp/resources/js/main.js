@@ -23,6 +23,7 @@ function drop(ev) {
 		//alert("prvi div");
 		
 		addUserToChannel(data, channel);
+		
 	} else {
 		//alert("drugi div");
 		removeUserFromChannel(data, channel);
@@ -105,7 +106,7 @@ documentReady = function(basePath) {
 
 	fetchAllChannels();
 	showAllUsers();
-	
+	onChangeFetchUsersByRoom();
 	$('#loading').hide();
 
 

@@ -13,7 +13,7 @@ public class UserServiceMock implements UserService {
 	public statusLoginUser loginUser(UserModel _model) {
 		// TODO Auto-generated method stub
 
-		for (UserModel model : UserConfiguration.listaKorisnika) {
+		for (UserModel model : UserConfiguration.usrs) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
 					return statusLoginUser.SUCCESS;
@@ -30,7 +30,7 @@ public class UserServiceMock implements UserService {
 	public statusLoginUser registerUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		if (checkUserExists(_model) == false) {
-			if (UserConfiguration.listaKorisnika.add(_model) == true) {
+			if (UserConfiguration.usrs.add(_model) == true) {
 				return statusLoginUser.SUCCESS;
 			}
 		}
@@ -42,9 +42,9 @@ public class UserServiceMock implements UserService {
 	public boolean deleteUser(UserModel _model) {
 		// TODO Auto-generated method stub
 
-		for (int i = 0; i < UserConfiguration.listaKorisnika.size(); i++) {
-			if (UserConfiguration.listaKorisnika.get(i).getUsername().contentEquals(_model.getUsername())) {
-				UserConfiguration.listaKorisnika.remove(i);
+		for (int i = 0; i < UserConfiguration.usrs.size(); i++) {
+			if (UserConfiguration.usrs.get(i).getUsername().contentEquals(_model.getUsername())) {
+				UserConfiguration.usrs.remove(i);
 				return true;
 			}
 		}
@@ -55,7 +55,7 @@ public class UserServiceMock implements UserService {
 	@Override
 	public List<UserModel> fetchAllUsers() {
 		// TODO Auto-generated method stub
-		return UserConfiguration.listaKorisnika;
+		return UserConfiguration.usrs;
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class UserServiceMock implements UserService {
 	@Override
 	public boolean checkUserExists(UserModel _model) {
 		// TODO Auto-generated method stub
-		for (UserModel model : UserConfiguration.listaKorisnika) {
+		for (UserModel model : UserConfiguration.usrs) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				return true;
 			}

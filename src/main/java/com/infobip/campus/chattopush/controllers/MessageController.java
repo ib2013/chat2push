@@ -1,11 +1,8 @@
 package com.infobip.campus.chattopush.controllers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,69 +16,70 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.appengine.api.mail.MailService.Message;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.infobip.campus.chattopush.clients.ClientMessageModel;
+import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
+import com.infobip.campus.chattopush.models.UserModel;
+import com.infobip.campus.chattopush.services.ChannelService;
+import com.infobip.campus.chattopush.services.MessageService;
+import com.infobip.campus.chattopush.services.PushNotification;
 import com.infobip.campus.chattopush.services.impl.DefaultMessageService;
 
 @RequestMapping("/message/**")
 @Controller
 public class MessageController {
-	@Autowired
-	DefaultMessageService defaultMessageService;
 
-	/*
-	 * @RequestMapping(method = RequestMethod.GET, value = "/fetch", params = {
-	 * "username", "channel", "start-time", "end-time" }) public @ResponseBody
-	 * JsonArray fetchMessageList(
-	 * 
-	 * @RequestParam(value = "username") String un,
-	 * 
-	 * @RequestParam(value = "channel") String ch,
-	 * 
-	 * @RequestParam(value = "start-time") String startTime,
-	 * 
-	 * @RequestParam(value = "end-time") String endTime) {
-	 * 
-	 * 
-	 * JsonArray jsonArray = new JsonArray(); List<MessageModel> messages =
-	 * defaultMessageService.fetchMessageList(); Date date1 = new
-	 * Date(startTime); Date date2 = new Date(endTime);
-	 * 
-	 * for (MessageModel msg : messages) { if
-	 * (msg.getChannel().getName().equals(ch) &&
-	 * msg.getLastMessageDate().after(date1) &&
-	 * msg.getLastMessageDate().before(date2)) { JsonObject jsonObject = new
-	 * JsonObject(); jsonObject.addProperty("message-text", msg.getMessage());
-	 * jsonObject.addProperty("sent-by", msg.getUser().getUsername());
-	 * jsonObject.addProperty("time", msg.getLastMessageDate().toString());
-	 * 
-	 * jsonArray.add(jsonObject); } } return jsonArray; }
-	 */
+	MessageService messageService;
 
-	@RequestMapping(method = RequestMethod.GET, value = "/fetch/{username}/{channel}/{start-time}/{end-time}")
+	public void setMessageService(MessageService mS) {
+		this.messageService = mS;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/fetch/{username}/{channel}")///{start-time}/{end-time}")
 	@ResponseBody
-	public JsonArray fetchMessageList(@PathVariable("username") String un,
-			@PathVariable("username") String ch,
-			@PathVariable("username") String startTime,
-			@PathVariable("username") String endTime) {
+	public List<MessageModel> fetchMessageList(
+			@PathVariable("username") String un,
+			@PathVariable("channel") String ch/*,
+			@PathVariable("start-time") String startTime,
+			@PathVariable("end-time") String endTime*/) {
 
-		JsonArray jsonArray = new JsonArray();
-		List<MessageModel> messages = defaultMessageService.fetchMessageList();
-		Date date1 = new Date(startTime);
-		Date date2 = new Date(endTime);
+		List<MessageModel> messages = messageService.fetchMessageList();
+		List<MessageModel> result = new ArrayList<MessageModel>();
+		Date date1 = new Date(0);//startTime);
+		Date date2 = new Date();//endTime);
 
 		for (MessageModel msg : messages) {
 			if (msg.getChannel().equals(ch)
 					&& msg.getLastMessageDate().after(date1)
-					&& msg.getLastMessageDate().before(date2)) {
-				JsonObject jsonObject = new JsonObject();
-				jsonObject.addProperty("message-text", msg.getMessage());
-				jsonObject.addProperty("sent-by", msg.getUser());
-				jsonObject.addProperty("time", msg.getLastMessageDate()
-						.toString());
-
-				jsonArray.add(jsonObject);
+					&& msg.getLastMessageDate().before(date2)
+					&& msg.getUser().equals(un)) {
+				result.add(msg);
 			}
 		}
-		return jsonArray;
+
+		return result;
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/send", consumes = "application/json")
+	@ResponseBody
+	public String sendMessage(@RequestBody final ClientMessageModel msg) {
+
+		MessageModel mmodel = new MessageModel();
+
+		String username = msg.getUsername();
+		String channel = msg.getChannel();
+		String message = msg.getMessageText();
+
+		mmodel.setChannel(channel);
+		mmodel.setMessage(message);
+		mmodel.setUser(username);
+		mmodel.setLastMessageDate(new Date());
+
+		if (messageService.addMessage(mmodel) == true) {
+			return "success";
+		} else {
+			return "error";
+		}
 	}
 }

@@ -53,8 +53,10 @@
 	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="channelService" factory-method="getInstance" >
 		<constructor-arg value="mock"></constructor-arg>
 	</bean>
-	
 	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="userService" factory-method="getUserServiceInstance" >
+		<constructor-arg value="mock"></constructor-arg>
+	</bean>
+	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="messageService" factory-method="getMessageServiceInstance" >
 		<constructor-arg value="mock"></constructor-arg>
 	</bean>
 	
@@ -62,11 +64,18 @@
 		<property name="channelService" ref="channelService"></property>
 	</bean>
 	
+
 	<bean class="com.infobip.campus.chattopush.controllers.UserController" id="userController">
 		<property name="userService" ref="userService"></property>
 	</bean>
 	
 	<!--  -->
+
+	<bean class="com.infobip.campus.chattopush.controllers.MessageController" id="messageController" >
+		<property name="messageService" ref="messageService"></property>
+	</bean>
+	
+
 	
 	<!-- This bean resolves specific types of exceptions to corresponding logical - view names for error views. The default behaviour of DispatcherServlet - is to propagate all exceptions to the servlet container: 
 		this will happen - here with all other types of exceptions. -->
