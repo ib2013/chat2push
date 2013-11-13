@@ -69,12 +69,13 @@ function onChangeFetchUsersByRoom() {
 	else $("#keyImage").hide();
 	var roomname=room.val();
 	fetchUsersByRoom(roomname);
+	fetchOpositeUsersByRoom(roomname);
 }
 function fetchUsersByRoom(roomname) {
 
 	$('#loading').show();
 	$('#list_rooms_users').html("");
-	$('#list_users').html("");
+	//$('#list_users').html("");
 	//showAllUsers();
 	if (isNaN(roomname)) {
 		var room = new Object();
@@ -123,7 +124,60 @@ function fetchUsersByRoom(roomname) {
 	$('#loading').hide();
 }
 
+function fetchOpositeUsersByRoom(roomname) {
+
+	$('#loading').show();
+	$('#list_users').html("");
+	//$('#list_users').html("");
+	//showAllUsers();
+	if (isNaN(roomname)) {
+		var room = new Object();
+		room.name = roomname;
+		
+		$
+				.ajax({
+					url : _basePath + "channel/fetchOpositeUsersByRoom",
+					headers : {
+						'Accept' : 'application/json',
+						'Content-Type' : 'application/json'
+					},
+					method : 'POST',
+					contentType : 'application/json',
+					data : JSON.stringify(room),
+					success : function(data, status, xhr) {
+						
+						if (data.length != 0) {
+							
+							//$('#list_rooms_users').html("");
+						
+							for (var i = 0; i < data.length; i++) {
+								var username = data[i].username;
+								//var elementForRemove=document.getElementById(username);
+								//elementForRemove.remove();
+								$('#list_users')
+										.append(
+												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
+												+ username
+												+ "'>"
+												+ username
+												+ "<label id='"
+												+ username
+												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"
+												);
+							}
+						
+						} else {
+							$('#loading').hide();
+						}
+					}
+				});
+	} else {
+		
+	}
+	$('#loading').hide();
+}
+
 function refershUserList(){
-	showAllUsers();
+	//showAllUsers();
 	onChangeFetchUsersByRoom();
 }
