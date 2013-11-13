@@ -1,6 +1,10 @@
 package com.infobip.campus.chattopush.services;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
+import com.infobip.campus.chattopush.models.UserModel;
 
 import java.util.List;
 
@@ -50,5 +54,11 @@ public class DefaultMessageService implements MessageService {
 			return false;
 		}
 	}
+	
+	public JsonArray fetchUserByChannelListService(String username) {
+		
+		return null;
+	}
+
 
 }
