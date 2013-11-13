@@ -55,9 +55,6 @@ public class DefaultChannelService implements ChannelService {
 	 */
 	@Override
 	public boolean addChannel(ChannelModel channel) {
-
-		channel.persist();
-
 		Gson gson = new Gson();
 		try {
 			URL url = new URL("https://pushapi.infobip.com/1/application/"
@@ -73,10 +70,16 @@ public class DefaultChannelService implements ChannelService {
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 			String responseText = new String(response.getContent());
-
-			return true; // response.getResponseCode() == 200;
+			try {
+				channel.persist();
+				return true; // response.getResponseCode() == 200;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			channel.remove();
 			return false;
 		}
 	}
@@ -90,16 +93,9 @@ public class DefaultChannelService implements ChannelService {
 	 */
 	@Override
 	public boolean deleteChannel(ChannelModel channel) {
-		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
-
-		for (ChannelModel channelElement : channels) {
-			if (channelElement.getName().equals(channel.getName())) {
-				channelElement.remove();
-				break;
-			}
-		}
 		Gson gson = new Gson();
 		try {
+
 			String channelName = channel.getName().replaceAll(" ", "%20");
 			URL url = new URL("https://pushapi.infobip.com/1/application/"
 					+ Configuration.APPLICATION_ID + "/channel/" + channelName);
@@ -114,7 +110,20 @@ public class DefaultChannelService implements ChannelService {
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 
-			return true;
+			List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+			try {
+				for (ChannelModel channelElement : channels) {
+					if (channelElement.getName().equals(channel.getName())) {
+						channelElement.remove();
+						break;
+					}
+				}
+				return true;
+			} catch (Exception e) {
+				addChannel(channel);
+				e.printStackTrace();
+				return false;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
