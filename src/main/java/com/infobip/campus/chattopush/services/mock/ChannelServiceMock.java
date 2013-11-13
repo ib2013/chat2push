@@ -12,6 +12,10 @@ import com.infobip.campus.chattopush.services.ChannelService;
 
 public class ChannelServiceMock implements ChannelService {
 
+	public ChannelServiceMock() {
+		//UserConfiguration.init();
+	}
+
 	@Override
 	public List<ChannelModel> fetchChannelList() {
 		return UserConfiguration.chnls;
@@ -97,11 +101,11 @@ public class ChannelServiceMock implements ChannelService {
 	}
 
 	@Override
-	public List<UserActivityModel> fetchUserByChannel(ChannelModel channelName) {
+	public List<UserActivityModel> fetchUserByChannel(ChannelModel channel) {
 		// TODO Auto-generated method stub
 		List<UserActivityModel> uAcM = new ArrayList<UserActivityModel>();
 		for (int i = 0; i < UserConfiguration.us.size(); i++) {
-			if (UserConfiguration.cs.get(i).equals(channelName)) {
+			if (UserConfiguration.cs.get(i).equals(channel.getName())) {
 				UserActivityModel x = new UserActivityModel();
 				x.setUsername(UserConfiguration.us.get(i));
 				x.setMessageCount((int) Math.random() * 100);

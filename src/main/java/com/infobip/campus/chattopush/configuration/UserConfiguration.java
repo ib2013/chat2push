@@ -25,5 +25,8 @@ public class UserConfiguration {
 		usrs.add(new UserModel("korisnik3", "pass3"));
 		usrs.add(new UserModel("korisnik4", "pass4"));
 		usrs.add(new UserModel("korisnik5", "pass5"));
+		
+		us.add("korisnik1");
+		cs.add("kanal1");
 	}
 }

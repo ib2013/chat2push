@@ -26,24 +26,24 @@ public class MessageController {
 		this.messageService = mS;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/fetch/{username}/{channel}")/*{start-time}/{end-time}*/
+	@RequestMapping(method = RequestMethod.GET, value = "/fetch/{username}/{channel}/{start-time}/{end-time}")
 	@ResponseBody
 	public List<MessageModel> fetchMessageList(
 			@PathVariable("username") String un,
-			@PathVariable("channel") String ch)
-			//@PathVariable("start-time") String startTime,
-			//@PathVariable("end-time") String endTime) 
+			@PathVariable("channel") String ch,
+			@PathVariable("start-time") String startTime,
+			@PathVariable("end-time") String endTime) 
 			{
 
 		List<MessageModel> messages = messageService.fetchMessageList();
 		List<MessageModel> result = new ArrayList<MessageModel>();
-		//Date date1 = new Date(startTime);
-		//Date date2 = new Date(endTime);
+		Date date1 = new Date(startTime);
+		Date date2 = new Date(endTime);
 
 		for (MessageModel msg : messages) {
 			if (msg.getChannel().equals(ch)
-					//&& msg.getLastMessageDate().after(date1)
-					//&& msg.getLastMessageDate().before(date2)
+					&& msg.getLastMessageDate().after(date1)
+					&& msg.getLastMessageDate().before(date2)
 					&& msg.getUser().equals(un)) {
 				result.add(msg);
 			}
@@ -70,7 +70,7 @@ public class MessageController {
 
 		try {
 			if (messageService.addMessage(mmodel)) {
-				/*try {
+				try {
 					PushNotification pN = new PushNotification(mmodel);
 					pN.notifyChannel();
 				} catch (Exception e) {
@@ -85,7 +85,7 @@ public class MessageController {
 					}
 					e.printStackTrace();
 					return false;
-				}*/
+				}
 			}
 
 		} catch (Exception e) {
