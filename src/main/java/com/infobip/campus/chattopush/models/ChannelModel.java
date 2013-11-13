@@ -18,12 +18,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-<<<<<<< HEAD
+
 import javax.validation.Constraint;
 
 
-=======
->>>>>>> ae7652695777fa2521d3d72fdd9cd6ce6e8b91fa
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
