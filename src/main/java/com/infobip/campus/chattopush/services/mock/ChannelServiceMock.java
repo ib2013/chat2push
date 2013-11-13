@@ -3,14 +3,12 @@ package com.infobip.campus.chattopush.services.mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
+import com.infobip.campus.chattopush.configuration.UserConfiguration;
 import com.infobip.campus.chattopush.models.ChannelModel;
-import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
-import com.infobip.campus.chattopush.configuration.*;
 
 public class ChannelServiceMock implements ChannelService {
 
@@ -68,8 +66,7 @@ public class ChannelServiceMock implements ChannelService {
 
 			boolean exists = false;
 			for (int i = 0; i < UserConfiguration.us.size(); i++) {
-				if (UserConfiguration.us.get(i).equals(username)
-						&& UserConfiguration.cs.get(i).equals(ch.getName())) {
+				if (UserConfiguration.us.get(i).equals(username) && UserConfiguration.cs.get(i).equals(ch.getName())) {
 					clChM.setSubscribed(true);
 					exists = true;
 					break;
@@ -94,8 +91,7 @@ public class ChannelServiceMock implements ChannelService {
 	@Override
 	public boolean removeUserFromRoom(UsersChannels object) {
 		for (int i = 0; i < UserConfiguration.us.size(); i++) {
-			if (UserConfiguration.us.get(i).equals(object.getUsername())
-					&& UserConfiguration.cs.get(i).equals(object.getChannel())) {
+			if (UserConfiguration.us.get(i).equals(object.getUsername()) && UserConfiguration.cs.get(i).equals(object.getChannel())) {
 				UserConfiguration.us.remove(i);
 				UserConfiguration.cs.remove(i);
 				return true;

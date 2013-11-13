@@ -46,7 +46,7 @@ function addUserToChannel(userName, channel) {
 	
 	var channelUserJson=new Object();
 	channelUserJson.username=user.id;
-	channelUserJson.name=channel.val();
+	channelUserJson.channel=channel.val();
 	
 	$.ajax({
 		url: _basePath+ "channel/addUserToRoom",
@@ -79,7 +79,7 @@ function removeUserFromChannel(userName, channel) {
 	
 	var channelUserJson=new Object();
 	channelUserJson.username=user.id;
-	channelUserJson.name=channel.val();
+	channelUserJson.channel=channel.val();
 	
 	$.ajax({
 		url: _basePath+ "channel/removeUserFromRoom",

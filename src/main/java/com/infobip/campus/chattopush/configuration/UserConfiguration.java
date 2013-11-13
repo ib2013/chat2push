@@ -2,7 +2,8 @@ package com.infobip.campus.chattopush.configuration;
 
 import java.util.ArrayList;
 
-import com.infobip.campus.chattopush.models.*;
+import com.infobip.campus.chattopush.models.ChannelModel;
+import com.infobip.campus.chattopush.models.UserModel;
 
 public class UserConfiguration {
 	public static ArrayList<ChannelModel> chnls = new ArrayList<ChannelModel>();

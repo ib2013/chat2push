@@ -4,54 +4,42 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
+import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
 
 @Service
 public class DefaultUserService implements UserService {
 
-	@Override
-	public boolean loginUser() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean registerUser() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public String loginUser(UserModel _model) {
+	public statusUser loginUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
-					return "success";
+					return statusUser.SUCCESS;
 				} else {
-					return "PwdError";
+					return statusUser.PASSERROR;
 				}
 			}
 		}
 
-		return "UserError";
+		return statusUser.NOUSER;
 	}
 
-	public String registerUser(UserModel model) {
+	public statusUser registerUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		try {
-			if (checkUserExists(model) == "fail") {
-				model.merge();
-				return "success";
+			if (checkUserExists(_model) == false) {
+				_model.merge();
+				return statusUser.SUCCESS;
 			}
-			return "exists";
+			return statusUser.EXISTS;
 		} catch (Exception e) {
 			// TODO: handle exception
-			return e.toString();
+			return statusUser.EXC;
 		}
 
 	}
@@ -66,7 +54,7 @@ public class DefaultUserService implements UserService {
 		return "success";
 	}
 
-	public String deleteUser(UserModel _model) {
+	public statusAction deleteUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
@@ -74,27 +62,27 @@ public class DefaultUserService implements UserService {
 			for (UserModel model : list) {
 				if (model.getUsername().contentEquals(_model.getUsername().toString())) {
 					model.remove();
-					return "success";
+					return statusAction.SUCCESS;
 				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			return "fail";
+			return statusAction.EXC;
 		}
-		return "fail";
+		return statusAction.FAIL;
 
 	}
 
-	public String checkUserExists(UserModel _model) {
+	public boolean checkUserExists(UserModel _model) {
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
 			if (model.getUsername().contentEquals(_model.getUsername().toString())) {
-				return "success";
+				return true;
 			}
 		}
 
-		return "fail";
+		return false;
 	}
 
 	public List<UserModel> fetchAllUsers() {
@@ -108,16 +96,10 @@ public class DefaultUserService implements UserService {
 
 	}
 
-	public String addChannelToUser(JsonObject object) {
+	public boolean addChannelToUser(UsersChannels _model) {
 		// TODO Auto-generated method stub
 		List<ChannelModel> channelModel = ChannelModel.findAllChannelModels();
 
-		for (ChannelModel model : channelModel) {
-			if (model.getName().contentEquals(object.get("room").toString())) {
-				return model.getName();
-			}
-		}
-
-		return null;
+		return false;
 	}
 }
