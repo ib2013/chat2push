@@ -20,7 +20,7 @@ import com.google.appengine.api.mail.MailService.Message;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.models.MessageModel;
-import com.infobip.campus.chattopush.services.DefaultMessageService;
+import com.infobip.campus.chattopush.services.impl.DefaultMessageService;
 
 @RequestMapping("/message/**")
 @Controller
@@ -70,12 +70,12 @@ public class MessageController {
 		Date date2 = new Date(endTime);
 
 		for (MessageModel msg : messages) {
-			if (msg.getChannel().getName().equals(ch)
+			if (msg.getChannel().equals(ch)
 					&& msg.getLastMessageDate().after(date1)
 					&& msg.getLastMessageDate().before(date2)) {
 				JsonObject jsonObject = new JsonObject();
 				jsonObject.addProperty("message-text", msg.getMessage());
-				jsonObject.addProperty("sent-by", msg.getUser().getUsername());
+				jsonObject.addProperty("sent-by", msg.getUser());
 				jsonObject.addProperty("time", msg.getLastMessageDate()
 						.toString());
 
