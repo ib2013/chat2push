@@ -70,14 +70,12 @@ function onChangeFetchUsersByRoom() {
 }
 function fetchUsersByRoom(roomname) {
 
-
+	$('#loading').show();
 	$('#list_rooms_users').html("");
 	if (isNaN(roomname)) {
-		// alert(roomname);
 		var room = new Object();
 		room.name = roomname;
 		showAllUsers();
-		// $('#loading').show();
 		$
 				.ajax({
 					url : _basePath + "channel/fetchUsersByRoom",
@@ -111,7 +109,7 @@ function fetchUsersByRoom(roomname) {
 												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"
 												);
 							}
-							$('#loading').hide();
+						
 						} else {
 							$('#loading').hide();
 							alert('Room is empty');
@@ -122,4 +120,5 @@ function fetchUsersByRoom(roomname) {
 		// $('#loading').hide();
 		// alert('Error show users by room.');
 	}
+	$('#loading').hide();
 }
