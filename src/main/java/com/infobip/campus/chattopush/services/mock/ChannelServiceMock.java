@@ -12,6 +12,10 @@ import com.infobip.campus.chattopush.services.ChannelService;
 
 public class ChannelServiceMock implements ChannelService {
 
+	public ChannelServiceMock() {
+		//UserConfiguration.init();
+	}
+
 	@Override
 	public List<ChannelModel> fetchChannelList() {
 		return UserConfiguration.chnls;

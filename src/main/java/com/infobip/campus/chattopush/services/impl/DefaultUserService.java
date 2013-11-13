@@ -12,34 +12,34 @@ import com.infobip.campus.chattopush.services.UserService;
 @Service
 public class DefaultUserService implements UserService {
 
-	public statusLoginUser loginUser(UserModel _model) {
+	public statusUser loginUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
-					return statusLoginUser.SUCCESS;
+					return statusUser.SUCCESS;
 				} else {
-					return statusLoginUser.PASSERROR;
+					return statusUser.PASSERROR;
 				}
 			}
 		}
 
-		return statusLoginUser.NOUSER;
+		return statusUser.NOUSER;
 	}
 
-	public statusLoginUser registerUser(UserModel _model) {
+	public statusUser registerUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		try {
 			if (checkUserExists(_model) == false) {
 				_model.merge();
-				return statusLoginUser.SUCCESS;
+				return statusUser.SUCCESS;
 			}
-			return statusLoginUser.EXISTS;
+			return statusUser.EXISTS;
 		} catch (Exception e) {
 			// TODO: handle exception
-			return statusLoginUser.EXC;
+			return statusUser.EXC;
 		}
 
 	}
@@ -54,7 +54,7 @@ public class DefaultUserService implements UserService {
 		return "success";
 	}
 
-	public boolean deleteUser(UserModel _model) {
+	public statusAction deleteUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
@@ -62,14 +62,14 @@ public class DefaultUserService implements UserService {
 			for (UserModel model : list) {
 				if (model.getUsername().contentEquals(_model.getUsername().toString())) {
 					model.remove();
-					return true;
+					return statusAction.SUCCESS;
 				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			return false;
+			return statusAction.EXC;
 		}
-		return false;
+		return statusAction.FAIL;
 
 	}
 
