@@ -5,28 +5,22 @@ import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
-import com.google.appengine.labs.repackaged.org.json.JSONException;
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
+
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.configuration.Configuration;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
-import com.infobip.campus.chattopush.models.UserModel;
+
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -55,34 +49,38 @@ public class DefaultChannelService implements ChannelService {
 	 */
 	@Override
 	public boolean addChannel(ChannelModel channel) {
-
-		Gson gson = new Gson();
-		try {
-			URL url = new URL("https://pushapi.infobip.com/1/application/"
-					+ Configuration.APPLICATION_ID + "/channel");
-			HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
-
-			request.addHeader(new HTTPHeader("Authorization",
-					Configuration.AUTHORIZATION_INFO));
-			request.addHeader(new HTTPHeader("content-type",
-					"application/json; charset=utf-8"));
-			request.setPayload(gson.toJson(channel).getBytes());
-
-			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
-					.fetch(request);
-			String responseText = new String(response.getContent());
+		if (isChannelExists(channel)) {
+			return false;
+		} else {
+			Gson gson = new Gson();
 			try {
-				channel.persist();
-				return true; // response.getResponseCode() == 200;
+				URL url = new URL("https://pushapi.infobip.com/1/application/"
+						+ Configuration.APPLICATION_ID + "/channel");
+				HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
+
+				request.addHeader(new HTTPHeader("Authorization",
+						Configuration.AUTHORIZATION_INFO));
+				request.addHeader(new HTTPHeader("content-type",
+						"application/json; charset=utf-8"));
+				request.setPayload(gson.toJson(channel).getBytes());
+
+				HTTPResponse response = URLFetchServiceFactory
+						.getURLFetchService().fetch(request);
+				String responseText = new String(response.getContent());
+				try {
+					channel.persist();
+					return true; // response.getResponseCode() == 200;
+				} catch (Exception e) {
+					e.printStackTrace();
+					return false;
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				channel.remove();
 				return false;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			channel.remove();
-			return false;
 		}
+
 	}
 
 	/*
@@ -170,82 +168,83 @@ public class DefaultChannelService implements ChannelService {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public List<ClientChannelModel> fetchSubscribedChannels(String username) {
-//		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
-//		JsonArray channelsArray = new JsonArray();
-//		for (ChannelModel channelElement : channels) {
-//			JsonObject obj = new JsonObject();
-//			obj.addProperty("name", channelElement.getName());
-//			obj.addProperty("description", channelElement.getDescription());
-//			boolean findUser = false;
-//			for (UsersChannels relations : UsersChannels
-//					.findAllUsersChannelses()) {
-//				if (relations.getUsername().equals(username)
-//						&& relations.getChannel().equals(
-//								channelElement.getName())) {
-//					obj.addProperty("isSubscribed", true);
-//					findUser = true;
-//					break;
-//				}
-//			}
-//			if (!findUser) {
-//				obj.addProperty("isSubscribed", false);
-//			}
-//			channelsArray.add(obj);
-//		}
-//		return channelsArray;
-		return null;
+
+		List<ClientChannelModel> returnParametars = new ArrayList<ClientChannelModel>();
+		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+
+		for (ChannelModel channelElement : channels) {
+			ClientChannelModel clientObject = new ClientChannelModel();
+			clientObject.setName(channelElement.getName());
+			clientObject.setDescription(channelElement.getDescription());
+			boolean findUser = false;
+			for (UsersChannels relations : UsersChannels
+					.findAllUsersChannelses()) {
+				if (relations.getUsername().equals(username)
+						&& relations.getChannel().equals(
+								channelElement.getName())) {
+					clientObject.setSubscribed(true);
+					findUser = true;
+					break;
+				}
+			}
+			if (!findUser) {
+				clientObject.setSubscribed(false);
+			}
+			returnParametars.add(clientObject);
+		}
+		return returnParametars;
 	}
 
 	@Override
 	public boolean addUserToRoom(UsersChannels object) {
+		if (isExistsUserInChannel(object)) {
+			try {
+				object.persist();
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public boolean removeUserFromRoom(UsersChannels object) {
 		try {
-			String channelName = object.getUsername();
-			String userName = object.getChannel();
-			UsersChannels uC = new UsersChannels();
-			uC.setChannel(channelName);
-			uC.setUsername(userName);
-			uC.setLastMessage(new Date());
-			uC.persist();
+			object.remove();
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
 	}
-	
-	@Override
-	public boolean removeUserFromRoom(UsersChannels object){
-		return true;
-	}
 
 	@Override
 	public List<UserActivityModel> fetchUserByChannel(ChannelModel channel) {
-//		JsonArray arr = new JsonArray();
-//		for (UsersChannels relations : UsersChannels.findAllUsersChannelses()) {
-//			if (channel.getName().equals(relations.getChannel())) {
-//				JsonObject obj = new JsonObject();
-//				obj.addProperty("username", relations.getUsername());
-//				obj.addProperty(
-//						"messageCount",
-//						countMessagesByUserAndChannel(relations.getChannel(),
-//								relations.getUsername()));
-//				arr.add(obj);
-//			}
-//		}
-//		return arr;
-		return null;
+		List<UserActivityModel> activityUsers = new ArrayList<UserActivityModel>();
+
+		for (UsersChannels relations : UsersChannels.findAllUsersChannelses()) {
+			if (channel.getName().equals(relations.getChannel())) {
+				UserActivityModel userObject = new UserActivityModel();
+				userObject.setUsername(relations.getUsername());
+				userObject.setMessageCount(countMessagesByUserAndChannel(
+						relations.getChannel(), relations.getUsername()));
+				activityUsers.add(userObject);
+			}
+		}
+		return activityUsers;
 	}
 
 	private int countMessagesByUserAndChannel(String channelName,
 			String username) {
 		int counter = 0;
 		ArrayList<MessageModel> msgModel = null;
-		try{
-			msgModel = new ArrayList<MessageModel>(MessageModel.findAllMessageModels());
-		}
-		catch(Exception e){
+		try {
+			msgModel = new ArrayList<MessageModel>(
+					MessageModel.findAllMessageModels());
+		} catch (Exception e) {
 			e.printStackTrace();
 			msgModel = new ArrayList<MessageModel>();
 		}
@@ -259,4 +258,26 @@ public class DefaultChannelService implements ChannelService {
 		return counter;
 	}
 
+	public boolean isChannelExists(ChannelModel channel) {
+		List<ChannelModel> channels = new ArrayList<ChannelModel>(
+				ChannelModel.findAllChannelModels());
+
+		for (ChannelModel channelIterator : channels) {
+			if (channelIterator.getName().equals(channel.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isExistsUserInChannel(UsersChannels relations) {
+		List<UsersChannels> allRelations = new ArrayList<UsersChannels>(
+				UsersChannels.findAllUsersChannelses());
+		for (UsersChannels userChannel : allRelations) {
+			if (userChannel.getChannel().equals(relations.getChannel())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
