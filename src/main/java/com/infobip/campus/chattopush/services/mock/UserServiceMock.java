@@ -11,6 +11,7 @@ public class UserServiceMock implements UserService {
 
 	@Override
 	public statusLoginUser loginUser(UserModel _model) {
+
 		// TODO Auto-generated method stub
 
 		for (UserModel model : UserConfiguration.usrs) {
@@ -19,6 +20,7 @@ public class UserServiceMock implements UserService {
 					return statusLoginUser.SUCCESS;
 				} else {
 					return statusLoginUser.PASSERROR;
+
 				}
 			}
 		}
@@ -40,16 +42,20 @@ public class UserServiceMock implements UserService {
 
 	@Override
 	public boolean deleteUser(UserModel _model) {
+
 		// TODO Auto-generated method stub
 
 		for (int i = 0; i < UserConfiguration.usrs.size(); i++) {
-			if (UserConfiguration.usrs.get(i).getUsername().contentEquals(_model.getUsername())) {
+			if (UserConfiguration.usrs.get(i).getUsername()
+					.contentEquals(_model.getUsername())) {
 				UserConfiguration.usrs.remove(i);
+
 				return true;
 			}
 		}
 
 		return false;
+
 	}
 
 	@Override

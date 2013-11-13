@@ -74,27 +74,29 @@ function fetchUsersByRoom(roomname) {
 
 	$('#loading').show();
 	$('#list_rooms_users').html("");
+	
 	if (isNaN(roomname)) {
 		var room = new Object();
+
 		room.name = roomname;
+		alert(JSON.stringify(room));
 		showAllUsers();
 		$
 				.ajax({
 					url : _basePath + "channel/fetchUsersByRoom",
 					headers : {
-						'Accept' : 'text/plain',
+						'Accept' : 'application/json',
 						'Content-Type' : 'application/json'
 					},
 					method : 'POST',
 					contentType : 'application/json',
 					data : JSON.stringify(room),
-					dataType: 'text json',
 					success : function(data, status, xhr) {
 						
 						if (data.length != 0) {
 							
 							$('#list_rooms_users').html("");
-							//alert(data.length);
+							alert(data);
 						
 							for (var i = 0; i < data.length; i++) {
 								var username = data[i].username;

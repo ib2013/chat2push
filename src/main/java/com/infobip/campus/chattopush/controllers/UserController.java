@@ -47,6 +47,7 @@ public class UserController {
 			return true;
 		}
 		return false;
+
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/fetchAllUsers")
