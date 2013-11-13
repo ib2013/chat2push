@@ -15,12 +15,14 @@ import com.infobip.campus.chattopush.services.enums.StatusUser;
 public class DefaultUserService implements UserService {
 
 	public StatusUser loginUser(UserModel _model) {
+
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
+
 					return StatusUser.SUCCESS;
 				} else {
 					return StatusUser.PASSERROR;
@@ -28,20 +30,24 @@ public class DefaultUserService implements UserService {
 			}
 		}
 
+
 		return StatusUser.NOUSER;
 	}
 
 	public StatusUser registerUser(UserModel _model) {
+
 		// TODO Auto-generated method stub
 		try {
 			if (checkUserExists(_model) == false) {
 				_model.merge();
+
 				return StatusUser.SUCCESS;
 			}
 			return StatusUser.EXISTS;
 		} catch (Exception e) {
 			// TODO: handle exception
 			return StatusUser.EXC;
+
 		}
 
 	}
@@ -56,19 +62,24 @@ public class DefaultUserService implements UserService {
 		return "success";
 	}
 
+
 	public StatusAction deleteUser(UserModel _model) {
+
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		try {
 			for (UserModel model : list) {
-				if (model.getUsername().contentEquals(_model.getUsername().toString())) {
+				if (model.getUsername().contentEquals(
+						_model.getUsername().toString())) {
 					model.remove();
+
 					return StatusAction.SUCCESS;
 				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+
 			return StatusAction.EXC;
 		}
 		return StatusAction.FAIL;
@@ -79,7 +90,8 @@ public class DefaultUserService implements UserService {
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
-			if (model.getUsername().contentEquals(_model.getUsername().toString())) {
+			if (model.getUsername().contentEquals(
+					_model.getUsername().toString())) {
 				return true;
 			}
 		}
