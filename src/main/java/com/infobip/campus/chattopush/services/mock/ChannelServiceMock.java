@@ -15,7 +15,7 @@ import com.infobip.campus.chattopush.configuration.*;
 public class ChannelServiceMock implements ChannelService {
 
 	public ChannelServiceMock() {
-		UserConfiguration.init();
+		//UserConfiguration.init();
 	}
 
 	@Override
