@@ -41,7 +41,7 @@
 				ondrop="drop(event)" ondragover="allowDrop(event)">
 			</div>
 
-			<div id='list_users' class="listContent">
+			<div id='list_users' class="listContent" ondrop="drop(event)" ondragover="allowDrop(event)">
 			
 			
 

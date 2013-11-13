@@ -1,4 +1,4 @@
-package com.infobip.campus.chattopush.services;
+package com.infobip.campus.chattopush.services.impl;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
+import com.infobip.campus.chattopush.services.UserService;
 
 @Service
 public class DefaultUserService implements UserService {
