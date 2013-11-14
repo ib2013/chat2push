@@ -69,7 +69,10 @@ function onChangeFetchUsersByRoom() {
 	if(room.attr("id")=="PR") $("#keyImage").show();
 	else $("#keyImage").hide();
 	var roomname=room.val();
+	$('#list_rooms_users').html("");
+	$('#list_users').html("");
 	fetchUsersByRoom(roomname);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	fetchOpositeUsersByRoom(roomname);
 }
@@ -80,6 +83,8 @@ function fetchUsersByRoom(roomname) {
 
 
 
+=======
+>>>>>>> cd118b8fac1cf7892657e3ffd0d229168b2db8e2
 	fetchOpositeUsersByRoom(roomname);
 	$('#loading').hide();
 }
@@ -260,8 +265,12 @@ function refershUserList(){
 	$('#loading').hide();
 }
 function refreshUserList(){
+<<<<<<< HEAD
 	showAllUsers();
 >>>>>>> 4960c91abbc3906ff507579290d7f80b15420c5b
+=======
+	//showAllUsers();
+>>>>>>> cd118b8fac1cf7892657e3ffd0d229168b2db8e2
 	onChangeFetchUsersByRoom();
 
 }
