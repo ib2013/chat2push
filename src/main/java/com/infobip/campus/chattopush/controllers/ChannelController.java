@@ -41,8 +41,16 @@ public class ChannelController {
 	@RequestMapping(method = RequestMethod.POST, value = "/fetchUsersByRoom", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public List<UserActivityModel> fetchUsersByChannel(
-			@RequestBody final ChannelModel channelName) {
-		return channelService.fetchUserByChannel(channelName);
+			@RequestBody final ChannelModel channel) {
+		return channelService.fetchUserByChannel(channel);
+
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/fetchOpositeUsersByRoom", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public List<UserActivityModel> fetchOpositeUsersByChannel(
+			@RequestBody final ChannelModel channel) {
+		return channelService.fetchOpositeUserByChannel(channel);
 
 	}
 
@@ -73,7 +81,7 @@ public class ChannelController {
 	@RequestMapping(method = RequestMethod.POST, value = "/addUserToRoom", consumes = "application/json")
 	@ResponseBody
 	public String addUserToChannel(@RequestBody final UsersChannels object) {
-
+		
 		if (channelService.addUserToRoom(object) == true) {
 			return "success";
 		} else {
@@ -85,7 +93,7 @@ public class ChannelController {
 	@ResponseBody
 	public String removeUserFromChannel(@RequestBody final UsersChannels object) {
 
-		if (channelService.addUserToRoom(object) == true) {
+		if (channelService.removeUserFromRoom(object) == true) {
 			return "success";
 		} else {
 			return "fail";

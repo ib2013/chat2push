@@ -13,14 +13,17 @@ public class UserServiceMock implements UserService {
 
 	@Override
 	public StatusUser loginUser(UserModel _model) {
+
 		// TODO Auto-generated method stub
 
 		for (UserModel model : UserConfiguration.usrs) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
+
 					return StatusUser.SUCCESS;
 				} else {
 					return StatusUser.PASSERROR;
+
 				}
 			}
 		}
@@ -42,16 +45,17 @@ public class UserServiceMock implements UserService {
 
 	@Override
 	public StatusAction deleteUser(UserModel _model) {
+
 		// TODO Auto-generated method stub
-		boolean UserExecuted = false;
-		boolean UserChannelRelation = false;
+		boolean deleteUserExecuted = false;
+		boolean deleteUserChannelRelation = false;
 		/*
 		 * User delete
 		 */
 		for (int i = 0; i < UserConfiguration.usrs.size(); i++) {
 			if (UserConfiguration.usrs.get(i).getUsername().contentEquals(_model.getUsername())) {
 				UserConfiguration.usrs.remove(i);
-				UserExecuted = true;
+				deleteUserExecuted = true;
 			}
 		}
 		/*
@@ -61,11 +65,11 @@ public class UserServiceMock implements UserService {
 			if (UserConfiguration.us.get(i).contentEquals(_model.getUsername())) {
 				UserConfiguration.us.remove(i);
 				UserConfiguration.cs.remove(i);
-				UserChannelRelation = true;
+				deleteUserChannelRelation = true;
 			}
 		}
 
-		if (UserExecuted == true && UserChannelRelation == true) {
+		if (deleteUserExecuted == true && deleteUserChannelRelation == true) {
 			return StatusAction.SUCCESS;
 		}
 

@@ -74,12 +74,12 @@ function fetchUsersByRoom(roomname) {
 
 	$('#loading').show();
 	$('#list_rooms_users').html("");
-	
+	$('#list_users').html("");
+	//showAllUsers();
 	if (isNaN(roomname)) {
 		var room = new Object();
-
 		room.name = roomname;
-		showAllUsers();
+		
 		$
 				.ajax({
 					url : _basePath + "channel/fetchUsersByRoom",
@@ -94,12 +94,12 @@ function fetchUsersByRoom(roomname) {
 						
 						if (data.length != 0) {
 							
-							$('#list_rooms_users').html("");
+							//$('#list_rooms_users').html("");
 						
 							for (var i = 0; i < data.length; i++) {
 								var username = data[i].username;
-								var elementForRemove=document.getElementById(username);
-								elementForRemove.remove();
+								//var elementForRemove=document.getElementById(username);
+								//elementForRemove.remove();
 								$('#list_rooms_users')
 										.append(
 												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
@@ -114,13 +114,11 @@ function fetchUsersByRoom(roomname) {
 						
 						} else {
 							$('#loading').hide();
-							alert('Room is empty');
 						}
 					}
 				});
 	} else {
-		// $('#loading').hide();
-		// alert('Error show users by room.');
+		
 	}
 	$('#loading').hide();
 }

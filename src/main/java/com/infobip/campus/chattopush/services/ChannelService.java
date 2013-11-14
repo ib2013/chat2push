@@ -17,13 +17,19 @@ public interface ChannelService {
 	public boolean deleteChannel(ChannelModel channel);
 
 	public boolean updateChannel(ChannelModel oldModel, ChannelModel newModel);
-
+	
+	public boolean isChannelExists(ChannelModel channel);
+	
 	public List<ClientChannelModel> fetchSubscribedChannels(String username);
 
 	public boolean addUserToRoom(UsersChannels object);
 	
+	public boolean isExistsUserInChannel(UsersChannels relations);
+	
 	public boolean removeUserFromRoom(UsersChannels object);
 
-	public List<UserActivityModel> fetchUserByChannel(ChannelModel channelName);
+	public List<UserActivityModel> fetchUserByChannel(ChannelModel channel);
+	
+	public List<UserActivityModel> fetchOpositeUserByChannel(ChannelModel channel);
 
 }

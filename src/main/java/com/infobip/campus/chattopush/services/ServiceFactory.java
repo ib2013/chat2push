@@ -9,7 +9,7 @@ import com.infobip.campus.chattopush.services.mock.UserServiceMock;
 
 public class ServiceFactory {
 
-	public static ChannelService getInstance(String str) {
+	public static ChannelService getChannelServiceInstance(String str) {
 		if (str.equals("mock")) {
 			return new ChannelServiceMock();
 		} else {

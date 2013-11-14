@@ -19,6 +19,7 @@ public class UserConfiguration {
 		chnls.add(new ChannelModel("kanal1", "room1"));
 		chnls.add(new ChannelModel("kanal2", "room2"));
 		chnls.add(new ChannelModel("kanal3", "room3"));
+		chnls.add(new ChannelModel("TEST","josip"));
 
 		usrs.add(new UserModel("korisnik1", "pass1"));
 		usrs.add(new UserModel("korisnik2", "pass2"));
@@ -26,7 +27,17 @@ public class UserConfiguration {
 		usrs.add(new UserModel("korisnik4", "pass4"));
 		usrs.add(new UserModel("korisnik5", "pass5"));
 		
-		us.add("korisnik1");
 		cs.add("kanal1");
+		us.add("korisnik1");
+		
+		cs.add("kanal1");
+		us.add("korisnik2");
+		
+		cs.add("kanal2");
+		us.add("korisnik4");
+		
+		cs.add("TEST");
+		us.add("korisnik1");
+
 	}
 }
