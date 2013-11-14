@@ -24,6 +24,3 @@ privileged aspect UserModel_Roo_JavaBean {
     }
     
 }
-viewHolder.imageVIewAuthorIcon.setBackgroundColor(Color.rgb(((currentMessageItem.getAuthor()+"   ").charAt(0)*5)%200+50, 
-((currentMessageItem.getAuthor()+"   ").charAt(1)*6)%200+50, 
-((currentMessageItem.getAuthor()+"   ").charAt(2)*7)%200+50));
