@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.infobip.campus.chattopush.clients.ClientMessageModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.services.MessageService;
-import com.infobip.campus.chattopush.services.PushNotification;
 
 public class MessageServiceMock implements MessageService {
 
@@ -36,7 +36,7 @@ public class MessageServiceMock implements MessageService {
 	}
 	
 	@Override
-	public List<MessageModel> fetchMessageList() {
+	public List<MessageModel> fetchMessageList(String un, String ch, long startTime, long endTime) {
 		return result;
 	}
 
@@ -49,6 +49,16 @@ public class MessageServiceMock implements MessageService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public List<MessageModel> fetchAllMessages() {
+		return result;
+	}
+
+	@Override
+	public boolean sendMessage(ClientMessageModel message) {
+		return true;
 	}
 
 }
