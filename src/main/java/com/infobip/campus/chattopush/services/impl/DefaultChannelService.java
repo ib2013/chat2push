@@ -212,7 +212,10 @@ public class DefaultChannelService implements ChannelService {
 
 	@Override
 	public boolean addUserToRoom(UsersChannels object) {
-		if (!isExistsUserInChannel(object)) {
+		ChannelModel channel = new ChannelModel();
+		channel.setName(object.getChannel());
+		channel.setDescription("");
+		if (isChannelExists(channel) && !isExistsUserInChannel(object)) {
 			try {
 				object.setLastMessage(new Date(0));
 				object.persist();
