@@ -79,7 +79,7 @@ function removeUserFromChannel(userName, channel) {
 			'Content-type':'application/json',
 		},
 		method: 'POST',
-		contentType: 'application-json',
+		contentType: 'application/json',
 		data: JSON.stringify(channelUserJson),
 		success:function(res, status,xhr){
 			if(res=="success"){

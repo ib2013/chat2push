@@ -71,8 +71,6 @@ function onChangeFetchUsersByRoom() {
 	var roomname=room.val();
 	fetchUsersByRoom(roomname);
 
-
-
 	fetchOpositeUsersByRoom(roomname);
 	$('#loading').hide();
 }
