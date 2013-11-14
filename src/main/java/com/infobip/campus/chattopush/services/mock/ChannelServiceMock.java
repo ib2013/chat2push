@@ -7,6 +7,7 @@ import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.configuration.UserConfiguration;
 import com.infobip.campus.chattopush.models.ChannelModel;
+import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
 
@@ -124,18 +125,24 @@ public class ChannelServiceMock implements ChannelService {
 	}
 
 	@Override
-	public List<UserActivityModel> fetchOpositeUserByChannel(
+	public List<UserModel> fetchOpositeUserByChannel(
 			ChannelModel channel) {
-		List<UserActivityModel> uAcM = new ArrayList<UserActivityModel>();
-		for (int i = 0; i < UserConfiguration.us.size(); i++) {
-			if (!UserConfiguration.cs.get(i).equals(channel.getName())) {
-				UserActivityModel x = new UserActivityModel();
-				x.setUsername(UserConfiguration.us.get(i));
-				x.setMessageCount((int) Math.random() * 100);
-				uAcM.add(x);
+		List<UserActivityModel> activityUsers = new ArrayList<UserActivityModel>(fetchUserByChannel(channel));
+		List<UserModel> users = new ArrayList<UserModel>(UserConfiguration.usrs);
+		List<UserModel> usersRoom = new ArrayList<UserModel>();
+		boolean find;
+		for(UserModel user : users){
+			find = false;
+			for(UserActivityModel relations : activityUsers){		
+				if(user.getUsername().equals(relations.getUsername())){
+					find = true;
+				}
+			}
+			if(!find){
+				usersRoom.add(user);
 			}
 		}
-		return uAcM;
+		return usersRoom;
 	}
 
 }
