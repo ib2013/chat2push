@@ -5,21 +5,18 @@ import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
-
 import com.google.gson.Gson;
-
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.configuration.Configuration;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
-
+import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
 
 import java.net.URL;
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -237,8 +234,6 @@ public class DefaultChannelService implements ChannelService {
 		return activityUsers;
 	}
 
-
-
 	private int countMessagesByUserAndChannel(String channelName,
 			String username) {
 		int counter = 0;
@@ -284,19 +279,24 @@ public class DefaultChannelService implements ChannelService {
 	}
 
 	@Override
-	public List<UserActivityModel> fetchOpositeUserByChannel(
-			ChannelModel channel) {
-		List<UserActivityModel> activityUsers = new ArrayList<UserActivityModel>();
-
-		for (UsersChannels relations : UsersChannels.findAllUsersChannelses()) {
-			if (!channel.getName().equals(relations.getChannel())) {
-				UserActivityModel userObject = new UserActivityModel();
-				userObject.setUsername(relations.getUsername());
-				userObject.setMessageCount(countMessagesByUserAndChannel(
-						relations.getChannel(), relations.getUsername()));
-				activityUsers.add(userObject);
+	public List<UserModel> fetchOpositeUserByChannel(ChannelModel channel) {
+		List<UserActivityModel> activityUsers = new ArrayList<UserActivityModel>(
+				fetchUserByChannel(channel));
+		List<UserModel> users = new ArrayList<UserModel>(
+				UserModel.findAllUserModels());
+		List<UserModel> usersRoom = new ArrayList<UserModel>();
+		boolean find;
+		for (UserModel user : users) {
+			find = false;
+			for (UserActivityModel relations : activityUsers) {
+				if (user.getUsername().equals(relations.getUsername())) {
+					find = true;
+				}
+			}
+			if (!find) {
+				usersRoom.add(user);
 			}
 		}
-		return activityUsers;
+		return usersRoom;
 	}
 }
