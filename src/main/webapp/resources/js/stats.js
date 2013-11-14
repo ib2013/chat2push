@@ -54,13 +54,15 @@ function graph(statsSent, statsReceived) {
 
 function statsByDays() {
 
-
+	var date=new Date();
+	var thisMonth=date.getMonth()+1;
+	var thisYear=date.getFullYear();
 	var statsSent = null;
 	var statsReceived = null;
 
 	$
 			.ajax({
-				url : "https://pushapi.infobip.com/1/statistics/application/1a6cfc8b976c/notifications?time-type=month&month=11&year=2013",
+				url : "https://pushapi.infobip.com/1/statistics/application/1a6cfc8b976c/notifications?time-type=month&month="+thisMonth+"&year="+thisYear+"",
 				headers : {
 					'Accept' : 'text/plain',
 					'Content-type' : 'application/json',

@@ -117,7 +117,7 @@ function fetchAllChannels() {
 													+ "</option>");
 									if (channelisPublic == true) {
 										$("#list_channels").append(
-												"<p class='' id='"
+												"<p class='plistelem' id='"
 												+ channelName
 												+ "'>"
 												+ channelName
@@ -128,7 +128,7 @@ function fetchAllChannels() {
 												);
 									} else {
 									$("#list_channels").append(
-											"<p class='' id='"
+											"<p class='plistelem' id='"
 											+ channelName
 											+ "'>"
 											+ channelName
@@ -154,7 +154,7 @@ function fetchAllChannels() {
 									
 									if (channelisPublic == true) {
 										$("#list_channels").append(
-												"<p class='' id='"
+												"<p class='plistelem' id='"
 												+ channelName
 												+ "'>"
 												+ channelName
@@ -165,7 +165,7 @@ function fetchAllChannels() {
 												);
 									} else {
 									$("#list_channels").append(
-											"<p class='' id='"
+											"<p class='plistelem' id='"
 											+ channelName
 											+ "'>"
 											+ channelName

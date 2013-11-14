@@ -21,7 +21,7 @@
 		<li class='tab'><a href="#tabscp">Control Panel</a></li>
 		<li class='tab'><a href="#tabsum">User management</a></li>
 		<li class='tab'><a href="#tabscm">Room management</a></li>
-		<li class='tab'><a href="#tabsstat">Statistics</a></li>
+		<li class='tab'><a onclick="statsByDays()" href="#tabsstat">Statistics</a></li>
 	</ul>
 	<div id="tabscp" style="padding-top: 20px; padding-bottom: 20px;">
 		<div id='central'>
