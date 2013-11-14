@@ -1,5 +1,6 @@
+
 function graph(statsSent, statsReceived) {
-	$('#container').highcharts({
+	$('#stats').highcharts({
 		chart : {
 			type : 'area'
 		},
@@ -84,3 +85,4 @@ function statsByDays() {
 
 			});
 }
+
