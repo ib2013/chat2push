@@ -20,6 +20,13 @@ public class MessageServiceMock implements MessageService {
 		m1.setLastMessageDate(new Date());
 		result.add(m1);
 		
+		MessageModel m4 = new MessageModel();
+		m4.setChannel("kanal2");
+		m4.setMessage("poruka broj4");
+		m4.setUser("korisnik1");
+		m4.setLastMessageDate(new Date());
+		result.add(m4);
+		
 		MessageModel m2 = new MessageModel();
 		m2.setChannel("kanal2");
 		m2.setMessage("poruka broj2");
@@ -58,7 +65,24 @@ public class MessageServiceMock implements MessageService {
 
 	@Override
 	public boolean sendMessage(ClientMessageModel message) {
-		return true;
+		MessageModel mmodel = new MessageModel();
+
+		String username = message.getUsername();
+		String channel = message.getChannel();
+		String msg = message.getMessageText();
+		Date date = new Date();
+		
+		mmodel.setChannel(channel);
+		mmodel.setMessage(msg);
+		mmodel.setUser(username);
+		mmodel.setLastMessageDate(date);
+		
+		if(addMessage(mmodel) == true){
+			result.add(mmodel);
+			return true;
+		}
+		else 
+			return false;
 	}
 
 }
