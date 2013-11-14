@@ -16,22 +16,13 @@ function drop(ev) {
 	ev.preventDefault();
 	var data = ev.dataTransfer.getData("Text");
 	
-	ev.target.appendChild(document.getElementById(data));
+	$("#list_rooms_users").append(document.getElementById(data));
 	channel = $("#select_room_list option:selected");
-	//alert(ev.target.id);
-	if (ev.target.id == "list_rooms_users") {
-		//alert("prvi div");
-		
-		addUserToChannel(data, channel);
-		
-	} else {
-		//alert("drugi div");
-		removeUserFromChannel(data, channel);
-	}
-	//$("#list_rooms_users").append(document.getElementById(data));
-
 	
-	//addUserToChannel(data, channel);
+
+	addUserToChannel(data, channel);
+		
+
 
 }
 
@@ -105,8 +96,14 @@ documentReady = function(basePath) {
 	$('#loading').show();
 
 	fetchAllChannels();
+<<<<<<< HEAD
 	//showAllUsers();
 	onChangeFetchUsersByRoom();
+=======
+
+	showAllUsers();
+    
+>>>>>>> 4960c91abbc3906ff507579290d7f80b15420c5b
 	$('#loading').hide();
 
 

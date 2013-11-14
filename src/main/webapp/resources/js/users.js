@@ -23,6 +23,7 @@ function showAllUsers() {
 
 					});
 	$('#loading').hide();
+	
 }
 
 function deleteUser(user) {
@@ -36,16 +37,15 @@ function deleteUser(user) {
 			$.ajax({
 				url : _basePath + "user/delete",
 				headers : {
-					'Accept' : 'text/plain',
+					'Accept' : 'application/json',
 					'Content-Type' : 'application/json'
 				},
 				method : 'POST',
 				contentType : 'application/json',
 				data : JSON.stringify(userJson),
 				success : function(rez, status, xhr) {
-					if (rez == "success") {
-						var deleted=document.getElementById(user.id);
-						deleted.remove();
+					if (rez == 'SUCCESS') {
+						showAllUsers();
 						$('#loading').hide();
 					} else {
 						$('#loading').hide();
@@ -64,16 +64,29 @@ function deleteUser(user) {
 
 }
 function onChangeFetchUsersByRoom() {
+	$('#loading').show();
 	var room = $("#select_room_list option:selected");
 	if(room.attr("id")=="PR") $("#keyImage").show();
 	else $("#keyImage").hide();
 	var roomname=room.val();
 	fetchUsersByRoom(roomname);
+<<<<<<< HEAD
 	fetchOpositeUsersByRoom(roomname);
 }
 function fetchUsersByRoom(roomname) {
 
 	$('#loading').show();
+=======
+
+
+
+	fetchOpositeUsersByRoom(roomname);
+	$('#loading').hide();
+}
+function fetchUsersByRoom(roomname) {
+
+	
+>>>>>>> 4960c91abbc3906ff507579290d7f80b15420c5b
 	$('#list_rooms_users').html("");
 	//$('#list_users').html("");
 	//showAllUsers();
@@ -100,8 +113,70 @@ function fetchUsersByRoom(roomname) {
 							for (var i = 0; i < data.length; i++) {
 								var username = data[i].username;
 								//var elementForRemove=document.getElementById(username);
+<<<<<<< HEAD
+=======
+								//alert(username);
+								//if(elementForRemove!=null)
+
+>>>>>>> 4960c91abbc3906ff507579290d7f80b15420c5b
 								//elementForRemove.remove();
 								$('#list_rooms_users')
+										.append(
+												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
+												+ username
+												+ "'>"
+												+ username
+												+ "<label id='"
+												+ username
+												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"
+												);
+							}
+						
+						} else {
+							
+						}
+					}
+				});
+	} else {
+		
+	}
+
+}
+
+
+
+
+function fetchOpositeUsersByRoom(roomname) {
+
+	$('#loading').show();
+	$('#list_users').html("");
+	//$('#list_users').html("");
+	//showAllUsers();
+	if (isNaN(roomname)) {
+		var room = new Object();
+		room.name = roomname;
+		
+		$
+				.ajax({
+					url : _basePath + "channel/fetchOpositeUsersByRoom",
+					headers : {
+						'Accept' : 'application/json',
+						'Content-Type' : 'application/json'
+					},
+					method : 'POST',
+					contentType : 'application/json',
+					data : JSON.stringify(room),
+					success : function(data, status, xhr) {
+						
+						if (data.length != 0) {
+							
+							//$('#list_rooms_users').html("");
+						
+							for (var i = 0; i < data.length; i++) {
+								var username = data[i].username;
+								//var elementForRemove=document.getElementById(username);
+								//elementForRemove.remove();
+								$('#list_users')
 										.append(
 												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
 												+ username
@@ -120,6 +195,7 @@ function fetchUsersByRoom(roomname) {
 				});
 	} else {
 		
+<<<<<<< HEAD
 	}
 	$('#loading').hide();
 }
@@ -179,5 +255,13 @@ function fetchOpositeUsersByRoom(roomname) {
 
 function refershUserList(){
 	//showAllUsers();
+=======
+	}
+	$('#loading').hide();
+}
+function refreshUserList(){
+	showAllUsers();
+>>>>>>> 4960c91abbc3906ff507579290d7f80b15420c5b
 	onChangeFetchUsersByRoom();
+
 }

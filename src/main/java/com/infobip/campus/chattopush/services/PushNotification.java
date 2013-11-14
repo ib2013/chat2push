@@ -35,7 +35,7 @@ public class PushNotification {
 		object.addProperty("channel", msg.getChannel());
 		object.addProperty("sent-by", msg.getUser());
 		object.addProperty("message", msg.getMessage());
-		object.addProperty("time", msg.getLastMessageDate().toString());
+		object.addProperty("time", msg.getLastMessageDate().getTime());
 		
 		this.notificationMessage = object.toString();
 
