@@ -5,21 +5,18 @@ import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
-
 import com.google.gson.Gson;
-
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.configuration.Configuration;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
-
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
 
 import java.net.URL;
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -202,6 +199,7 @@ public class DefaultChannelService implements ChannelService {
 	public boolean addUserToRoom(UsersChannels object) {
 		if (!isExistsUserInChannel(object)) {
 			try {
+				object.setLastMessage(new Date(0));
 				object.persist();
 				return true;
 			} catch (Exception e) {
