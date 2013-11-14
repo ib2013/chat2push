@@ -21,7 +21,6 @@ import java.util.Date;
 
 import java.util.List;
 
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -202,13 +201,15 @@ public class DefaultChannelService implements ChannelService {
 					break;
 				}
 			}
-			if (!findUser){
+			if (!findUser) {
 				clientObject.setSubscribed(false);
 			}
-			
-			if (clientObject.isSubscribed() || clientObject.isPublic()){
+
+			if (clientObject.isSubscribed() || clientObject.isPublic()) {
 				returnParameters.add(clientObject);
-				System.out.println(clientObject.getName() + clientObject.isSubscribed() + clientObject.isPublic() + " --- " + findUser);
+				System.out.println(clientObject.getName()
+						+ clientObject.isSubscribed() + clientObject.isPublic()
+						+ " --- " + findUser);
 			}
 		}
 		return returnParameters;
@@ -237,7 +238,9 @@ public class DefaultChannelService implements ChannelService {
 			List<UsersChannels> relations = UsersChannels
 					.findAllUsersChannelses();
 			for (UsersChannels relationElement : relations) {
-				if (relationElement.getChannel().equals(object.getChannel())) {
+				if (relationElement.getChannel().equals(object.getChannel())
+						&& relationElement.getUsername().equals(
+								object.getUsername())) {
 					relationElement.remove();
 					return true;
 				}
