@@ -122,11 +122,10 @@ function fetchUsersByRoom(roomname) {
 								//elementForRemove.remove();
 								$('#list_rooms_users')
 										.append(
-												
-												"<div style='float: left; width:10px; height:32px; background-color:"+getColor(username)+"';></div>&nbsp; "
-												+"<p class='plistelem'  draggable='true' ondragstart='drag(event)' id='"
+								
+												+" <p class='plistelem'  draggable='true' ondragstart='drag(event)' id='"
 												+ username
-												+ "'>"
+												+ "'><label style='float: left; width:20px; height:20px; background-color:"+getColor(username)+"';></label> &nbsp;"
 												+ username
 												+"</p>"
 												/*+ "<label id='"
@@ -181,13 +180,12 @@ function fetchOpositeUsersByRoom(roomname) {
 								//elementForRemove.remove();
 								$('#list_users')
 										.append(
+												
 												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
 												+ username
-												+ "'>"
+												+ "'><label style='float: left; width:20px; height:20px; background-color:"+getColor(username)+"';></label> &nbsp;"
 												+ username
-												+ "<label id='"
-												+ username
-												+"><label></p>"
+												+"</p>"
 												);
 							}
 						
