@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.UserService;
 import com.infobip.campus.chattopush.services.enums.StatusAction;
@@ -58,7 +57,7 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/fetchUserStatistics", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public Map<ChannelModel, Integer> fetchUserStatistics(@RequestBody UserModel _model) {
+	public Map<String, Integer> fetchUserStatistics(@RequestBody UserModel _model) {
 		return userService.fetchUserStatistics(_model);
 	}
 }

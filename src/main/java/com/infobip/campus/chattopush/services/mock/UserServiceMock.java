@@ -54,8 +54,7 @@ public class UserServiceMock implements UserService {
 		 * User delete
 		 */
 		for (int i = 0; i < UserConfiguration.usrs.size(); i++) {
-			if (UserConfiguration.usrs.get(i).getUsername()
-					.contentEquals(_model.getUsername())) {
+			if (UserConfiguration.usrs.get(i).getUsername().contentEquals(_model.getUsername())) {
 				UserConfiguration.usrs.remove(i);
 
 				deleteUserExecuted = true;
@@ -97,9 +96,9 @@ public class UserServiceMock implements UserService {
 	}
 
 	@Override
-	public Map<ChannelModel, Integer> fetchUserStatistics(UserModel _model) {
+	public Map<String, Integer> fetchUserStatistics(UserModel _model) {
 		// TODO Auto-generated method stub
-		Map<ChannelModel, Integer> statistic = new HashMap<ChannelModel, Integer>();
+		Map<String, Integer> statistic = new HashMap<String, Integer>();
 
 		for (ChannelModel chnlModel : UserConfiguration.chnls) {
 			int brojPoruka = 0;
@@ -108,7 +107,7 @@ public class UserServiceMock implements UserService {
 					brojPoruka++;
 				}
 			}
-			statistic.put(chnlModel, brojPoruka);
+			statistic.put(chnlModel.getName(), brojPoruka);
 		}
 		return statistic;
 	}
