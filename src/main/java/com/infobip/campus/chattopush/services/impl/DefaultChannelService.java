@@ -190,6 +190,7 @@ public class DefaultChannelService implements ChannelService {
 			ClientChannelModel clientObject = new ClientChannelModel();
 			clientObject.setName(channelElement.getName());
 			clientObject.setDescription(channelElement.getDescription());
+			clientObject.setPublic(channelElement.isIsPublic());
 			boolean findUser = false;
 			for (UsersChannels relations : UsersChannels
 					.findAllUsersChannelses()) {
@@ -201,10 +202,14 @@ public class DefaultChannelService implements ChannelService {
 					break;
 				}
 			}
-			if (!findUser) {
+			if (!findUser){
 				clientObject.setSubscribed(false);
 			}
-			returnParameters.add(clientObject);
+			
+			if (clientObject.isSubscribed() || clientObject.isPublic()){
+				returnParameters.add(clientObject);
+				System.out.println(clientObject.getName() + clientObject.isSubscribed() + clientObject.isPublic() + " --- " + findUser);
+			}
 		}
 		return returnParameters;
 	}
