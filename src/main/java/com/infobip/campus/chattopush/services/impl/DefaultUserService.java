@@ -1,6 +1,7 @@
 package com.infobip.campus.chattopush.services.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -124,10 +125,8 @@ public class DefaultUserService implements UserService {
 
 	}
 
-	public boolean addChannelToUser(UsersChannels _model) {
+	public Map<ChannelModel, Integer> fetchUserStatistics(UserModel _model) {
 		// TODO Auto-generated method stub
-		List<ChannelModel> channelModel = ChannelModel.findAllChannelModels();
-
-		return false;
+		return null;
 	}
 }

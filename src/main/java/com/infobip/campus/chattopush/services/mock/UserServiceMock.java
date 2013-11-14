@@ -1,10 +1,13 @@
 package com.infobip.campus.chattopush.services.mock;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.infobip.campus.chattopush.configuration.UserConfiguration;
+import com.infobip.campus.chattopush.models.ChannelModel;
+import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
-import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
 import com.infobip.campus.chattopush.services.enums.StatusAction;
 import com.infobip.campus.chattopush.services.enums.StatusUser;
@@ -61,7 +64,7 @@ public class UserServiceMock implements UserService {
 		/*
 		 * User relation delete
 		 */
-		for (int i = 0; i < UserConfiguration.usrs.size(); i++) {
+		for (int i = 0; i < UserConfiguration.us.size(); i++) {
 			if (UserConfiguration.us.get(i).contentEquals(_model.getUsername())) {
 				UserConfiguration.us.remove(i);
 				UserConfiguration.cs.remove(i);
@@ -83,12 +86,6 @@ public class UserServiceMock implements UserService {
 	}
 
 	@Override
-	public boolean addChannelToUser(UsersChannels _model) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean checkUserExists(UserModel _model) {
 		// TODO Auto-generated method stub
 		for (UserModel model : UserConfiguration.usrs) {
@@ -97,5 +94,22 @@ public class UserServiceMock implements UserService {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public Map<ChannelModel, Integer> fetchUserStatistics(UserModel _model) {
+		// TODO Auto-generated method stub
+		Map<ChannelModel, Integer> statistic = new HashMap<ChannelModel, Integer>();
+
+		for (ChannelModel chnlModel : UserConfiguration.chnls) {
+			int brojPoruka = 0;
+			for (MessageModel msgModel : UserConfiguration.msgs) {
+				if (msgModel.getChannel().contentEquals(chnlModel.getName()) && msgModel.getUser().contentEquals(_model.getUsername())) {
+					brojPoruka++;
+				}
+			}
+			statistic.put(chnlModel, brojPoruka);
+		}
+		return statistic;
 	}
 }
