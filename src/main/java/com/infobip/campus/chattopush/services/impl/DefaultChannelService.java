@@ -200,7 +200,7 @@ public class DefaultChannelService implements ChannelService {
 
 	@Override
 	public boolean addUserToRoom(UsersChannels object) {
-		if (isExistsUserInChannel(object)) {
+		if (!isExistsUserInChannel(object)) {
 			try {
 				object.persist();
 				return true;

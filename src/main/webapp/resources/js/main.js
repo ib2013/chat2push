@@ -102,9 +102,16 @@ documentReady = function(basePath) {
 =======
 
 	showAllUsers();
+<<<<<<< HEAD
     
 >>>>>>> 4960c91abbc3906ff507579290d7f80b15420c5b
+=======
+    statsByDays();
+>>>>>>> 5cfde0cf973d369fde27fb05bbf1ec374cd2844e
 	$('#loading').hide();
+	
+    
 
+    
 
 };

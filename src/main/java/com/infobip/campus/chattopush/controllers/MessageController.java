@@ -28,12 +28,11 @@ public class MessageController {
 	@RequestMapping(method = RequestMethod.GET, value = "/fetch/{username}/{channel}/{start-time}/{end-time}")
 	@ResponseBody
 	public List<MessageModel> fetchMessageList(
+
 			@PathVariable("username") @NotNull String un,
 			@PathVariable("channel") @NotNull String ch,
 			@PathVariable("start-time") @NotNull long startTime,
-			@PathVariable("end-time") @NotNull long endTime) 
-			{
-
+			@PathVariable("end-time") @NotNull long endTime) {
 		return messageService.fetchMessageList(un, ch, startTime, endTime);
 	}
 
