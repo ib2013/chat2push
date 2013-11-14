@@ -111,7 +111,7 @@
 			<div id='centralContentCM' class="centralContent">
 				<div id='headersCM'>
 
-					<div id='channel_header' style="float: left;">
+					<div id='channel_header' style="float: left; margin-left: 50px;">
 						<label id='channel_list_tab' class='listOptions'>List of
 							Rooms </label>
 					</div>

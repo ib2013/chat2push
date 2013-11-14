@@ -11,7 +11,7 @@ function showAllUsers() {
 	
 	$('#loading').show();
 	//alert("Ucitavanje usera");
-	$('#UserList').html("");
+	//$('#UserList').html("");
 	$.get(_basePath + "user/fetchAllUsers",
 					function(data, status, xhr) {
 						
@@ -20,13 +20,7 @@ function showAllUsers() {
 							var username = data[i].username;
 							$('#UserList')
 									.append(
-											"<li><p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
-												+ username
-												+ "'>"
-												+ username
-												+ "<label id='"
-												+ username
-												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p></li>");
+											"<li><p>"+username+"</p></li>");
 						}
 					});
 	$('#loading').hide();
