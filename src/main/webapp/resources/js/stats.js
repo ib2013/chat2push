@@ -67,10 +67,10 @@ function statsByDays(){
             series:
             	[{
                 name: 'Sent',
-                data: byDays[0].countSent
+                data: byDays.countSent
             }, {
                 name: 'Received',
-                data:byDays[0].countReceived
+                data:byDays.countReceived
             }]
         });
     });

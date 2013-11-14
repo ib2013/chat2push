@@ -30,6 +30,7 @@ public class DefaultUserService implements UserService {
 			}
 		}
 
+
 		return StatusUser.NOUSER;
 	}
 
@@ -61,6 +62,7 @@ public class DefaultUserService implements UserService {
 		return "success";
 	}
 
+
 	public StatusAction deleteUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
@@ -71,7 +73,6 @@ public class DefaultUserService implements UserService {
 		boolean deleteUserChannelRelation = false;
 
 		try {
-
 			for (UserModel modelUser : list) {
 				if (modelUser.getUsername().contentEquals(_model.getUsername().toString())) {
 					modelUser.remove();
@@ -105,7 +106,8 @@ public class DefaultUserService implements UserService {
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
-			if (model.getUsername().contentEquals(_model.getUsername().toString())) {
+			if (model.getUsername().contentEquals(
+					_model.getUsername().toString())) {
 				return true;
 			}
 		}

@@ -94,11 +94,23 @@ function removeUserFromChannel(userName, channel) {
 
 documentReady = function(basePath) {
 	$('#loading').show();
-
 	fetchAllChannels();
+<<<<<<< HEAD
+<<<<<<< HEAD
+	//showAllUsers();
+	onChangeFetchUsersByRoom();
+=======
 
 	showAllUsers();
+<<<<<<< HEAD
+    
+>>>>>>> 4960c91abbc3906ff507579290d7f80b15420c5b
+=======
+=======
+	//onChangeFetchUsersByRoom();
+>>>>>>> cd118b8fac1cf7892657e3ffd0d229168b2db8e2
     statsByDays();
+>>>>>>> 5cfde0cf973d369fde27fb05bbf1ec374cd2844e
 	$('#loading').hide();
 	
     
