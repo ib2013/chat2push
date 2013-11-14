@@ -67,21 +67,37 @@ public class DefaultUserService implements UserService {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
+		List<UsersChannels> listaKanala = UsersChannels.findAllUsersChannelses();
+
+		boolean deleteUser = false;
+		boolean deleteUserChannelRelation = false;
 
 		try {
-			for (UserModel model : list) {
-				if (model.getUsername().contentEquals(
-						_model.getUsername().toString())) {
-					model.remove();
+			for (UserModel modelUser : list) {
+				if (modelUser.getUsername().contentEquals(_model.getUsername().toString())) {
+					modelUser.remove();
 
-					return StatusAction.SUCCESS;
+					deleteUser = true;
 				}
 			}
+
+			for (UsersChannels modelKanal : listaKanala) {
+				if (modelKanal.getUsername().contentEquals(_model.getUsername())) {
+					modelKanal.remove();
+					deleteUserChannelRelation = true;
+				}
+			}
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 
 			return StatusAction.EXC;
 		}
+
+		if (deleteUserChannelRelation == true && deleteUser == true) {
+			return StatusAction.SUCCESS;
+		}
+
 		return StatusAction.FAIL;
 
 	}

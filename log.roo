@@ -1,3 +1,4 @@
+
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-08 13:56:34
 project --topLevelPackage com.infobip.campus.rsstopush --projectName RssToPush --java 7 --packaging WAR
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-08 13:56:42
@@ -143,3 +144,4 @@ field number --fieldName probaBr --type int
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-12 19:02:00
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-13 18:08:19
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-14 01:10:17
+
