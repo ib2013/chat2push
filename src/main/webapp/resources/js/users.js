@@ -1,32 +1,25 @@
-
-var allusers;
 function showAllUsers() {
 	$('#loading').show();
-	
-	$
-			.get(
-					_basePath + "user/fetchAllUsers",
+	//alert("Ucitavanje usera");
+	$('#UserList').html("");
+	$.get(_basePath + "user/fetchAllUsers",
 					function(data, status, xhr) {
-						$('#list_users').html("");
+						
 
 						for (var i = 0; i < data.length; i++) {
 							var username = data[i].username;
-						    allusers[i].name = username;
-						    allusers[i].data = 5;
-							/*$('#list_users')
+							$('#UserList')
 									.append(
-											"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
-													+ username
-													+ "'>"
-													+ username
-													+ "<label id='"
-													+ username
-													+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>");*/
+											"<li><p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
+												+ username
+												+ "'>"
+												+ username
+												+ "<label id='"
+												+ username
+												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p></li>");
 						}
-
 					});
 	$('#loading').hide();
-	
 }
 
 function deleteUser(user) {
@@ -40,7 +33,7 @@ function deleteUser(user) {
 			$.ajax({
 				url : _basePath + "user/delete",
 				headers : {
-					'Accept' : 'application/json',
+					'Accept' : 'text/plain',
 					'Content-Type' : 'application/json'
 				},
 				method : 'POST',

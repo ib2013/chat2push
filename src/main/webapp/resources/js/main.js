@@ -82,6 +82,8 @@ function removeUserFromChannel(userName, channel) {
 documentReady = function(basePath) {
 	$('#loading').show();
 	fetchAllChannels();
+	showAllUsers();
     statsByDays();
+    $('#paging_container1').pajinate();
 	$('#loading').hide();
 };

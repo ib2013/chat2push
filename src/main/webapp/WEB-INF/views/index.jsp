@@ -15,6 +15,16 @@
 			$('#tab-container').easytabs();
 			documentReady(_basePath);
 		});
+		
+		
+		
+		
+		
+	/*	
+		$(document).ready(function(){
+			$('#paging_container1').pajinate();
+		});		*/
+		
 	</script>
 
 	<ul class='etabs'>
@@ -68,8 +78,31 @@
 		
 	</div>
 	<div id="tabsum">
-		<h2></h2>
-		<!-- content -->
+		<div id="paging_container1" class="container">
+
+			<h2>List of Users</h2>
+
+
+			<ul id="UserList" class="content" style="text-align: center;">
+					 <li><p>One</p></li> 
+					 <li><p>Two</p></li> 
+					 <li><p>Three</p></li> 
+					 <li><p>Four</p></li> 
+					 <li><p>Five</p></li> 
+					 <li><p>Six</p></li> 
+					 <li><p>Seven</p></li> 
+					 <li><p>Eight</p></li> 
+					 <li><p>Nine</p></li> 
+					 <li><p>Ten</p></li> 
+					 <li><p>Eleven</p></li> 
+					 <li><p>Twelve</p></li> 
+					 <li><p>Thirteen</p></li> 
+					 <li><p>Fourteen</p></li> 
+					 <li><p>Fifteen</p></li> 
+					 <li><p>Sixteen</p></li> 
+			</ul>
+			<div class="page_navigation"></div>
+		</div>
 	</div>
 	<div id="tabscm" style="padding-top: 20px; padding-bottom: 20px;">
 		<h2></h2>
@@ -130,3 +163,9 @@
 			style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 	</div>
 </div>
+
+<script>
+			/*$(document).ready(function(){
+				$('li:odd, .content > *:odd').css('background-color','#FFD9BF');
+			});*/
+		</script>
