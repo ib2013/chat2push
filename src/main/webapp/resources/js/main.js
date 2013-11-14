@@ -15,26 +15,19 @@ function drag(ev) {
 function drop(ev) {
 	ev.preventDefault();
 	var data = ev.dataTransfer.getData("Text");
-	
-	$("#list_rooms_users").append(document.getElementById(data));
 	channel = $("#select_room_list option:selected");
-	
-
-	addUserToChannel(data, channel);
-		
-
-
+	if (ev.target.id == "list_rooms_users") {
+		$("#list_rooms_users").append(document.getElementById(data));
+		addUserToChannel(data, channel);
+	} else if (ev.target.id == "list_users") {
+		$("#list_users").append(document.getElementById(data));
+		removeUserFromChannel(data, channel);
+	}
 }
 
 
 function addUserToChannel(userName, channel) {
 	var user = document.getElementById(userName);
-	//alert("Dodajem " + user.id + " u " + channel.val());
-	user.draggable = false;
-	var child = $(":first-child", user);
-	child.get(0).onclick = ""; // dodati novu funkciju za brisanje usera iz
-	// sobe
-	
 	var channelUserJson=new Object();
 	channelUserJson.username=user.id;
 	channelUserJson.channel=channel.val();
@@ -62,12 +55,6 @@ function addUserToChannel(userName, channel) {
 
 function removeUserFromChannel(userName, channel) {
 	var user = document.getElementById(userName);
-	//alert("Dodajem " + user.id + " u " + channel.val());
-	user.draggable = false;
-	var child = $(":first-child", user);
-	child.get(0).onclick = ""; // dodati novu funkciju za brisanje usera iz
-	// sobe
-	
 	var channelUserJson=new Object();
 	channelUserJson.username=user.id;
 	channelUserJson.channel=channel.val();
@@ -95,26 +82,6 @@ function removeUserFromChannel(userName, channel) {
 documentReady = function(basePath) {
 	$('#loading').show();
 	fetchAllChannels();
-<<<<<<< HEAD
-<<<<<<< HEAD
-	//showAllUsers();
-	onChangeFetchUsersByRoom();
-=======
-
-	showAllUsers();
-<<<<<<< HEAD
-    
->>>>>>> 4960c91abbc3906ff507579290d7f80b15420c5b
-=======
-=======
-	//onChangeFetchUsersByRoom();
->>>>>>> cd118b8fac1cf7892657e3ffd0d229168b2db8e2
     statsByDays();
->>>>>>> 5cfde0cf973d369fde27fb05bbf1ec374cd2844e
 	$('#loading').hide();
-	
-    
-
-    
-
 };

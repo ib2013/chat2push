@@ -17,6 +17,8 @@ import com.infobip.campus.chattopush.services.ChannelService;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
+
 import java.util.List;
 
 import javax.management.relation.RelationException;
@@ -212,6 +214,7 @@ public class DefaultChannelService implements ChannelService {
 	public boolean addUserToRoom(UsersChannels object) {
 		if (!isExistsUserInChannel(object)) {
 			try {
+				object.setLastMessage(new Date(0));
 				object.persist();
 				return true;
 			} catch (Exception e) {
@@ -284,7 +287,9 @@ public class DefaultChannelService implements ChannelService {
 		List<UsersChannels> allRelations = new ArrayList<UsersChannels>(
 				UsersChannels.findAllUsersChannelses());
 		for (UsersChannels userChannel : allRelations) {
-			if (userChannel.getChannel().equals(relations.getChannel())) {
+			if (userChannel.getChannel().equals(relations.getChannel())
+					&& userChannel.getUsername()
+							.equals(relations.getUsername())) {
 				return true;
 			}
 		}
