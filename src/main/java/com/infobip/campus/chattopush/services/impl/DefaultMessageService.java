@@ -15,7 +15,8 @@ import org.springframework.stereotype.Service;
 public class DefaultMessageService implements MessageService {
 
 	@Override
-	public List<MessageModel> fetchMessageList(String un, String ch, long startTime, long endTime) {
+	public List<MessageModel> fetchMessageList(String un, String ch,
+			long startTime, long endTime) {
 		List<MessageModel> messages = fetchAllMessages();
 		List<MessageModel> result = new ArrayList<MessageModel>();
 		Date date1 = new Date(startTime);
@@ -24,8 +25,7 @@ public class DefaultMessageService implements MessageService {
 		for (MessageModel msg : messages) {
 			if (msg.getChannel().equals(ch)
 					&& msg.getLastMessageDate().after(date1)
-					&& msg.getLastMessageDate().before(date2)
-					&& msg.getUser().equals(un)) {
+					&& msg.getLastMessageDate().before(date2)) {
 				result.add(msg);
 			}
 		}
@@ -41,7 +41,7 @@ public class DefaultMessageService implements MessageService {
 		String channel = msg.getChannel();
 		String message = msg.getMessageText();
 		Date date = new Date();
-		
+
 		mmodel.setChannel(channel);
 		mmodel.setMessage(message);
 		mmodel.setUser(username);
@@ -79,12 +79,12 @@ public class DefaultMessageService implements MessageService {
 		List<MessageModel> messageList = MessageModel.findAllMessageModels();
 		return messageList;
 	}
-	
+
 	@Override
 	public boolean addMessage(MessageModel message) {
 		try {
 			message.persist();
-			return true; 
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
