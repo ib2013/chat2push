@@ -33,7 +33,7 @@
 
 							<select id="select_room_list" style="width: 140px;"
 								onChange="onChangeFetchUsersByRoom()">
-							</select><img id="keyImage" src="resources/images/key.gif" />
+							</select> <img id="keyImage" src="resources/images/key.gif" />
 							<!-- <input
 								type='button' id='deleteRoom' value='Delete'
 								onclick='deleteChannel()' class='removeList'
