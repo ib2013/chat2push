@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.infobip.campus.chattopush.configuration.MD5;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
@@ -24,7 +25,7 @@ public class DefaultUserService implements UserService {
 
 		for (UserModel model : list) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
-				if (model.getPassword().contentEquals(_model.getPassword())) {
+				if (model.getPassword().contentEquals(MD5.getMD5(_model.getPassword()))) {
 
 					return StatusUser.SUCCESS;
 				} else {
@@ -41,8 +42,10 @@ public class DefaultUserService implements UserService {
 		// TODO Auto-generated method stub
 		try {
 			if (checkUserExists(_model) == false) {
-				_model.merge();
-
+				UserModel newUser = new UserModel();
+				newUser.setUsername(_model.getUsername());
+				newUser.setPassword(MD5.getMD5(_model.getPassword()));
+				newUser.merge();
 				return StatusUser.SUCCESS;
 			}
 			return StatusUser.EXISTS;
