@@ -110,9 +110,9 @@ public class DefaultChannelService implements ChannelService {
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 
-			
 			try {
-				List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+				List<ChannelModel> channels = ChannelModel
+						.findAllChannelModels();
 				String removChannel = "";
 				for (ChannelModel channelElement : channels) {
 					if (channelElement.getName().equals(channel.getName())) {
@@ -121,10 +121,11 @@ public class DefaultChannelService implements ChannelService {
 						break;
 					}
 				}
-				
-				List<UsersChannels> relations = new ArrayList<UsersChannels>(UsersChannels.findAllUsersChannelses());
-				for(UsersChannels releationElement : relations){
-					if (releationElement.getChannel().equals(removChannel)){
+
+				List<UsersChannels> relations = new ArrayList<UsersChannels>(
+						UsersChannels.findAllUsersChannelses());
+				for (UsersChannels releationElement : relations) {
+					if (releationElement.getChannel().equals(removChannel)) {
 						releationElement.remove();
 						break;
 					}
@@ -191,6 +192,7 @@ public class DefaultChannelService implements ChannelService {
 			ClientChannelModel clientObject = new ClientChannelModel();
 			clientObject.setName(channelElement.getName());
 			clientObject.setDescription(channelElement.getDescription());
+			clientObject.setPublic(channelElement.isIsPublic());
 			boolean findUser = false;
 			for (UsersChannels relations : UsersChannels
 					.findAllUsersChannelses()) {
@@ -202,10 +204,14 @@ public class DefaultChannelService implements ChannelService {
 					break;
 				}
 			}
-			if (!findUser) {
+			if (!findUser){
 				clientObject.setSubscribed(false);
 			}
-			returnParametars.add(clientObject);
+			
+			if (clientObject.isSubscribed() || clientObject.isPublic()){
+				returnParametars.add(clientObject);
+				System.out.println(clientObject.getName() + clientObject.isSubscribed() + clientObject.isPublic() + " --- " + findUser);
+			}
 		}
 		return returnParametars;
 	}

@@ -6,6 +6,8 @@ import com.infobip.campus.chattopush.services.MessageService;
 import com.infobip.campus.chattopush.services.PushNotification;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultMessageService implements MessageService {
-
+	
 	@Override
 	public List<MessageModel> fetchMessageList(String un, String ch,
 			long startTime, long endTime) {
@@ -29,6 +31,8 @@ public class DefaultMessageService implements MessageService {
 				result.add(msg);
 			}
 		}
+		
+		Collections.sort(result, new MessageComparator());
 
 		return result;
 	}
