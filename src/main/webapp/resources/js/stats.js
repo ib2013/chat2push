@@ -2,8 +2,8 @@ function statsByDays(){
 	
 	
 	$(function () {
-		showAllUsers();
-		alert(allusers);
+	//	showAllUsers();
+		//alert(allusers);
 		
         $('#container').highcharts({
             chart: {
