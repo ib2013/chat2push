@@ -17,7 +17,11 @@ import com.infobip.campus.chattopush.services.ChannelService;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
+
 import java.util.List;
+
+import javax.management.relation.RelationException;
 
 import org.springframework.stereotype.Service;
 
@@ -106,11 +110,22 @@ public class DefaultChannelService implements ChannelService {
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 
-			List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+			
 			try {
+				List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+				String removChannel = "";
 				for (ChannelModel channelElement : channels) {
 					if (channelElement.getName().equals(channel.getName())) {
+						removChannel = channelElement.getName();
 						channelElement.remove();
+						break;
+					}
+				}
+				
+				List<UsersChannels> relations = new ArrayList<UsersChannels>(UsersChannels.findAllUsersChannelses());
+				for(UsersChannels releationElement : relations){
+					if (releationElement.getChannel().equals(removChannel)){
+						releationElement.remove();
 						break;
 					}
 				}
@@ -197,8 +212,12 @@ public class DefaultChannelService implements ChannelService {
 
 	@Override
 	public boolean addUserToRoom(UsersChannels object) {
-		if (isExistsUserInChannel(object)) {
+		ChannelModel channel = new ChannelModel();
+		channel.setName(object.getChannel());
+		channel.setDescription("");
+		if (isChannelExists(channel) && !isExistsUserInChannel(object)) {
 			try {
+				object.setLastMessage(new Date(0));
 				object.persist();
 				return true;
 			} catch (Exception e) {
@@ -271,7 +290,9 @@ public class DefaultChannelService implements ChannelService {
 		List<UsersChannels> allRelations = new ArrayList<UsersChannels>(
 				UsersChannels.findAllUsersChannelses());
 		for (UsersChannels userChannel : allRelations) {
-			if (userChannel.getChannel().equals(relations.getChannel())) {
+			if (userChannel.getChannel().equals(relations.getChannel())
+					&& userChannel.getUsername()
+							.equals(relations.getUsername())) {
 				return true;
 			}
 		}

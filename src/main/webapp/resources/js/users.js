@@ -117,9 +117,9 @@ function fetchUsersByRoom(roomname) {
 												+ username
 												+ "'>"
 												+ username
-												+ "<label id='"
+												/*+ "<label id='"
 												+ username
-												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"
+												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"*/
 												);
 							}
 						
@@ -173,9 +173,9 @@ function fetchOpositeUsersByRoom(roomname) {
 												+ username
 												+ "'>"
 												+ username
-												+ "<label id='"
+												/*+ "<label id='"
 												+ username
-												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"
+												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"*/
 												);
 							}
 						
