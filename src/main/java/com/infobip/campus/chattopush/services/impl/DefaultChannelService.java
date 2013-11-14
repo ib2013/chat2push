@@ -237,8 +237,6 @@ public class DefaultChannelService implements ChannelService {
 		return activityUsers;
 	}
 
-
-
 	private int countMessagesByUserAndChannel(String channelName,
 			String username) {
 		int counter = 0;
@@ -276,7 +274,9 @@ public class DefaultChannelService implements ChannelService {
 		List<UsersChannels> allRelations = new ArrayList<UsersChannels>(
 				UsersChannels.findAllUsersChannelses());
 		for (UsersChannels userChannel : allRelations) {
-			if (userChannel.getChannel().equals(relations.getChannel())) {
+			if (userChannel.getChannel().equals(relations.getChannel())
+					&& userChannel.getUsername()
+							.equals(relations.getUsername())) {
 				return true;
 			}
 		}
