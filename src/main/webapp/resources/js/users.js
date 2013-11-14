@@ -1,3 +1,4 @@
+var allusers;
 function showAllUsers() {
 	$('#loading').show();
 	
@@ -9,8 +10,9 @@ function showAllUsers() {
 
 						for (var i = 0; i < data.length; i++) {
 							var username = data[i].username;
-						
-							$('#list_users')
+						    allusers[i].name = username;
+						    allusers[i].data = 5;
+							/*$('#list_users')
 									.append(
 											"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
 													+ username
@@ -18,7 +20,7 @@ function showAllUsers() {
 													+ username
 													+ "<label id='"
 													+ username
-													+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>");
+													+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>");*/
 						}
 
 					});
