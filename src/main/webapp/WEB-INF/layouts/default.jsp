@@ -13,18 +13,29 @@
 <title>Chat to Push</title>
 
 <spring:url value="resources/js/jquery.js" var='jsJquery' />
-<spring:url value="resources/js/main.js" var='main'/>
+<spring:url value="resources/js/main.js" var='main' />
 <spring:url value="resources/js/channels.js" var='jsChannelsForm' />
 <spring:url value="resources/js/users.js" var='jsUsersForm' />
+<spring:url value="resources/js/highcharts.js" var='jsHighCharts' />
+<spring:url value="resources/js/exporting.js" var='jsExporting' />
+<spring:url value="resources/js/stats.js" var='jsStats' />
 <spring:url value="resources/css/style.css" var="cssStyle" />
 <spring:url value="resources/css/bootstrap.css" var="cssBootstrap" />
 
-    <script type="text/javascript" src="${jsJquery}"> </script>
-	<script type="text/javascript" src="${main}"> </script>
-	<script type="text/javascript" src="${jsChannelsForm}"></script>
-		<script type="text/javascript" src="${jsUsersForm}"></script>
-	<link rel="stylesheet" type="text/css" media="screen" href="${cssStyle}" />
-	<link rel="stylesheet" type="text/css" media="screen" href="${cssBootstrap}" />
+<script type="text/javascript" src="${jsJquery}">
+	
+</script>
+<script type="text/javascript" src="${main}">
+	
+</script>
+<script type="text/javascript" src="${jsChannelsForm}"></script>
+<script type="text/javascript" src="${jsUsersForm}"></script>
+<script type="text/javascript" src="${jsHighCharts}"></script>
+<script type="text/javascript" src="${jsExporting}"></script>
+<script type="text/javascript" src="${jsStats}"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="${cssStyle}" />
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${cssBootstrap}" />
 
 
 <spring:message code="application_name" var="app_name"
