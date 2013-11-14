@@ -21,8 +21,8 @@ function showAllUsers() {
 													+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>");
 						}
 
-					}).done(onChangeFetchUsersByRoom());
-	
+					});
+	$('#loading').hide();
 	
 }
 
@@ -37,16 +37,15 @@ function deleteUser(user) {
 			$.ajax({
 				url : _basePath + "user/delete",
 				headers : {
-					'Accept' : 'text/plain',
+					'Accept' : 'application/json',
 					'Content-Type' : 'application/json'
 				},
 				method : 'POST',
 				contentType : 'application/json',
 				data : JSON.stringify(userJson),
 				success : function(rez, status, xhr) {
-					if (rez == "success") {
-						var deleted=document.getElementById(user.id);
-						deleted.remove();
+					if (rez == 'SUCCESS') {
+						showAllUsers();
 						$('#loading').hide();
 					} else {
 						$('#loading').hide();
@@ -77,8 +76,8 @@ function fetchUsersByRoom(roomname) {
 
 	
 	$('#list_rooms_users').html("");
-	//$('#list_users').html("");
-	//showAllUsers();
+	$('#list_users').html("");
+	showAllUsers();
 	if (isNaN(roomname)) {
 		var room = new Object();
 		room.name = roomname;
@@ -101,8 +100,9 @@ function fetchUsersByRoom(roomname) {
 						
 							for (var i = 0; i < data.length; i++) {
 								var username = data[i].username;
-							//	var elementForRemove=document.getElementById(username);
+								//var elementForRemove=document.getElementById(username);
 								//alert(username);
+								//if(elementForRemove!=null)
 								//elementForRemove.remove();
 								$('#list_rooms_users')
 										.append(

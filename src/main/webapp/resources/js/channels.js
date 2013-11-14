@@ -113,7 +113,7 @@ function fetchAllChannels() {
 													+ channelName.substr(0,	40)
 													+ "</option>");
 									//alert("Prvi elem je: " + channelName);
-									fetchUsersByRoom(channelName);
+									//fetchUsersByRoom(channelName);
 									ind = false;
 									
 								} else {
@@ -132,8 +132,10 @@ function fetchAllChannels() {
 							$('#loading').hide();
 							//alert('Error loading channel.');
 						}
+						
 
 					});	
+	onChangeFetchUsersByRoom();
 
 }
 

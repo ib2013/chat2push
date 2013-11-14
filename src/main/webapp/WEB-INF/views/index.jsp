@@ -23,7 +23,7 @@
 			<div id='room_header' style="float: left;">
 				<div id="room_list_tab" class='listRoom'>
 
-					<select id="select_room_list" style="width: 140px;" onChange="showAllUsers()">
+					<select id="select_room_list" style="width: 140px;" onChange="onChangeFetchUsersByRoom()">
 					</select> 
 					<img id="keyImage" src="resources/images/key.gif" />
 					<input type='button' id='deleteRoom' value='Delete'
