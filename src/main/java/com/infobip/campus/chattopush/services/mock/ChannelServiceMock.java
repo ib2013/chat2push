@@ -123,4 +123,19 @@ public class ChannelServiceMock implements ChannelService {
 		return false;
 	}
 
+	@Override
+	public List<UserActivityModel> fetchOpositeUserByChannel(
+			ChannelModel channel) {
+		List<UserActivityModel> uAcM = new ArrayList<UserActivityModel>();
+		for (int i = 0; i < UserConfiguration.us.size(); i++) {
+			if (!UserConfiguration.cs.get(i).equals(channel.getName())) {
+				UserActivityModel x = new UserActivityModel();
+				x.setUsername(UserConfiguration.us.get(i));
+				x.setMessageCount((int) Math.random() * 100);
+				uAcM.add(x);
+			}
+		}
+		return uAcM;
+	}
+
 }

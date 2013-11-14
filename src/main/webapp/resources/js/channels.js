@@ -114,6 +114,7 @@ function fetchAllChannels() {
 													+ "</option>");
 									//alert("Prvi elem je: " + channelName);
 									//fetchUsersByRoom(channelName);
+									onChangeFetchUsersByRoom();
 									ind = false;
 									
 								} else {
@@ -135,7 +136,7 @@ function fetchAllChannels() {
 						
 
 					});	
-	onChangeFetchUsersByRoom();
+	
 
 }
 
