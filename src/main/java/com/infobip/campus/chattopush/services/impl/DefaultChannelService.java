@@ -21,7 +21,6 @@ import java.util.Date;
 
 import java.util.List;
 
-import javax.management.relation.RelationException;
 
 import org.springframework.stereotype.Service;
 
@@ -110,9 +109,9 @@ public class DefaultChannelService implements ChannelService {
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 
-			
 			try {
-				List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+				List<ChannelModel> channels = ChannelModel
+						.findAllChannelModels();
 				String removChannel = "";
 				for (ChannelModel channelElement : channels) {
 					if (channelElement.getName().equals(channel.getName())) {
@@ -121,17 +120,17 @@ public class DefaultChannelService implements ChannelService {
 						break;
 					}
 				}
-				
-				List<UsersChannels> relations = new ArrayList<UsersChannels>(UsersChannels.findAllUsersChannelses());
-				for(UsersChannels releationElement : relations){
-					if (releationElement.getChannel().equals(removChannel)){
+
+				List<UsersChannels> relations = new ArrayList<UsersChannels>(
+						UsersChannels.findAllUsersChannelses());
+				for (UsersChannels releationElement : relations) {
+					if (releationElement.getChannel().equals(removChannel)) {
 						releationElement.remove();
 						break;
 					}
 				}
 				return true;
 			} catch (Exception e) {
-				addChannel(channel);
 				e.printStackTrace();
 				return false;
 			}
@@ -184,13 +183,14 @@ public class DefaultChannelService implements ChannelService {
 	@Override
 	public List<ClientChannelModel> fetchSubscribedChannels(String username) {
 
-		List<ClientChannelModel> returnParametars = new ArrayList<ClientChannelModel>();
+		List<ClientChannelModel> returnParameters = new ArrayList<ClientChannelModel>();
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 
 		for (ChannelModel channelElement : channels) {
 			ClientChannelModel clientObject = new ClientChannelModel();
 			clientObject.setName(channelElement.getName());
 			clientObject.setDescription(channelElement.getDescription());
+			clientObject.setPublic(channelElement.isIsPublic());
 			boolean findUser = false;
 			for (UsersChannels relations : UsersChannels
 					.findAllUsersChannelses()) {
@@ -202,12 +202,16 @@ public class DefaultChannelService implements ChannelService {
 					break;
 				}
 			}
-			if (!findUser) {
+			if (!findUser){
 				clientObject.setSubscribed(false);
 			}
-			returnParametars.add(clientObject);
+			
+			if (clientObject.isSubscribed() || clientObject.isPublic()){
+				returnParameters.add(clientObject);
+				System.out.println(clientObject.getName() + clientObject.isSubscribed() + clientObject.isPublic() + " --- " + findUser);
+			}
 		}
-		return returnParametars;
+		return returnParameters;
 	}
 
 	@Override
@@ -230,8 +234,15 @@ public class DefaultChannelService implements ChannelService {
 
 	public boolean removeUserFromRoom(UsersChannels object) {
 		try {
-			object.remove();
-			return true;
+			List<UsersChannels> relations = UsersChannels
+					.findAllUsersChannelses();
+			for (UsersChannels relationElement : relations) {
+				if (relationElement.getChannel().equals(object.getChannel())) {
+					relationElement.remove();
+					return true;
+				}
+			}
+			return false;
 		} catch (Exception e) {
 			return false;
 		}
