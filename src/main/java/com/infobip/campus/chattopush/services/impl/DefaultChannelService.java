@@ -183,7 +183,7 @@ public class DefaultChannelService implements ChannelService {
 	@Override
 	public List<ClientChannelModel> fetchSubscribedChannels(String username) {
 
-		List<ClientChannelModel> returnParametars = new ArrayList<ClientChannelModel>();
+		List<ClientChannelModel> returnParameters = new ArrayList<ClientChannelModel>();
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 
 		for (ChannelModel channelElement : channels) {
@@ -204,9 +204,9 @@ public class DefaultChannelService implements ChannelService {
 			if (!findUser) {
 				clientObject.setSubscribed(false);
 			}
-			returnParametars.add(clientObject);
+			returnParameters.add(clientObject);
 		}
-		return returnParametars;
+		return returnParameters;
 	}
 
 	@Override
