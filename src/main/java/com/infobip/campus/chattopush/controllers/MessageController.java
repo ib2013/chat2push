@@ -31,8 +31,8 @@ public class MessageController {
 	public List<MessageModel> fetchMessageList(
 			@PathVariable("username") String un,
 			@PathVariable("channel") String ch,
-			@PathVariable("start-time") String startTime,
-			@PathVariable("end-time") String endTime) {
+			@PathVariable("start-time") long startTime,
+			@PathVariable("end-time") long endTime) {
 
 		List<MessageModel> messages = messageService.fetchMessageList();
 		List<MessageModel> result = new ArrayList<MessageModel>();

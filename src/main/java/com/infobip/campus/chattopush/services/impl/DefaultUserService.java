@@ -67,7 +67,7 @@ public class DefaultUserService implements UserService {
 		List<UserModel> list = UserModel.findAllUserModels();
 		List<UsersChannels> listaKanala = UsersChannels.findAllUsersChannelses();
 
-		boolean deleteUserExecuted = false;
+		boolean deleteUser = false;
 		boolean deleteUserChannelRelation = false;
 
 		try {
@@ -76,13 +76,14 @@ public class DefaultUserService implements UserService {
 				if (modelUser.getUsername().contentEquals(_model.getUsername().toString())) {
 					modelUser.remove();
 
-					deleteUserExecuted = true;
+					deleteUser = true;
 				}
 			}
 
 			for (UsersChannels modelKanal : listaKanala) {
 				if (modelKanal.getUsername().contentEquals(_model.getUsername())) {
 					modelKanal.remove();
+					deleteUserChannelRelation = true;
 				}
 			}
 
@@ -91,6 +92,11 @@ public class DefaultUserService implements UserService {
 
 			return StatusAction.EXC;
 		}
+
+		if (deleteUserChannelRelation == true && deleteUser == true) {
+			return StatusAction.SUCCESS;
+		}
+
 		return StatusAction.FAIL;
 
 	}
