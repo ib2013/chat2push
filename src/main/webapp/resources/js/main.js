@@ -98,8 +98,11 @@ documentReady = function(basePath) {
 	fetchAllChannels();
 
 	showAllUsers();
-    
+    statsByDays();
 	$('#loading').hide();
+	
+    
 
+    
 
 };
