@@ -23,6 +23,7 @@ function showAllUsers() {
 
 					});
 	$('#loading').hide();
+	
 }
 
 function deleteUser(user) {
@@ -36,16 +37,15 @@ function deleteUser(user) {
 			$.ajax({
 				url : _basePath + "user/delete",
 				headers : {
-					'Accept' : 'text/plain',
+					'Accept' : 'application/json',
 					'Content-Type' : 'application/json'
 				},
 				method : 'POST',
 				contentType : 'application/json',
 				data : JSON.stringify(userJson),
 				success : function(rez, status, xhr) {
-					if (rez == "success") {
-						var deleted=document.getElementById(user.id);
-						deleted.remove();
+					if (rez == 'SUCCESS') {
+						showAllUsers();
 						$('#loading').hide();
 					} else {
 						$('#loading').hide();
@@ -64,16 +64,21 @@ function deleteUser(user) {
 
 }
 function onChangeFetchUsersByRoom() {
+	$('#loading').show();
 	var room = $("#select_room_list option:selected");
 	if(room.attr("id")=="PR") $("#keyImage").show();
 	else $("#keyImage").hide();
 	var roomname=room.val();
 	fetchUsersByRoom(roomname);
+
+
+
 	fetchOpositeUsersByRoom(roomname);
+	$('#loading').hide();
 }
 function fetchUsersByRoom(roomname) {
 
-	$('#loading').show();
+	
 	$('#list_rooms_users').html("");
 	//$('#list_users').html("");
 	//showAllUsers();
@@ -100,6 +105,9 @@ function fetchUsersByRoom(roomname) {
 							for (var i = 0; i < data.length; i++) {
 								var username = data[i].username;
 								//var elementForRemove=document.getElementById(username);
+								//alert(username);
+								//if(elementForRemove!=null)
+
 								//elementForRemove.remove();
 								$('#list_rooms_users')
 										.append(
@@ -114,15 +122,18 @@ function fetchUsersByRoom(roomname) {
 							}
 						
 						} else {
-							$('#loading').hide();
+							
 						}
 					}
 				});
 	} else {
 		
 	}
-	$('#loading').hide();
+
 }
+
+
+
 
 function fetchOpositeUsersByRoom(roomname) {
 
@@ -176,8 +187,8 @@ function fetchOpositeUsersByRoom(roomname) {
 	}
 	$('#loading').hide();
 }
-
-function refershUserList(){
-	//showAllUsers();
+function refreshUserList(){
+	showAllUsers();
 	onChangeFetchUsersByRoom();
+
 }
