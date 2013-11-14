@@ -58,7 +58,7 @@ function removeUserFromChannel(userName, channel) {
 	var channelUserJson=new Object();
 	channelUserJson.username=user.id;
 	channelUserJson.channel=channel.val();
-	
+
 	$.ajax({
 		url: _basePath+ "channel/removeUserFromRoom",
 		headers: {
