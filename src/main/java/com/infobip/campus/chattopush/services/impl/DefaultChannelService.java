@@ -21,7 +21,6 @@ import java.util.Date;
 
 import java.util.List;
 
-import javax.management.relation.RelationException;
 
 import org.springframework.stereotype.Service;
 
@@ -132,7 +131,6 @@ public class DefaultChannelService implements ChannelService {
 				}
 				return true;
 			} catch (Exception e) {
-				addChannel(channel);
 				e.printStackTrace();
 				return false;
 			}
@@ -185,7 +183,7 @@ public class DefaultChannelService implements ChannelService {
 	@Override
 	public List<ClientChannelModel> fetchSubscribedChannels(String username) {
 
-		List<ClientChannelModel> returnParametars = new ArrayList<ClientChannelModel>();
+		List<ClientChannelModel> returnParameters = new ArrayList<ClientChannelModel>();
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 
 		for (ChannelModel channelElement : channels) {
@@ -209,11 +207,11 @@ public class DefaultChannelService implements ChannelService {
 			}
 			
 			if (clientObject.isSubscribed() || clientObject.isPublic()){
-				returnParametars.add(clientObject);
+				returnParameters.add(clientObject);
 				System.out.println(clientObject.getName() + clientObject.isSubscribed() + clientObject.isPublic() + " --- " + findUser);
 			}
 		}
-		return returnParametars;
+		return returnParameters;
 	}
 
 	@Override
@@ -236,8 +234,15 @@ public class DefaultChannelService implements ChannelService {
 
 	public boolean removeUserFromRoom(UsersChannels object) {
 		try {
-			object.remove();
-			return true;
+			List<UsersChannels> relations = UsersChannels
+					.findAllUsersChannelses();
+			for (UsersChannels relationElement : relations) {
+				if (relationElement.getChannel().equals(object.getChannel())) {
+					relationElement.remove();
+					return true;
+				}
+			}
+			return false;
 		} catch (Exception e) {
 			return false;
 		}

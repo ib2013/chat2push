@@ -1,10 +1,13 @@
 package com.infobip.campus.chattopush.services.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.infobip.campus.chattopush.models.ChannelModel;
+import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
@@ -29,7 +32,6 @@ public class DefaultUserService implements UserService {
 				}
 			}
 		}
-
 
 		return StatusUser.NOUSER;
 	}
@@ -61,7 +63,6 @@ public class DefaultUserService implements UserService {
 		}
 		return "success";
 	}
-
 
 	public StatusAction deleteUser(UserModel _model) {
 
@@ -106,8 +107,7 @@ public class DefaultUserService implements UserService {
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
-			if (model.getUsername().contentEquals(
-					_model.getUsername().toString())) {
+			if (model.getUsername().contentEquals(_model.getUsername().toString())) {
 				return true;
 			}
 		}
@@ -126,10 +126,23 @@ public class DefaultUserService implements UserService {
 
 	}
 
-	public boolean addChannelToUser(UsersChannels _model) {
+	public Map<String, Integer> fetchUserStatistics(UserModel _model) {
 		// TODO Auto-generated method stub
-		List<ChannelModel> channelModel = ChannelModel.findAllChannelModels();
+		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+		List<MessageModel> messages = MessageModel.findAllMessageModels();
 
-		return false;
+		Map<String, Integer> statistic = new HashMap<String, Integer>();
+
+		for (ChannelModel chnlModel : channels) {
+			int brojPoruka = 0;
+			for (MessageModel msgModel : messages) {
+				if (msgModel.getChannel().contentEquals(chnlModel.getName()) && msgModel.getUser().contentEquals(_model.getUsername())) {
+					brojPoruka++;
+				}
+			}
+			statistic.put(chnlModel.getName(), brojPoruka);
+		}
+
+		return statistic;
 	}
 }

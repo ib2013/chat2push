@@ -1,6 +1,14 @@
 
 var allusers;
+
+function getColor(username){
+	var red=(username.charCodeAt(0))*5%200+50;
+	var green=(username.charCodeAt(1)*6)%200+50;
+	var blue=(username.charCodeAt(2)*7)%200+50;
+	return "rgb("+red+","+green+","+blue+")";
+}
 function showAllUsers() {
+	
 	$('#loading').show();
 	
 	$
@@ -68,6 +76,7 @@ function deleteUser(user) {
 }
 function onChangeFetchUsersByRoom() {
 	$('#loading').show();
+	getColor("imer");
 	var room = $("#select_room_list option:selected");
 	if(room.attr("id")=="PR") $("#keyImage").show();
 	else $("#keyImage").hide();
@@ -113,10 +122,12 @@ function fetchUsersByRoom(roomname) {
 								//elementForRemove.remove();
 								$('#list_rooms_users')
 										.append(
-												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
+								
+												+" <p class='plistelem'  draggable='true' ondragstart='drag(event)' id='"
 												+ username
-												+ "'>"
+												+ "'><label style='float: left; width:20px; height:20px; background-color:"+getColor(username)+"';></label> &nbsp;"
 												+ username
+												+"</p>"
 												/*+ "<label id='"
 												+ username
 												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"*/
@@ -169,13 +180,12 @@ function fetchOpositeUsersByRoom(roomname) {
 								//elementForRemove.remove();
 								$('#list_users')
 										.append(
+												
 												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
 												+ username
-												+ "'>"
+												+ "'><label style='float: left; width:20px; height:20px; background-color:"+getColor(username)+"';></label> &nbsp;"
 												+ username
-												/*+ "<label id='"
-												+ username
-												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"*/
+												+"</p>"
 												);
 							}
 						
