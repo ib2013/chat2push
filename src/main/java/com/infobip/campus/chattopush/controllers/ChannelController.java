@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.models.ChannelModel;
+import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
 
@@ -48,7 +49,7 @@ public class ChannelController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/fetchOpositeUsersByRoom", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public List<UserActivityModel> fetchOpositeUsersByChannel(
+	public List<UserModel> fetchOpositeUsersByChannel(
 			@RequestBody final ChannelModel channel) {
 		return channelService.fetchOpositeUserByChannel(channel);
 

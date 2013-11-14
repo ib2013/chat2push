@@ -5,6 +5,7 @@ import java.util.List;
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.models.ChannelModel;
+import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 
 
@@ -30,6 +31,6 @@ public interface ChannelService {
 
 	public List<UserActivityModel> fetchUserByChannel(ChannelModel channel);
 	
-	public List<UserActivityModel> fetchOpositeUserByChannel(ChannelModel channel);
+	public List<UserModel> fetchOpositeUserByChannel(ChannelModel channel);
 
 }
