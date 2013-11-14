@@ -123,9 +123,9 @@ function fetchUsersByRoom(roomname) {
 								$('#list_rooms_users')
 										.append(
 								
-												+" <p class='plistelem'  draggable='true' ondragstart='drag(event)' id='"
+												"<p class='plistelem'  draggable='true' ondragstart='drag(event)' id='"
 												+ username
-												+ "'><label style='float: left; width:20px; height:20px; background-color:"+getColor(username)+"';></label> &nbsp;"
+												+ "'><label style='float: left; width:20px; height:20px; background-color:"+getColor(username)+"'></label> &nbsp;"
 												+ username
 												+"</p>"
 												/*+ "<label id='"
@@ -183,7 +183,7 @@ function fetchOpositeUsersByRoom(roomname) {
 												
 												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
 												+ username
-												+ "'><label style='float: left; width:20px; height:20px; background-color:"+getColor(username)+"';></label> &nbsp;"
+												+ "'><label style='float: left; width:20px; height:20px; background-color:"+getColor(username)+"'></label> &nbsp;"
 												+ username
 												+"</p>"
 												);
