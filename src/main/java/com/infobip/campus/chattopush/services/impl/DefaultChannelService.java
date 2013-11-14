@@ -19,6 +19,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.relation.RelationException;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -106,11 +108,22 @@ public class DefaultChannelService implements ChannelService {
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 
-			List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+			
 			try {
+				List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+				String removChannel = "";
 				for (ChannelModel channelElement : channels) {
 					if (channelElement.getName().equals(channel.getName())) {
+						removChannel = channelElement.getName();
 						channelElement.remove();
+						break;
+					}
+				}
+				
+				List<UsersChannels> relations = new ArrayList<UsersChannels>(UsersChannels.findAllUsersChannelses());
+				for(UsersChannels releationElement : relations){
+					if (releationElement.getChannel().equals(removChannel)){
+						releationElement.remove();
 						break;
 					}
 				}
@@ -197,7 +210,7 @@ public class DefaultChannelService implements ChannelService {
 
 	@Override
 	public boolean addUserToRoom(UsersChannels object) {
-		if (isExistsUserInChannel(object)) {
+		if (!isExistsUserInChannel(object)) {
 			try {
 				object.persist();
 				return true;
