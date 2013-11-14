@@ -110,9 +110,9 @@ public class DefaultChannelService implements ChannelService {
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 
-			
 			try {
-				List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+				List<ChannelModel> channels = ChannelModel
+						.findAllChannelModels();
 				String removChannel = "";
 				for (ChannelModel channelElement : channels) {
 					if (channelElement.getName().equals(channel.getName())) {
@@ -121,10 +121,11 @@ public class DefaultChannelService implements ChannelService {
 						break;
 					}
 				}
-				
-				List<UsersChannels> relations = new ArrayList<UsersChannels>(UsersChannels.findAllUsersChannelses());
-				for(UsersChannels releationElement : relations){
-					if (releationElement.getChannel().equals(removChannel)){
+
+				List<UsersChannels> relations = new ArrayList<UsersChannels>(
+						UsersChannels.findAllUsersChannelses());
+				for (UsersChannels releationElement : relations) {
+					if (releationElement.getChannel().equals(removChannel)) {
 						releationElement.remove();
 						break;
 					}
