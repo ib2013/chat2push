@@ -48,16 +48,16 @@ public class UserServiceMock implements UserService {
 
 	@Override
 	public StatusAction deleteUser(UserModel _model) {
-
-		// TODO Auto-generated method stub
 		boolean deleteUserExecuted = false;
 		boolean deleteUserChannelRelation = false;
 		/*
 		 * User delete
 		 */
 		for (int i = 0; i < UserConfiguration.usrs.size(); i++) {
-			if (UserConfiguration.usrs.get(i).getUsername().contentEquals(_model.getUsername())) {
+			if (UserConfiguration.usrs.get(i).getUsername()
+					.contentEquals(_model.getUsername())) {
 				UserConfiguration.usrs.remove(i);
+
 				deleteUserExecuted = true;
 			}
 		}

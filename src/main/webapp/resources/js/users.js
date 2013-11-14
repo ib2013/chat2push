@@ -1,3 +1,4 @@
+var allusers;
 function showAllUsers() {
 	$('#loading').show();
 	
@@ -9,8 +10,9 @@ function showAllUsers() {
 
 						for (var i = 0; i < data.length; i++) {
 							var username = data[i].username;
-						
-							$('#list_users')
+						    allusers[i].name = username;
+						    allusers[i].data = 5;
+							/*$('#list_users')
 									.append(
 											"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
 													+ username
@@ -18,7 +20,7 @@ function showAllUsers() {
 													+ username
 													+ "<label id='"
 													+ username
-													+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>");
+													+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>");*/
 						}
 
 					});
@@ -69,10 +71,9 @@ function onChangeFetchUsersByRoom() {
 	if(room.attr("id")=="PR") $("#keyImage").show();
 	else $("#keyImage").hide();
 	var roomname=room.val();
+	$('#list_rooms_users').html("");
+	$('#list_users').html("");
 	fetchUsersByRoom(roomname);
-
-
-
 	fetchOpositeUsersByRoom(roomname);
 	$('#loading').hide();
 }
@@ -115,9 +116,9 @@ function fetchUsersByRoom(roomname) {
 												+ username
 												+ "'>"
 												+ username
-												+ "<label id='"
+												/*+ "<label id='"
 												+ username
-												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"
+												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"*/
 												);
 							}
 						
@@ -171,9 +172,9 @@ function fetchOpositeUsersByRoom(roomname) {
 												+ username
 												+ "'>"
 												+ username
-												+ "<label id='"
+												/*+ "<label id='"
 												+ username
-												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"
+												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"*/
 												);
 							}
 						
@@ -188,7 +189,7 @@ function fetchOpositeUsersByRoom(roomname) {
 	$('#loading').hide();
 }
 function refreshUserList(){
-	showAllUsers();
+	//showAllUsers();
 	onChangeFetchUsersByRoom();
 
 }

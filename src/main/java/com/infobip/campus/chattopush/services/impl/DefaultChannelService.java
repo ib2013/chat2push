@@ -5,22 +5,23 @@ import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
-
 import com.google.gson.Gson;
-
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.configuration.Configuration;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
-
+import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 
 import java.util.List;
+
+import javax.management.relation.RelationException;
 
 import org.springframework.stereotype.Service;
 
@@ -109,11 +110,22 @@ public class DefaultChannelService implements ChannelService {
 			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
 					.fetch(request);
 
-			List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+			
 			try {
+				List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+				String removChannel = "";
 				for (ChannelModel channelElement : channels) {
 					if (channelElement.getName().equals(channel.getName())) {
+						removChannel = channelElement.getName();
 						channelElement.remove();
+						break;
+					}
+				}
+				
+				List<UsersChannels> relations = new ArrayList<UsersChannels>(UsersChannels.findAllUsersChannelses());
+				for(UsersChannels releationElement : relations){
+					if (releationElement.getChannel().equals(removChannel)){
+						releationElement.remove();
 						break;
 					}
 				}
@@ -200,8 +212,12 @@ public class DefaultChannelService implements ChannelService {
 
 	@Override
 	public boolean addUserToRoom(UsersChannels object) {
-		if (!isExistsUserInChannel(object)) {
+		ChannelModel channel = new ChannelModel();
+		channel.setName(object.getChannel());
+		channel.setDescription("");
+		if (isChannelExists(channel) && !isExistsUserInChannel(object)) {
 			try {
+				object.setLastMessage(new Date(0));
 				object.persist();
 				return true;
 			} catch (Exception e) {
@@ -236,8 +252,6 @@ public class DefaultChannelService implements ChannelService {
 		}
 		return activityUsers;
 	}
-
-
 
 	private int countMessagesByUserAndChannel(String channelName,
 			String username) {
@@ -276,7 +290,9 @@ public class DefaultChannelService implements ChannelService {
 		List<UsersChannels> allRelations = new ArrayList<UsersChannels>(
 				UsersChannels.findAllUsersChannelses());
 		for (UsersChannels userChannel : allRelations) {
-			if (userChannel.getChannel().equals(relations.getChannel())) {
+			if (userChannel.getChannel().equals(relations.getChannel())
+					&& userChannel.getUsername()
+							.equals(relations.getUsername())) {
 				return true;
 			}
 		}
@@ -284,19 +300,24 @@ public class DefaultChannelService implements ChannelService {
 	}
 
 	@Override
-	public List<UserActivityModel> fetchOpositeUserByChannel(
-			ChannelModel channel) {
-		List<UserActivityModel> activityUsers = new ArrayList<UserActivityModel>();
-
-		for (UsersChannels relations : UsersChannels.findAllUsersChannelses()) {
-			if (!channel.getName().equals(relations.getChannel())) {
-				UserActivityModel userObject = new UserActivityModel();
-				userObject.setUsername(relations.getUsername());
-				userObject.setMessageCount(countMessagesByUserAndChannel(
-						relations.getChannel(), relations.getUsername()));
-				activityUsers.add(userObject);
+	public List<UserModel> fetchOpositeUserByChannel(ChannelModel channel) {
+		List<UserActivityModel> activityUsers = new ArrayList<UserActivityModel>(
+				fetchUserByChannel(channel));
+		List<UserModel> users = new ArrayList<UserModel>(
+				UserModel.findAllUserModels());
+		List<UserModel> usersRoom = new ArrayList<UserModel>();
+		boolean find;
+		for (UserModel user : users) {
+			find = false;
+			for (UserActivityModel relations : activityUsers) {
+				if (user.getUsername().equals(relations.getUsername())) {
+					find = true;
+				}
+			}
+			if (!find) {
+				usersRoom.add(user);
 			}
 		}
-		return activityUsers;
+		return usersRoom;
 	}
 }
