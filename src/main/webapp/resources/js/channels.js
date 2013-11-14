@@ -53,9 +53,10 @@ function addNewChannel() {
 
 }
 
-function deleteChannel() {
-	var channel=$("#select_room_list option:selected");
-	var channelName=channel.val();
+function deleteChannel(channel) {
+	//var channel=$("#select_room_list option:selected");
+	//alert(channel.id);
+	var channelName=channel.id;
 	if (isNaN(channelName)) {
 		$('#loading').hide();
 		if (confirm('Are you sure you want to delete ' + channelName + '?')) {
@@ -75,13 +76,14 @@ function deleteChannel() {
 						channel.remove();
 						$('#loading').hide();
 						alert('Room deleted.');
+						fetchAllChannels();
 					} else {
 						$('#loading').hide();
 						alert('Error!');
 					}
 				}
 			});
-		}
+		}	
 	} else {
 		$('#loading').hide();
 		alert('Error to delete channel.');
@@ -91,6 +93,7 @@ function deleteChannel() {
 
 function fetchAllChannels() {
 	$('#loading').show();
+	$('#list_channels').html("");
 	$.get(_basePath + "channel/fetch", function(data, status, xhr) {
 						if (JSON.stringify(data) != "") {
 							
@@ -112,6 +115,29 @@ function fetchAllChannels() {
 													+ "'>"
 													+ channelName.substr(0,	40)
 													+ "</option>");
+									if (channelisPublic == true) {
+										$("#list_channels").append(
+												"<p class='' id='"
+												+ channelName
+												+ "'>"
+												+ channelName
+												+ "<img id=\"keyImage\" src=\"\" width=\"16px\" height=\"16px\" style=\"float:right;\"/>"
+												+ "<label id='"
+												+ channelName
+												+ "' class='removeList' onclick='deleteChannel(this)'>&nbsp;x&nbsp;<label></p>"
+												);
+									} else {
+									$("#list_channels").append(
+											"<p class='' id='"
+											+ channelName
+											+ "'>"
+											+ channelName
+											+ "<img id=\"keyImage\" src=\"resources/images/key.gif\" style=\"float:right;\"/>" 											
+											+ "<label id='"
+											+ channelName
+											+ "' class='removeList' onclick='deleteChannel(this)'>&nbsp;x&nbsp;<label></p>"
+											);
+									}
 									//alert("Prvi elem je: " + channelName);
 									//fetchUsersByRoom(channelName);
 									onChangeFetchUsersByRoom();
@@ -125,6 +151,30 @@ function fetchAllChannels() {
 													+ "'>"
 													+ channelName.substr(0,	40)
 													+ "</option>");
+									
+									if (channelisPublic == true) {
+										$("#list_channels").append(
+												"<p class='' id='"
+												+ channelName
+												+ "'>"
+												+ channelName
+												+ "<img id=\"keyImage\" src=\"\" width=\"16px\" height=\"16px\" style=\"float:right;\"/>"
+												+ "<label id='"
+												+ channelName
+												+ "' class='removeList' onclick='deleteChannel(this)'>&nbsp;x&nbsp;<label></p>"
+												);
+									} else {
+									$("#list_channels").append(
+											"<p class='' id='"
+											+ channelName
+											+ "'>"
+											+ channelName
+											+ "<img id=\"keyImage\" src=\"resources/images/key.gif\" style=\"float:right;\"/>" 
+											+ "<label id='"
+											+ channelName
+											+ "' class='removeList' onclick='deleteChannel(this)' style=\"float:right;\">&nbsp;x&nbsp;<label></p>"
+											);
+									}
 								}
 								
 							}
