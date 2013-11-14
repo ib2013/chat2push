@@ -69,10 +69,9 @@ function onChangeFetchUsersByRoom() {
 	if(room.attr("id")=="PR") $("#keyImage").show();
 	else $("#keyImage").hide();
 	var roomname=room.val();
+	$('#list_rooms_users').html("");
+	$('#list_users').html("");
 	fetchUsersByRoom(roomname);
-
-
-
 	fetchOpositeUsersByRoom(roomname);
 	$('#loading').hide();
 }
@@ -188,7 +187,7 @@ function fetchOpositeUsersByRoom(roomname) {
 	$('#loading').hide();
 }
 function refreshUserList(){
-	showAllUsers();
+	//showAllUsers();
 	onChangeFetchUsersByRoom();
 
 }
