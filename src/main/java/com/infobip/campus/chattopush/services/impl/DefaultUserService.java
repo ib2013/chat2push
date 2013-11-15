@@ -69,6 +69,7 @@ public class DefaultUserService implements UserService {
 
 		boolean deleteUser = false;
 		boolean deleteUserChannelRelation = false;
+		boolean listaKanalaEmpty = false;
 
 		try {
 			for (UserModel modelUser : list) {
@@ -78,12 +79,15 @@ public class DefaultUserService implements UserService {
 					deleteUser = true;
 				}
 			}
-
-			for (UsersChannels modelKanal : listaKanala) {
-				if (modelKanal.getUsername().contentEquals(_model.getUsername())) {
-					modelKanal.remove();
-					deleteUserChannelRelation = true;
+			if (listaKanala != null) {
+				for (UsersChannels modelKanal : listaKanala) {
+					if (modelKanal.getUsername().contentEquals(_model.getUsername())) {
+						modelKanal.remove();
+						deleteUserChannelRelation = true;
+					}
 				}
+			} else {
+				listaKanalaEmpty = true;
 			}
 
 		} catch (Exception ex) {
@@ -92,6 +96,8 @@ public class DefaultUserService implements UserService {
 		}
 
 		if (deleteUserChannelRelation == true && deleteUser == true) {
+			return StatusCode.SUCCESS;
+		} else if (listaKanalaEmpty == true && deleteUser == true) {
 			return StatusCode.SUCCESS;
 		}
 
