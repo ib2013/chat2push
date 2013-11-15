@@ -77,11 +77,10 @@ public class DefaultUserService implements UserService {
 			for (UserModel modelUser : list) {
 				if (modelUser.getUsername().contentEquals(_model.getUsername().toString())) {
 					modelUser.remove();
-
 					deleteUser = true;
 				}
 			}
-			if (listaKanala != null) {
+			if (listaKanala.isEmpty() != true) {
 				for (UsersChannels modelKanal : listaKanala) {
 					if (modelKanal.getUsername().contentEquals(_model.getUsername())) {
 						modelKanal.remove();
@@ -97,9 +96,9 @@ public class DefaultUserService implements UserService {
 			new ChannelExceptionHandler(ex.getMessage());
 		}
 
-		if (deleteUserChannelRelation == true && deleteUser == true) {
+		if (listaKanalaEmpty == true && deleteUser == true) {
 			return StatusCode.SUCCESS;
-		} else if (listaKanalaEmpty == true && deleteUser == true) {
+		} else if (deleteUserChannelRelation == true && deleteUser == true) {
 			return StatusCode.SUCCESS;
 		}
 
