@@ -20,12 +20,12 @@ public class ChannelServiceMock implements ChannelService {
 
 	@Override
 	public boolean addChannel(ChannelModel channel) {
-		try {
-			UserConfiguration.chnls.add(channel);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+		// try {
+		UserConfiguration.chnls.add(channel);
+		return true;
+		// } catch (Exception e) {
+		// return false;
+		// }
 	}
 
 	@Override
@@ -125,20 +125,19 @@ public class ChannelServiceMock implements ChannelService {
 	}
 
 	@Override
-	public List<UserModel> fetchOpositeUserByChannel(
-			ChannelModel channel) {
+	public List<UserModel> fetchOpositeUserByChannel(ChannelModel channel) {
 		List<UserActivityModel> activityUsers = new ArrayList<UserActivityModel>(fetchUserByChannel(channel));
 		List<UserModel> users = new ArrayList<UserModel>(UserConfiguration.usrs);
 		List<UserModel> usersRoom = new ArrayList<UserModel>();
 		boolean find;
-		for(UserModel user : users){
+		for (UserModel user : users) {
 			find = false;
-			for(UserActivityModel relations : activityUsers){		
-				if(user.getUsername().equals(relations.getUsername())){
+			for (UserActivityModel relations : activityUsers) {
+				if (user.getUsername().equals(relations.getUsername())) {
 					find = true;
 				}
 			}
-			if(!find){
+			if (!find) {
 				usersRoom.add(user);
 			}
 		}

@@ -8,12 +8,14 @@
 			alt="Loading..." />
 	</div>
 
+
 	<script type="text/javascript">
 		var _basePath = '${_basePath}';
-
 		$(document).ready(function() {
 			$('#tab-container').easytabs();
 			documentReady(_basePath);
+			showAllUsers();
+			showTenUsers(1);
 		});
 	</script>
 
@@ -65,11 +67,31 @@
 
 		</div>
 
-		
+
 	</div>
 	<div id="tabsum">
-		<h2></h2>
-		<!-- content -->
+		<!-- <div id="paging_container1" class="container">
+-->
+
+		<div id='lists2' style="clear: both;">
+			<div id='centralContent' class="centralContent"
+				style="margin-top: 20px;">
+				<div id="content" class='listContent' style="float: left;"></div>
+				<div id='user_graph' class="listContent" style="width: 450px;">
+				</div>
+			</div>
+		</div>
+		<div id="page-selection"></div>
+		<script>
+			$('#page-selection').bootpag({
+				total : numofpages
+			}).on("page", function(event, num) {
+				//$("#content").html(""); // some ajax content loading...
+				showAllUsers();
+				showTenUsers(num);
+			});
+		</script>
+
 	</div>
 	<div id="tabscm" style="padding-top: 20px; padding-bottom: 20px;">
 		<h2></h2>
@@ -78,7 +100,7 @@
 			<div id='centralContentCM' class="centralContent">
 				<div id='headersCM'>
 
-					<div id='channel_header' style="float: left;">
+					<div id='channel_header' style="float: left; margin-left: 50px;">
 						<label id='channel_list_tab' class='listOptions'>List of
 							Rooms </label>
 					</div>
@@ -126,7 +148,8 @@
 		</div>
 	</div>
 	<div id="tabsstat" style="padding-top: 20px; padding-bottom: 20px;">
-	<div id="stats"
+		<div id="stats"
 			style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 	</div>
 </div>
+

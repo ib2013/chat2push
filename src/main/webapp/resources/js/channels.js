@@ -75,7 +75,7 @@ function deleteChannel(channel) {
 					if (rez == 'success') {
 						channel.remove();
 						$('#loading').hide();
-						alert('Room deleted.');
+						//alert('Room deleted.');
 						fetchAllChannels();
 					} else {
 						$('#loading').hide();
