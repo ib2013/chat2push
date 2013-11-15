@@ -11,7 +11,7 @@
       <spring:message code="error_uncaughtexception_problemdescription" />
     </p>
     <c:if test="${not empty exception}">
-      <p>
+    
         <h4>
           <spring:message code="exception_details" />
         </h4>
@@ -21,6 +21,6 @@
             <c:out value="${trace}" />
             <br />
           </c:forEach>
-      </p>
+      
     </c:if>
 </div>

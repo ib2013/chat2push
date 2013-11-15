@@ -1,5 +1,14 @@
 package com.infobip.campus.chattopush.services.impl;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
 import com.google.appengine.api.urlfetch.HTTPHeader;
 import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
@@ -14,14 +23,6 @@ import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultChannelService implements ChannelService {
@@ -334,4 +335,32 @@ public class DefaultChannelService implements ChannelService {
 		}
 		return usersRoom;
 	}
+
+	public Map<String, Integer> channelStatistics() {
+		// TODO Auto-generated method stub
+		try {
+			List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+			List<MessageModel> messages = MessageModel.findAllMessageModels();
+
+			Map<String, Integer> statistic = new HashMap<String, Integer>();
+
+			for (ChannelModel chnlModel : channels) {
+				int numMessage = 0;
+				for (MessageModel msgModel : messages) {
+					if (msgModel.getChannel()
+							.contentEquals(chnlModel.getName())) {
+						numMessage++;
+					}
+				}
+				statistic.put(chnlModel.getName(), numMessage);
+			}
+
+			return statistic;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
 }
