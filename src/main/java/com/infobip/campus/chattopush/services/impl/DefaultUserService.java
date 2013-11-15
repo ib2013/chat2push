@@ -11,13 +11,12 @@ import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
-import com.infobip.campus.chattopush.services.enums.StatusAction;
-import com.infobip.campus.chattopush.services.enums.StatusUser;
+import com.infobip.campus.chattopush.services.enums.StatusCode;
 
 @Service
 public class DefaultUserService implements UserService {
 
-	public StatusUser loginUser(UserModel _model) {
+	public StatusCode loginUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
@@ -26,29 +25,28 @@ public class DefaultUserService implements UserService {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
 
-					return StatusUser.SUCCESS;
+					return StatusCode.SUCCESS;
 				} else {
-					return StatusUser.PASSERROR;
+					return StatusCode.PASSERROR;
 				}
 			}
 		}
-
-		return StatusUser.NOUSER;
+		return StatusCode.NOUSER;
 	}
 
-	public StatusUser registerUser(UserModel _model) {
+	public StatusCode registerUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		try {
 			if (checkUserExists(_model) == false) {
 				_model.merge();
 
-				return StatusUser.SUCCESS;
+				return StatusCode.SUCCESS;
 			}
-			return StatusUser.EXISTS;
+			return StatusCode.EXISTS;
 		} catch (Exception e) {
 			// TODO: handle exception
-			return StatusUser.EXC;
+			return StatusCode.EXC;
 
 		}
 
@@ -64,7 +62,7 @@ public class DefaultUserService implements UserService {
 		return "success";
 	}
 
-	public StatusAction deleteUser(UserModel _model) {
+	public StatusCode deleteUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
@@ -92,14 +90,14 @@ public class DefaultUserService implements UserService {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 
-			return StatusAction.EXC;
+			return StatusCode.EXC;
 		}
 
 		if (deleteUserChannelRelation == true && deleteUser == true) {
-			return StatusAction.SUCCESS;
+			return StatusCode.SUCCESS;
 		}
 
-		return StatusAction.FAIL;
+		return StatusCode.EXC;
 
 	}
 
