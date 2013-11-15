@@ -19,9 +19,6 @@ import com.infobip.campus.chattopush.services.enums.StatusUser;
 
 @Service
 public class DefaultUserService implements UserService {
-	
-	@Autowired
-	SmsMessageService defaultSmsMessageService;
 
 	public StatusCode loginUser(UserModel _model) {
 
@@ -75,11 +72,6 @@ public class DefaultUserService implements UserService {
 				newUser.setUsername(_model.getUsername());
 				newUser.setPassword(MD5.getMD5(_model.getPassword()));
 				newUser.setRegistrationCode(1000 + (int) (Math.random() * 9000));
-				newUser.setPhoneNumber(_model.getPhoneNumber());
-				defaultSmsMessageService.sendSmsMessage("IB - Chat2Push",
-						"C2P Registration code: "
-								+ newUser.getRegistrationCode(),
-						newUser.getPhoneNumber());
 				newUser.setRegistrationStatus(0);
 				newUser.merge();
 				return StatusCode.SUCCESS;
