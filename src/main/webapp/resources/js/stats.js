@@ -10,7 +10,7 @@ function graphDays(statsSent, statsReceived) {
 			type : 'area'
 		},
 		title : {
-			text : 'Stats month: day/messages'
+			text : 'Stats month: messages/day'
 		},
 		subtitle : {
 			text : 'Source: <a href="http://infobip.com">' + 'infobip</a>'
@@ -111,7 +111,7 @@ function graphToday(statsSent, statsReceived) {
 			type : 'area'
 		},
 		title : {
-			text : 'Stats today: hour/messages'
+			text : 'Stats today: messages/hour'
 		},
 		subtitle : {
 			text : 'Source: <a href="http://infobip.com">' + 'infobip</a>'

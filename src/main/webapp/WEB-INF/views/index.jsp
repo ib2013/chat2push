@@ -149,9 +149,10 @@
 	</div>
 	<div id="tabsstat" style="padding-top: 20px; padding-bottom: 20px;">
 		<div id="stats"
-			style="height: 400px; width: 600px; margin: auto"></div>
+			style="height: 400px;  margin: auto"></div>
+			<hr/>
 			<div id="stats2"
-			style="height: 400px; width: 600px; margin: auto"></div>
+			style="height: 400px;  margin: auto"></div>
 	</div>
 </div>
 
