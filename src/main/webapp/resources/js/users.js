@@ -109,9 +109,11 @@ function deleteUser(user) {
 				contentType : 'application/json',
 				data : JSON.stringify(userJson),
 				success : function(rez, status, xhr) {
-					alert(rez);
+					//alert(rez);
 					if (rez == "SUCCESS") {
+						//alert("obrisano" + rez);
 						showAllUsers();
+						showTenUsers(1);
 						$('#user_graph').html("");						
 						$('#loading').hide();
 					} else {
