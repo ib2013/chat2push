@@ -35,8 +35,6 @@ function addNewChannel(callback) {
 			contentType : 'application/json; charset=utf-8',
 			data : JSON.stringify(channelJson),
 			success : function(rez, status, xhr) {
-				nekitekst = rez;
-				alert(rez);
 				if (rez == "SUCCESS") {
 					$('#title').val("");
 					$('#channel_description').val("");
@@ -44,18 +42,18 @@ function addNewChannel(callback) {
 					$('#loading').hide();
 					alert("New room is added.");
 					callback();
+					
 				} else {
 					$('#loading').hide();
 					alert("Error in adding room.");
 				}
 			}
+			
 		});
-		alert(nekitekst);
 	} else {
 		$('#loading').hide();
 		alert("Title required!");
 	}
-
 }
 
 function deleteChannel(channel) {
@@ -82,6 +80,7 @@ function deleteChannel(channel) {
 						$('#loading').hide();
 						//alert('Room deleted.');
 						fetchAllChannels();
+						statsRoom();
 					} else {
 						$('#loading').hide();
 						alert('Error!');
@@ -183,13 +182,13 @@ function fetchAllChannels() {
 								}
 								
 							}
+							statsRoom();
 							$('#loading').hide();
 						} else {
 							$('#loading').hide();
 							//alert('Error loading channel.');
 						}
 						
-
 					});	
 	
 
