@@ -9,6 +9,17 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJpaActiveRecord
 public class UserModel {
 
+	/**
+     */
+	private String username;
+
+	/**
+     */
+	private String password;
+
+	/*
+	 * Constructors
+	 */
 	public UserModel() {
 	}
 
@@ -31,14 +42,6 @@ public class UserModel {
 	public UserModel(String username) {
 		this.username = username;
 	}
-
-	/**
-     */
-	private String username;
-
-	/**
-     */
-	private String password;
 
 	private int registrationStatus;
 

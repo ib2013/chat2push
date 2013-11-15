@@ -10,7 +10,9 @@ function graphDays(statsSent, statsReceived) {
 			text : 'Source: <a href="http://infobip.com">' + 'infobip</a>'
 		},
 		xAxis : {
-
+			title : {
+				text : 'Days'
+			},
 		},
 		yAxis : {
 			title : {

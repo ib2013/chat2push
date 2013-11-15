@@ -12,10 +12,12 @@
 	<script type="text/javascript">
 		var _basePath = '${_basePath}';
 		$(document).ready(function() {
+			pageCount(setPaging);
+			showAllUsersSync(showTenUsers);
 			$('#tab-container').easytabs();
 			documentReady(_basePath);
-			showAllUsers();
-			showTenUsers(1);
+		//	showAllUsers();
+		//	showTenUsers(1);
 		});
 	</script>
 
@@ -83,13 +85,9 @@
 		</div>
 		<div id="page-selection"></div>
 		<script>
-			$('#page-selection').bootpag({
-				total : numofpages
-			}).on("page", function(event, num) {
-				//$("#content").html(""); // some ajax content loading...
-				showAllUsers();
-				showTenUsers(num);
-			});
+		//showAllUsers();
+			//doThis(doThat);
+
 		</script>
 
 	</div>

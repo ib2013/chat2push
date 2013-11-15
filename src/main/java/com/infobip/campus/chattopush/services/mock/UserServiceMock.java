@@ -4,18 +4,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 import com.infobip.campus.chattopush.configuration.UserConfiguration;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.UserService;
-import com.infobip.campus.chattopush.services.enums.StatusAction;
-import com.infobip.campus.chattopush.services.enums.StatusUser;
+import com.infobip.campus.chattopush.services.enums.StatusCode;
 
 public class UserServiceMock implements UserService {
 
 	@Override
-	public StatusUser loginUser(UserModel _model) {
+	public StatusCode loginUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 
@@ -23,31 +25,32 @@ public class UserServiceMock implements UserService {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
 
-					return StatusUser.SUCCESS;
+					return StatusCode.SUCCESS;
 				} else {
-					return StatusUser.PASSERROR;
+					return StatusCode.PASSERROR;
 
 				}
 			}
 		}
 
-		return StatusUser.NOUSER;
+		return StatusCode.NOUSER;
 	}
 
 	@Override
-	public StatusUser registerUser(UserModel _model) {
+	public StatusCode registerUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		if (checkUserExists(_model) == false) {
 			if (UserConfiguration.usrs.add(_model) == true) {
-				return StatusUser.SUCCESS;
+				return StatusCode.SUCCESS;
 			}
+		} else {
+			return StatusCode.EXISTS;
 		}
-		return StatusUser.EXISTS;
-
+		return StatusCode.EXC;
 	}
 
 	@Override
-	public StatusAction deleteUser(UserModel _model) {
+	public StatusCode deleteUser(UserModel _model) {
 		boolean deleteUserExecuted = false;
 		boolean deleteUserChannelRelation = false;
 		/*
@@ -72,10 +75,10 @@ public class UserServiceMock implements UserService {
 		}
 
 		if (deleteUserExecuted == true && deleteUserChannelRelation == true) {
-			return StatusAction.SUCCESS;
+			return StatusCode.SUCCESS;
 		}
 
-		return StatusAction.FAIL;
+		return StatusCode.EXC;
 	}
 
 	@Override
@@ -113,7 +116,7 @@ public class UserServiceMock implements UserService {
 	}
 
 	@Override
-	public StatusUser verifyUser(UserModel _model) {
+	public StatusCode verifyUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		return null;
 	}
