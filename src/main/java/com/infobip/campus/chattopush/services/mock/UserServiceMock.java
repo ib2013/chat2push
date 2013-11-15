@@ -37,16 +37,16 @@ public class UserServiceMock implements UserService {
 	}
 
 	@Override
-	public StatusCode registerUser(UserModel _model) throws Exception {
+	public StatusCode registerUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		if (checkUserExists(_model) == false) {
 			if (UserConfiguration.usrs.add(_model) == true) {
 				return StatusCode.SUCCESS;
 			}
 		} else {
-			throw new nijePronaden();
+			return StatusCode.EXISTS;
 		}
-		return null;
+		return StatusCode.EXC;
 	}
 
 	@Override
@@ -115,13 +115,9 @@ public class UserServiceMock implements UserService {
 		return statistic;
 	}
 
-	@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "nema posebnog razloga")
-	public class nijePronaden extends RuntimeException {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
+	@Override
+	public StatusCode verifyUser(UserModel _model) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

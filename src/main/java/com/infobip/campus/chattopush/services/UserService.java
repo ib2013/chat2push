@@ -5,12 +5,15 @@ import java.util.Map;
 
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.enums.StatusCode;
+import com.infobip.campus.chattopush.services.enums.StatusUser;
 
 public interface UserService {
 
 	public StatusCode loginUser(UserModel _model);
 
-	public StatusCode registerUser(UserModel _model) throws Exception;
+	public StatusCode registerUser(UserModel _model);
+	
+	public StatusCode verifyUser(UserModel _model);
 
 	public StatusCode deleteUser(UserModel _model);
 
