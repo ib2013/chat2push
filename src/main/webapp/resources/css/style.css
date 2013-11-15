@@ -20,6 +20,7 @@
 
 .centralContent {
 	border: solid 0px;
+	width:950px;
 	display: table;
 	margin: 0 auto;
 }
@@ -76,6 +77,17 @@
 	overflow-x: auto;
 	border: solid 1px;
 }
+.listContent3 {
+	border: solid 0px;
+	padding: 10px;
+	height: 450px;
+	width: 250px;
+	margin-left: 150px;
+	
+	box-shadow: 8px 8px 5px #888888;
+	overflow-x: auto;
+	border: solid 1px;
+}
 .listContent2 {
 	border: solid 1px;
 	padding: 10px;
@@ -101,13 +113,26 @@
 	margin-bottom: 10px;
 	background-color: #F0F0F0;
 }
+.listOptionsUsers {
+	border: solid 1px;
+	padding: 10px;	
+	width: 250px;
+	height: 40px;
+	margin-left: 350px;
+	margin-right: 0px; 
+	text-align: center;
+	font-size: 16px;
+	border-radius: 10px 10px 0px 0px;
+	margin-bottom: 10px;
+	background-color: #F0F0F0;
+}
 .listOptions2 {
 	border: solid 1px;
 	padding: 10px;
 	width: 350px;
 	height: 40px;
-	margin-left: auto;
-	margin-right: auto; "
+	margin-left: 50px;
+	margin-right: 0px; 
 	text-align: center;
 	font-size: 16px;
 	border-radius: 10px 10px 0px 0px;
@@ -120,7 +145,7 @@
 	width: 250px;
 	height: 40px;
 	margin-left: 50px;
-	margin-right: 0px; "
+	margin-right: 0px; 
 	text-align: center;
 	font-size: 16px;
 	border-radius: 10px 10px 0px 0px;
@@ -255,10 +280,11 @@
 
 .etabs { padding: 0; border: solid 0px;
 	display: table;
-	margin: 0 auto; }
+	margin: 0 auto;
+	width: 1350px; }
 .tab { display: inline-block; zoom:1; *display:inline; background: #eee; border: solid 1px #999; border-bottom: none; -moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; }
 .tab a { font-size: 14px; line-height: 2em; display: block; padding: 0 10px; outline: none; }
 .tab a:hover { text-decoration: underline; }
 .tab.active { background: #fff; padding-top: 6px; position: relative; top: 1px; border-color: #666; }
 .tab a.active { font-weight: bold; }
-.tab-container .panel-container { background: #fff; border: solid #666 1px; padding: 10px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
+.tab-container .panel-container { float:centre; background: #fff; border: solid #666 1px; padding: 10px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
