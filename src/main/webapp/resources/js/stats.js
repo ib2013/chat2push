@@ -58,51 +58,43 @@ function graphUser(username,data) {
 	$.get(_basePath + "channel/fetch", function(data2, status, xhr) {
 		JSON.stringify(data2);
 		for (var i = 0; i < data2.length; i++) {
-			alert(data2[i].name);
-			//var user=Array();
-			//user.push(data2[i].name);
-			//user.push(data[data2[i].name]);
-			stats.push(data2[i].name);
+			var user=[];
+			user.push(data2[i].name);
+			user.push(data[data2[i].name]);
+			stats.push(user);
 		}
-		alert(stats[0]);
-	});
-	// Build the chart
-	
-    $('#stats').highcharts({
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false
-        },
-        title: {
-            text: 'User activity:'+ username
-        },
-        tooltip: {
-    	    pointFormat: '{series.name} <b>{point.y}</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: false
-                },
-                showInLegend: true
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Messages:',
-            data: [
-                ['Firefox',   45],
-                ['IE',       26],
-                ['Safari',    8],
-                ['Opera',     6],
-                ['Others',   0]
-            ]
-        }]
-    });
 
+	    $('#stats').highcharts({
+	        chart: {
+	            plotBackgroundColor: null,
+	            plotBorderWidth: null,
+	            plotShadow: false
+	        },
+	        title: {
+	            text: 'User activity:'+ username
+	        },
+	        tooltip: {
+	    	    pointFormat: '{series.name} <b>{point.y}</b>'
+	        },
+	        plotOptions: {
+	            pie: {
+	                allowPointSelect: true,
+	                cursor: 'pointer',
+	                dataLabels: {
+	                    enabled: false
+	                },
+	                showInLegend: true
+	            }
+	        },
+	        series: [{
+	            type: 'pie',
+	            name: 'Messages:',
+	            data: stats
+	        }]
+	    });
+
+	});
+	
 
 }
 
@@ -138,7 +130,7 @@ function statsByDays() {
 					// statsReceived=byDays.countReceived;
 					// alert(statsReceived);
 					// graphDays(statsSent, statsReceived);
-					statsByUser("Josip");
+					statsByUser("imer");
 				}
 
 			});
