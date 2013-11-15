@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.infobip.campus.chattopush.configuration.MD5;
@@ -11,12 +12,16 @@ import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
+import com.infobip.campus.chattopush.services.SmsMessageService;
 import com.infobip.campus.chattopush.services.UserService;
 import com.infobip.campus.chattopush.services.enums.StatusCode;
 import com.infobip.campus.chattopush.services.enums.StatusUser;
 
 @Service
 public class DefaultUserService implements UserService {
+	
+	@Autowired
+	SmsMessageService defaultSmsMessageService;
 
 	public StatusCode loginUser(UserModel _model) {
 
@@ -71,7 +76,10 @@ public class DefaultUserService implements UserService {
 				newUser.setPassword(MD5.getMD5(_model.getPassword()));
 				newUser.setRegistrationCode(1000 + (int) (Math.random() * 9000));
 				newUser.setPhoneNumber(_model.getPhoneNumber());
-				// sendSMS(newUser.getPhoneNumber(),newUser.getRegistrationCode());
+				defaultSmsMessageService.sendSmsMessage("IB - Chat2Push",
+						"C2P Registration code: "
+								+ newUser.getRegistrationCode(),
+						newUser.getPhoneNumber());
 				newUser.setRegistrationStatus(0);
 				newUser.merge();
 				return StatusCode.SUCCESS;
