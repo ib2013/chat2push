@@ -102,14 +102,15 @@ function deleteUser(user) {
 			$.ajax({
 				url : _basePath + "user/delete",
 				headers : {
-					'Accept' : 'text/plain',
+					'Accept' : 'application/json',
 					'Content-Type' : 'application/json'
 				},
 				method : 'POST',
 				contentType : 'application/json',
 				data : JSON.stringify(userJson),
 				success : function(rez, status, xhr) {
-					if (rez == 'SUCCESS') {
+					alert(rez);
+					if (rez == "SUCCESS") {
 						showAllUsers();
 						$('#loading').hide();
 					} else {
@@ -130,7 +131,6 @@ function deleteUser(user) {
 }
 function onChangeFetchUsersByRoom() {
 	$('#loading').show();
-	getColor("imer");
 	var room = $("#select_room_list option:selected");
 	if (room.attr("id") == "PR")
 		$("#keyImage").show();

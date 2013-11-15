@@ -170,9 +170,9 @@
 	</div>
 	<div id="tabsstat" style="padding-top: 20px; padding-bottom: 20px;">
 		<div id='channel_header' style=" width: 900px">
-			<label id='channel_list_tab' class='listOptions' style="margin-left: 225px; width: 900px">General Chat Statistics</label>
+			<label id='channel_list_tab' class='listOptions' style="margin-left: 225px; width: 1000px">General Chat Statistics</label>
 		</div>
-		<div id='room_graph' class="listContent2" style="clear:both; width:900px; height:900px; margin-left: 225px;">
+		<div id='room_graph' class="listContent2" style="clear:both; width:1000px; height:900px; margin-left: 225px;">
 			<div id="stats" style="height: 400px; clear: both;"></div>
 			<hr />
 			<div id="stats2" style="height: 400px; clear:both"></div>
