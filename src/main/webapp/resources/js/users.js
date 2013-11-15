@@ -134,7 +134,6 @@ function deleteUser(user) {
 }
 function onChangeFetchUsersByRoom() {
 	$('#loading').show();
-	getColor("imer");
 	var room = $("#select_room_list option:selected");
 	if (room.attr("id") == "PR")
 		$("#keyImage").show();
