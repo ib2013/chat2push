@@ -23,6 +23,9 @@
 <spring:url value="resources/js/jquery.easytabs.min.js" var='jsEasyTabs' />
 <spring:url value="resources/js/jquery.pajinate.js" var='jsPajinate' />
 
+<spring:url value="resources/js/jquery.bootpag.min.js" var='jsBootpag' />
+<spring:url value="resources/js/bootstrap.min.js" var='jsBootstrap' />
+
 
 <spring:url value="resources/css/style.css" var="cssStyle" />
 <spring:url value="resources/css/styles.css" var="cssStyles" />
@@ -38,6 +41,9 @@
 <script type="text/javascript" src="${jsHashChange}"></script>
 <script type="text/javascript" src="${jsEasyTabs}"></script>
 <script type="text/javascript" src="${jsPajinate}"></script>
+
+<script type="text/javascript" src="${jsBootpag}"></script>
+<script type="text/javascript" src="${jsBootstrap}"></script>
 
 <link rel="stylesheet" type="text/css" media="screen" href="${cssStyle}" />
 <link rel="stylesheet" type="text/css" media="screen" href="${cssStyles}" />

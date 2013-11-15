@@ -8,23 +8,15 @@
 			alt="Loading..." />
 	</div>
 
+
 	<script type="text/javascript">
 		var _basePath = '${_basePath}';
-
 		$(document).ready(function() {
 			$('#tab-container').easytabs();
 			documentReady(_basePath);
+			showAllUsers();
+			showTenUsers(1);
 		});
-		
-		
-		
-		
-		
-	/*	
-		$(document).ready(function(){
-			$('#paging_container1').pajinate();
-		});		*/
-		
 	</script>
 
 	<ul class='etabs'>
@@ -75,34 +67,31 @@
 
 		</div>
 
-		
+
 	</div>
 	<div id="tabsum">
-		<div id="paging_container1" class="container">
+		<!-- <div id="paging_container1" class="container">
+-->
 
-			<h2>List of Users</h2>
-
-
-			<ul id="UserList" class="content" style="text-align: center;">
-					 <li><p>One</p></li> 
-					 <li><p>Two</p></li> 
-					 <li><p>Three</p></li> 
-					 <li><p>Four</p></li> 
-					 <li><p>Five</p></li> 
-					 <li><p>Six</p></li> 
-					 <li><p>Seven</p></li> 
-					 <li><p>Eight</p></li> 
-					 <li><p>Nine</p></li> 
-					 <li><p>Ten</p></li> 
-					 <li><p>Eleven</p></li> 
-					 <li><p>Twelve</p></li> 
-					 <li><p>Thirteen</p></li> 
-					 <li><p>Fourteen</p></li> 
-					 <li><p>Fifteen</p></li> 
-					 <li><p>Sixteen</p></li> 
-			</ul>
-			<div class="page_navigation"></div>
+		<div id='lists2' style="clear: both;">
+			<div id='centralContent' class="centralContent"
+				style="margin-top: 20px;">
+				<div id="content" class='listContent' style="float: left;"></div>
+				<div id='user_graph' class="listContent" style="width: 450px;">
+				</div>
+			</div>
 		</div>
+		<div id="page-selection"></div>
+		<script>
+			$('#page-selection').bootpag({
+				total : numofpages
+			}).on("page", function(event, num) {
+				//$("#content").html(""); // some ajax content loading...
+				showAllUsers();
+				showTenUsers(num);
+			});
+		</script>
+
 	</div>
 	<div id="tabscm" style="padding-top: 20px; padding-bottom: 20px;">
 		<h2></h2>
@@ -159,13 +148,8 @@
 		</div>
 	</div>
 	<div id="tabsstat" style="padding-top: 20px; padding-bottom: 20px;">
-	<div id="stats"
+		<div id="stats"
 			style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 	</div>
 </div>
 
-<script>
-			/*$(document).ready(function(){
-				$('li:odd, .content > *:odd').css('background-color','#FFD9BF');
-			});*/
-		</script>

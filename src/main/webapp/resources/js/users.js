@@ -1,29 +1,55 @@
+var allusers = new Array();
+var numofpages = 4;
 
-var allusers;
-
-function getColor(username){
-	var red=(username.charCodeAt(0))*5%200+50;
-	var green=(username.charCodeAt(1)*6)%200+50;
-	var blue=(username.charCodeAt(2)*7)%200+50;
-	return "rgb("+red+","+green+","+blue+")";
+function getColor(username) {
+	var red = (username.charCodeAt(0)) * 5 % 200 + 50;
+	var green = (username.charCodeAt(1) * 6) % 200 + 50;
+	var blue = (username.charCodeAt(2) * 7) % 200 + 50;
+	return "rgb(" + red + "," + green + "," + blue + ")";
 }
 function showAllUsers() {
-	
-	$('#loading').show();
-	//alert("Ucitavanje usera");
-	//$('#UserList').html("");
-	$.get(_basePath + "user/fetchAllUsers",
-					function(data, status, xhr) {
-						
 
-						for (var i = 0; i < data.length; i++) {
-							var username = data[i].username;
-							$('#UserList')
-									.append(
-											"<li><p>"+username+"</p></li>");
-						}
-					});
+	$('#loading').show();
+	// alert("Ucitavanje usera");
+	$.get(_basePath + "user/fetchAllUsers", function(data, status, xhr) {
+		for (var i = 0; i < data.length; i++) {
+			var username = data[i].username;
+			allusers[i] = username;
+			// alert(allusers[i]);
+		}
+		numofpages = Math.ceil(data.length/10.0);
+	});
 	$('#loading').hide();
+}
+
+function showTenUsers(num) {
+	var number = (num - 1) * 10;
+	$('#content').html("");
+	for (var i = number; i < number + 10; i++) {
+		if (allusers[i] != null) {
+			//$('#content').append("<p>" + allusers[i] + "</p>");
+			$('#content').append(
+					"<p class='plistelem' id='"
+					+ allusers[i]
+					+ "'><label style='float: left; width:20px; height:20px; background-color:"
+					+ getColor(allusers[i])
+					+ "'></label> &nbsp;"
+					+ allusers[i] 
+					+ "<label id='"
+					+ allusers[i]
+					+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"
+					
+				/*	
+					
+			"<p class='plistelem' id='"
+			+ allusers[i]
+			+ "'>"
+			+ allusers[i]
+			+ "<label id='"
+			+ allusers[i]
+			+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"*/);
+		}
+	}
 }
 
 function deleteUser(user) {
@@ -53,7 +79,7 @@ function deleteUser(user) {
 					}
 				}
 			});
-		
+
 		}
 	} else {
 		$('#loading').hide();
@@ -67,9 +93,11 @@ function onChangeFetchUsersByRoom() {
 	$('#loading').show();
 	getColor("imer");
 	var room = $("#select_room_list option:selected");
-	if(room.attr("id")=="PR") $("#keyImage").show();
-	else $("#keyImage").hide();
-	var roomname=room.val();
+	if (room.attr("id") == "PR")
+		$("#keyImage").show();
+	else
+		$("#keyImage").hide();
+	var roomname = room.val();
 	$('#list_rooms_users').html("");
 	$('#list_users').html("");
 	fetchUsersByRoom(roomname);
@@ -78,14 +106,13 @@ function onChangeFetchUsersByRoom() {
 }
 function fetchUsersByRoom(roomname) {
 
-	
 	$('#list_rooms_users').html("");
-	//$('#list_users').html("");
-	//showAllUsers();
+	// $('#list_users').html("");
+	// showAllUsers();
 	if (isNaN(roomname)) {
 		var room = new Object();
 		room.name = roomname;
-		
+
 		$
 				.ajax({
 					url : _basePath + "channel/fetchUsersByRoom",
@@ -97,56 +124,57 @@ function fetchUsersByRoom(roomname) {
 					contentType : 'application/json',
 					data : JSON.stringify(room),
 					success : function(data, status, xhr) {
-						
+
 						if (data.length != 0) {
-							
-							//$('#list_rooms_users').html("");
-						
+
+							// $('#list_rooms_users').html("");
+
 							for (var i = 0; i < data.length; i++) {
 								var username = data[i].username;
-								//var elementForRemove=document.getElementById(username);
-								//alert(username);
-								//if(elementForRemove!=null)
+								// var
+								// elementForRemove=document.getElementById(username);
+								// alert(username);
+								// if(elementForRemove!=null)
 
-								//elementForRemove.remove();
+								// elementForRemove.remove();
 								$('#list_rooms_users')
 										.append(
-								
+
 												"<p class='plistelem'  draggable='true' ondragstart='drag(event)' id='"
-												+ username
-												+ "'><label style='float: left; width:20px; height:20px; background-color:"+getColor(username)+"'></label> &nbsp;"
-												+ username
-												+"</p>"
-												/*+ "<label id='"
-												+ username
-												+ "' class='removeList' onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"*/
-												);
+														+ username
+														+ "'><label style='float: left; width:20px; height:20px; background-color:"
+														+ getColor(username)
+														+ "'></label> &nbsp;"
+														+ username + "</p>"
+										/*
+										 * + "<label id='" + username + "'
+										 * class='removeList'
+										 * onclick='deleteUser(this)'>&nbsp;x&nbsp;<label></p>"
+										 */
+										);
 							}
-						
+
 						} else {
-							
+
 						}
 					}
 				});
 	} else {
-		
+
 	}
 
 }
-
-
-
 
 function fetchOpositeUsersByRoom(roomname) {
 
 	$('#loading').show();
 	$('#list_users').html("");
-	//$('#list_users').html("");
-	//showAllUsers();
+	// $('#list_users').html("");
+	// showAllUsers();
 	if (isNaN(roomname)) {
 		var room = new Object();
 		room.name = roomname;
-		
+
 		$
 				.ajax({
 					url : _basePath + "channel/fetchOpositeUsersByRoom",
@@ -158,38 +186,41 @@ function fetchOpositeUsersByRoom(roomname) {
 					contentType : 'application/json',
 					data : JSON.stringify(room),
 					success : function(data, status, xhr) {
-						
+
 						if (data.length != 0) {
-							
-							//$('#list_rooms_users').html("");
-						
+
+							// $('#list_rooms_users').html("");
+
 							for (var i = 0; i < data.length; i++) {
 								var username = data[i].username;
-								//var elementForRemove=document.getElementById(username);
-								//elementForRemove.remove();
+								// var
+								// elementForRemove=document.getElementById(username);
+								// elementForRemove.remove();
 								$('#list_users')
 										.append(
-												
+
 												"<p class='plistelem' draggable='true' ondragstart='drag(event)' id='"
-												+ username
-												+ "'><label style='float: left; width:20px; height:20px; background-color:"+getColor(username)+"'></label> &nbsp;"
-												+ username
-												+"</p>"
-												);
+														+ username
+														+ "'><label style='float: left; width:20px; height:20px; background-color:"
+														+ getColor(username)
+														+ "'></label> &nbsp;"
+														+ username + "</p>");
 							}
-						
+
 						} else {
 							$('#loading').hide();
 						}
 					}
 				});
 	} else {
-		
+
 	}
 	$('#loading').hide();
 }
-function refreshUserList(){
-	//showAllUsers();
+function refreshUserList() {
+	// showAllUsers();
 	onChangeFetchUsersByRoom();
+	showAllUsers();
+	showTenUsers(1);
 
 }
