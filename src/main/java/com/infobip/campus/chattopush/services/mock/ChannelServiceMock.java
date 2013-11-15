@@ -1,12 +1,15 @@
 package com.infobip.campus.chattopush.services.mock;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.configuration.UserConfiguration;
 import com.infobip.campus.chattopush.models.ChannelModel;
+import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
@@ -142,6 +145,26 @@ public class ChannelServiceMock implements ChannelService {
 			}
 		}
 		return usersRoom;
+	}
+	
+	public Map<String, Integer> channelStatistics() {
+		// TODO Auto-generated method stub
+		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
+		List<MessageModel> messages = MessageModel.findAllMessageModels();
+
+		Map<String, Integer> statistic = new HashMap<String, Integer>();
+
+		for (ChannelModel chnlModel : channels) {
+			int numMessage = 0;
+			for (MessageModel msgModel : messages) {
+				if (msgModel.getChannel().contentEquals(chnlModel.getName())) {
+					numMessage++;
+				}
+			}
+			statistic.put(chnlModel.getName(), numMessage);
+		}
+
+		return statistic;
 	}
 
 }
