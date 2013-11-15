@@ -35,14 +35,14 @@ function addUserToChannel(userName, channel) {
 	$.ajax({
 		url: _basePath+ "channel/addUserToRoom",
 		headers: {
-			'Accept': 'text/plain',
+			'Accept': 'application/json',
 			'Content-type':'application/json',
 		},
 		method: 'POST',
 		contentType: 'application-json',
 		data: JSON.stringify(channelUserJson),
 		success:function(res, status,xhr){
-			if(res=="success"){
+			if(res=="SUCCESS"){
 				//alert("User added to room.");
 			}else{
 				alert("Error.");
@@ -62,14 +62,14 @@ function removeUserFromChannel(userName, channel) {
 	$.ajax({
 		url: _basePath+ "channel/removeUserFromRoom",
 		headers: {
-			'Accept': 'text/plain',
+			'Accept': 'application/json',
 			'Content-type':'application/json',
 		},
 		method: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify(channelUserJson),
 		success:function(res, status,xhr){
-			if(res=="success"){
+			if(res=="SUCCESS"){
 				//alert("User removed from room.");
 			}else{
 				alert("Error.");
