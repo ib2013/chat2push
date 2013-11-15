@@ -43,7 +43,7 @@ function addUserToChannel(userName, channel) {
 		data: JSON.stringify(channelUserJson),
 		success:function(res, status,xhr){
 			if(res=="SUCCESS"){
-				alert("User added to room.");
+				//alert("User added to room.");
 			}else{
 				alert("Error.");
 			}
@@ -70,7 +70,7 @@ function removeUserFromChannel(userName, channel) {
 		data: JSON.stringify(channelUserJson),
 		success:function(res, status,xhr){
 			if(res=="SUCCESS"){
-				alert("User removed from room.");
+				//alert("User removed from room.");
 			}else{
 				alert("Error.");
 			}
