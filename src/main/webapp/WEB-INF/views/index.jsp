@@ -30,10 +30,10 @@
 	<div id="tabscp" style="padding-top: 20px; padding-bottom: 20px;">
 		<div id='central'>
 			<div id='centralContent' class="centralContent">
-				<div id='headers'>
+				<div id='headers' style="margin-left:150px;">
 
 					<div id='room_header' style="float: left;">
-						<div id="room_list_tab" class='listRoom'>
+						<div id="room_list_tab" class='listRoom' >
 
 							<select id="select_room_list" style="width: 140px;"
 								onChange="onChangeFetchUsersByRoom()">
@@ -46,16 +46,18 @@
 					</div>
 
 					<div id='user_header'>
-						<label id='user_list_tab' class='listOptions'>List of
-							Users <input type='button' id='deleteRoom' value='Refresh'
+					<div id="room_list_tab" class='listOptionsUsers'>
+						<label id='user_list_tab' >List of
+							Users <!-- <input type='button' id='deleteRoom' value='Refresh'
 							onclick='refreshUserList()' class='removeList'
-							style="float: right;" />
+							style="float: right;" /> -->
 						</label>
+						</div>
 					</div>
 				</div>
 				<div id='lists' style="clear: both;">
 
-					<div id='list_rooms_users' class='listContent' style="float: left;"
+					<div id='list_rooms_users' class='listContent' style="float: left; margin-left:200px;"
 						ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 
 					<div id='list_users' class="listContent" ondrop="drop(event)"
@@ -132,7 +134,7 @@
 								</select></td>
 							<tr>
 								<td colspan='2'><input type='button' id='addNewChanelBtn'
-									value='Add' class='submitBtn ' onclick='addNewChannel()' /></td>
+									value='Add' class='submitBtn ' onclick='addNewChannel(fetchAllChannels)' /></td>
 							</tr>
 						</table>
 					</div>
