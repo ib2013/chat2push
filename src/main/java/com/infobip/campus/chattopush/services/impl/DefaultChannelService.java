@@ -1,5 +1,12 @@
 package com.infobip.campus.chattopush.services.impl;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.google.appengine.api.urlfetch.HTTPHeader;
 import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
@@ -15,16 +22,9 @@ import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.ChannelService;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 @Service
 public class DefaultChannelService implements ChannelService {
+	
 
 	/*
 	 * (non-Javadoc)

@@ -58,7 +58,6 @@ public class ChannelController {
 	@RequestMapping(method = RequestMethod.POST, value = "/add", consumes = "application/json")
 	@ResponseBody
 	public String addChannel(@RequestBody final ChannelModel model) {
-
 		if (channelService.addChannel(model) == true) {
 			return "success";
 		} else {
