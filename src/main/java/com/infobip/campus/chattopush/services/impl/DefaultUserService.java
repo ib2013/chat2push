@@ -40,7 +40,7 @@ public class DefaultUserService implements UserService {
 		}
 	}
 
-	public void registerUser(UserModel _model) {
+	public StatusCode registerUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		if (checkUserExists(_model) == false) {
@@ -48,7 +48,9 @@ public class DefaultUserService implements UserService {
 			newUser.setUsername(_model.getUsername());
 			newUser.setPassword(MD5.getMD5(_model.getPassword()));
 			newUser.merge();
+			return StatusCode.SUCCESS;
 		}
+		return StatusCode.EXISTS;
 	}
 
 	public String deleteAll() {
