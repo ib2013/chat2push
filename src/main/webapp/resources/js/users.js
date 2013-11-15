@@ -7,17 +7,56 @@ function getColor(username) {
 	var blue = (username.charCodeAt(2) * 7) % 200 + 50;
 	return "rgb(" + red + "," + green + "," + blue + ")";
 }
+
+function pageCount(callback) {
+	$.ajax({
+			    type: 'GET',
+			    url:  _basePath + "user/fetchAllUsers",
+			    success: function(data, status, xhr) {
+					numofpages = Math.ceil(data.length/10.0);	
+					callback();
+				},	
+			    error: function() {
+			        callback(null);
+			    }
+			  });
+}
+
+
+function setPaging() {
+	$('#page-selection').bootpag({
+		total : numofpages
+	}).on("page", function(event, num) {
+		showAllUsers();
+		showTenUsers(num);
+	});
+}
+
+function showAllUsersSync(callback) {
+	$.ajax({
+	    type: 'GET',
+	    url:  _basePath + "user/fetchAllUsers",
+	    success: function(data, status, xhr) {
+	    	for (var i = 0; i < data.length; i++) {
+				var username = data[i].username;
+				allusers[i] = username;
+	    	}
+			callback(1);
+		},	
+	    error: function() {
+	        callback(null);
+	    }
+	  });
+}
+
 function showAllUsers() {
 
 	$('#loading').show();
-	// alert("Ucitavanje usera");
 	$.get(_basePath + "user/fetchAllUsers", function(data, status, xhr) {
 		for (var i = 0; i < data.length; i++) {
 			var username = data[i].username;
 			allusers[i] = username;
-			// alert(allusers[i]);
 		}
-		numofpages = Math.ceil(data.length/10.0);
 	});
 	$('#loading').hide();
 }
