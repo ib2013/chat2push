@@ -1,5 +1,5 @@
-function allStats(){
-	
+function allStats() {
+
 	statsByDays();
 	statsToday();
 }
@@ -62,12 +62,13 @@ function graphDays(statsSent, statsReceived) {
 function graphUser(username, data) {
 
 	var stats = [];
-
+	var allMessages = 0;
 	$.get(_basePath + "channel/fetch", function(data2, status, xhr) {
 		JSON.stringify(data2);
 		for (var i = 0; i < data2.length; i++) {
 			var user = [];
 			user.push(data2[i].name);
+			allMessages+=data[data2[i].name];
 			user.push(data[data2[i].name]);
 			stats.push(user);
 		}
@@ -79,7 +80,7 @@ function graphUser(username, data) {
 				plotShadow : false
 			},
 			title : {
-				text : 'User activity:' + username
+				text :'User:<b>' + username + '</b><br/>Messages:<b>' + allMessages+'</b>'
 			},
 			tooltip : {
 				pointFormat : '{series.name} <b>{point.y}</b>'
