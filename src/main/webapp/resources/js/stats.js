@@ -121,16 +121,8 @@ function statsByDays() {
 
 					statsSent = data.data[0].countSent;
 					statsReceived = data.data[0].countReceived;
-					// alert(byDays2);
-					// statsSent=JSON.stringify(byDays);
-					// statsReceived=JSON.stringify(byDays2);
-					// statsSent=JSON.stringify(byDays.countSent[0]);
-
-					// alert(statsSent);
-					// statsReceived=byDays.countReceived;
-					// alert(statsReceived);
-					// graphDays(statsSent, statsReceived);
-					statsByUser("imer");
+					
+					graphDays(statsSent, statsReceived);
 				}
 
 			});
