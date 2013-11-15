@@ -64,7 +64,7 @@ function graphUser(username,data) {
 			stats.push(user);
 		}
 
-	    $('#stats').highcharts({
+	    $('#user_graph').highcharts({
 	        chart: {
 	            plotBackgroundColor: null,
 	            plotBorderWidth: null,
