@@ -68,7 +68,7 @@ function showTenUsers(num) {
 		if (allusers[i] != null) {
 			//$('#content').append("<p>" + allusers[i] + "</p>");
 			$('#content').append(
-					"<p class='plistelem' id='"
+					"<p class='plistelem' onclick='statsByUser(this.id)' id='"
 					+ allusers[i]
 					+ "'><label style='float: left; width:20px; height:20px; background-color:"
 					+ getColor(allusers[i])
