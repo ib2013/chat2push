@@ -112,6 +112,7 @@ function deleteUser(user) {
 					alert(rez);
 					if (rez == "SUCCESS") {
 						showAllUsers();
+						$('#user_graph').html("");						
 						$('#loading').hide();
 					} else {
 						$('#loading').hide();
