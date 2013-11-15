@@ -3,6 +3,8 @@ package com.infobip.campus.chattopush.controllers;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.UserService;
 import com.infobip.campus.chattopush.services.enums.StatusCode;
+import com.infobip.campus.chattopush.services.exception.ChannelExceptionHandler;
 
 @RequestMapping("/user/**")
 @Controller
@@ -26,15 +29,14 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/login", consumes = "application/json")
 	@ResponseBody
-	public StatusCode loginUser(@RequestBody UserModel model) {
+	public StatusCode loginUser(@RequestBody UserModel model) throws ChannelExceptionHandler {
 
 		return userService.loginUser(model);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/register", consumes = "application/json")
 	@ResponseBody
-	@ExceptionHandler
-	public StatusCode registerUser(@RequestBody UserModel model) throws Exception {
+	public StatusCode registerUser(@RequestBody UserModel model) {
 		return userService.registerUser(model);
 	}
 
@@ -58,5 +60,11 @@ public class UserController {
 	@ResponseBody
 	public Map<String, Integer> fetchUserStatistics(@RequestBody UserModel _model) {
 		return userService.fetchUserStatistics(_model);
+	}
+
+	@ExceptionHandler(ChannelExceptionHandler.class)
+	public String errorHandler(ChannelExceptionHandler ceh, HttpServletResponse resp) {
+		resp.setStatus(ceh.getErrorCode());
+		return ceh.getErrorMessage();
 	}
 }

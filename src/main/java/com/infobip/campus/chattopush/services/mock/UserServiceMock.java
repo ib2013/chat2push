@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import com.infobip.campus.chattopush.configuration.UserConfiguration;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
@@ -37,14 +34,14 @@ public class UserServiceMock implements UserService {
 	}
 
 	@Override
-	public StatusCode registerUser(UserModel _model) throws Exception {
+	public StatusCode registerUser(UserModel _model) {
 		// TODO Auto-generated method stub
 		if (checkUserExists(_model) == false) {
 			if (UserConfiguration.usrs.add(_model) == true) {
 				return StatusCode.SUCCESS;
 			}
 		} else {
-			throw new nijePronaden();
+			return StatusCode.EXISTS;
 		}
 		return null;
 	}
@@ -115,13 +112,4 @@ public class UserServiceMock implements UserService {
 		return statistic;
 	}
 
-	@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "nema posebnog razloga")
-	public class nijePronaden extends RuntimeException {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-	}
 }

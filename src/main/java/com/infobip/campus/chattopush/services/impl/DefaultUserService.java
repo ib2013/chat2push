@@ -13,6 +13,7 @@ import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
 import com.infobip.campus.chattopush.services.enums.StatusCode;
+import com.infobip.campus.chattopush.services.exception.ChannelExceptionHandler;
 
 @Service
 public class DefaultUserService implements UserService {
@@ -22,37 +23,32 @@ public class DefaultUserService implements UserService {
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
-		for (UserModel model : list) {
-			if (model.getUsername().contentEquals(_model.getUsername())) {
-				if (model.getPassword().contentEquals(MD5.getMD5(_model.getPassword()))) {
-
-					return StatusCode.SUCCESS;
-				} else {
-					return StatusCode.PASSERROR;
+		try {
+			for (UserModel model : list) {
+				if (model.getUsername().contentEquals(_model.getUsername())) {
+					if (model.getPassword().contentEquals(MD5.getMD5(_model.getPassword()))) {
+						return StatusCode.SUCCESS;
+					} else {
+						return StatusCode.PASSERROR;
+					}
 				}
 			}
+			return StatusCode.NOUSER;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return StatusCode.PASSERROR;
 		}
-		return StatusCode.NOUSER;
 	}
 
-	public StatusCode registerUser(UserModel _model) {
+	public void registerUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
-		try {
-			if (checkUserExists(_model) == false) {
-				UserModel newUser = new UserModel();
-				newUser.setUsername(_model.getUsername());
-				newUser.setPassword(MD5.getMD5(_model.getPassword()));
-				newUser.merge();
-				return StatusCode.SUCCESS;
-			}
-			return StatusCode.EXISTS;
-		} catch (Exception e) {
-			// TODO: handle exception
-			return StatusCode.EXC;
-
+		if (checkUserExists(_model) == false) {
+			UserModel newUser = new UserModel();
+			newUser.setUsername(_model.getUsername());
+			newUser.setPassword(MD5.getMD5(_model.getPassword()));
+			newUser.merge();
 		}
-
 	}
 
 	public String deleteAll() {
@@ -90,10 +86,9 @@ public class DefaultUserService implements UserService {
 				}
 			}
 
-		} catch (Exception e) {
+		} catch (Exception ex) {
 			// TODO Auto-generated catch block
-
-			return StatusCode.EXC;
+			new ChannelExceptionHandler(ex.getMessage());
 		}
 
 		if (deleteUserChannelRelation == true && deleteUser == true) {
