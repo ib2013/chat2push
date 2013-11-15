@@ -24,17 +24,20 @@ function addNewChannel(callback) {
 		channelJson.name = channelTitle;
 		channelJson.isPublic = isPublic;
 		channelJson.description = channelDescription;
+		var nekitekst = ""; 
 		$.ajax({
 			url : _basePath + "channel/add",
 			headers : {
-				'Accept' : 'text/plain',
+				'Accept' : 'application/json',
 				'Content-Type' : 'application/json'
 			},
 			method : 'POST',
 			contentType : 'application/json; charset=utf-8',
 			data : JSON.stringify(channelJson),
 			success : function(rez, status, xhr) {
-				if (rez == "success") {
+				nekitekst = rez;
+				alert(rez);
+				if (rez == "SUCCESS") {
 					$('#title').val("");
 					$('#channel_description').val("");
 					//fetchAllChannels();
@@ -47,6 +50,7 @@ function addNewChannel(callback) {
 				}
 			}
 		});
+		alert(nekitekst);
 	} else {
 		$('#loading').hide();
 		alert("Title required!");
@@ -66,14 +70,14 @@ function deleteChannel(channel) {
 			$.ajax({
 				url : _basePath + "channel/delete",
 				headers : {
-					'Accept' : 'text/plain',
+					'Accept' : 'application/json',
 					'Content-Type' : 'application/json'
 				},
 				method : 'POST',
 				contentType : 'application/json',
 				data : JSON.stringify(channelJson),
 				success : function(rez, status, xhr) {
-					if (rez == 'success') {
+					if (rez == "SUCCESS") {
 						channel.remove();
 						$('#loading').hide();
 						//alert('Room deleted.');
