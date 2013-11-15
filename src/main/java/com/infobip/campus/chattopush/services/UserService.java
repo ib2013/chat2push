@@ -10,7 +10,7 @@ public interface UserService {
 
 	public StatusCode loginUser(UserModel _model);
 
-	public StatusCode registerUser(UserModel _model) throws Exception;
+	public StatusCode registerUser(UserModel _model);
 
 	public StatusCode deleteUser(UserModel _model);
 
