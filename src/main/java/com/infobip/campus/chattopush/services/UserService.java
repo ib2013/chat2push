@@ -12,6 +12,8 @@ public interface UserService {
 	public StatusUser loginUser(UserModel _model);
 
 	public StatusUser registerUser(UserModel _model);
+	
+	public StatusUser verifyUser(UserModel _model);
 
 	public StatusAction deleteUser(UserModel _model);
 

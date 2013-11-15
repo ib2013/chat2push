@@ -111,4 +111,10 @@ public class UserServiceMock implements UserService {
 		}
 		return statistic;
 	}
+
+	@Override
+	public StatusUser verifyUser(UserModel _model) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -38,6 +38,13 @@ public class UserController {
 		return userService.registerUser(model);
 
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/verify", consumes = "application/json")
+	@ResponseBody
+	public StatusUser verifyUser(@RequestBody UserModel model) {
+		return userService.verifyUser(model);
+
+	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/delete", consumes = "application/json")
 	@ResponseBody
