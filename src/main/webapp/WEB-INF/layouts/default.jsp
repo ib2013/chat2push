@@ -19,9 +19,9 @@
 <spring:url value="resources/js/highcharts.js" var='jsHighCharts' />
 <spring:url value="resources/js/exporting.js" var='jsExporting' />
 <spring:url value="resources/js/stats.js" var='jsStats' />
-<spring:url value="resources/js/jquery.hashchange.min.js" var='jsHashChange' />
+
 <spring:url value="resources/js/jquery.easytabs.min.js" var='jsEasyTabs' />
-<spring:url value="resources/js/jquery.pajinate.js" var='jsPajinate' />
+
 
 <spring:url value="resources/js/jquery.bootpag.min.js" var='jsBootpag' />
 <spring:url value="resources/js/bootstrap.min.js" var='jsBootstrap' />
@@ -38,9 +38,8 @@
 <script type="text/javascript" src="${jsHighCharts}"></script>
 <script type="text/javascript" src="${jsExporting}"></script>
 <script type="text/javascript" src="${jsStats}"></script>
-<script type="text/javascript" src="${jsHashChange}"></script>
+
 <script type="text/javascript" src="${jsEasyTabs}"></script>
-<script type="text/javascript" src="${jsPajinate}"></script>
 
 <script type="text/javascript" src="${jsBootpag}"></script>
 <script type="text/javascript" src="${jsBootstrap}"></script>
