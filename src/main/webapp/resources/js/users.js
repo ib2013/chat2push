@@ -93,7 +93,7 @@ function showTenUsers(num) {
 
 function deleteUser(user) {
 
-	if (isNaN(user.id)) {
+	//if (isNaN(user.id)) {
 		if (confirm('Are you sure you want to delete ' + user.id + '?')) {
 			$('#loading').show();
 			var userJson = new Object();
@@ -122,10 +122,10 @@ function deleteUser(user) {
 			});
 
 		}
-	} else {
+/*	} else {
 		$('#loading').hide();
 		alert('Error to delete user.');
-	}
+	}*/
 
 	$('#loading').hide();
 
