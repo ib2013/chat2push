@@ -1,3 +1,4 @@
+/*TREBA PROMENITI STATUS CODE*/
 function addNewChannel(callback) {
 	var channelTitle = $('#title').val();
 	var channelDescription = $('#channel_description').val();
@@ -55,7 +56,7 @@ function addNewChannel(callback) {
 		alert("Title required!");
 	}
 }
-
+/*TREBA PROMENITI STATUS CODE*/
 function deleteChannel(channel) {
 	//var channel=$("#select_room_list option:selected");
 	//alert(channel.id);

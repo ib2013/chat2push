@@ -90,7 +90,7 @@ function showTenUsers(num) {
 		}
 	}
 }
-
+/*TREBA PROMENITI STATUS CODE*/
 function deleteUser(user) {
 
 	//if (isNaN(user.id)) {
