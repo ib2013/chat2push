@@ -1,4 +1,4 @@
-function addNewChannel() {
+function addNewChannel(callback) {
 	var channelTitle = $('#title').val();
 	var channelDescription = $('#channel_description').val();
 	var typeOfChannel = $("#typeOfChannel option:selected").text();
@@ -37,9 +37,10 @@ function addNewChannel() {
 				if (rez == "success") {
 					$('#title').val("");
 					$('#channel_description').val("");
-					fetchAllChannels();
+					//fetchAllChannels();
 					$('#loading').hide();
 					alert("New room is added.");
+					callback();
 				} else {
 					$('#loading').hide();
 					alert("Error in adding room.");
