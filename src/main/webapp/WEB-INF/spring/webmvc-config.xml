@@ -50,7 +50,6 @@
 		Nase definicije 
 	
 	-->
-	
 	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="channelService" factory-method="getChannelServiceInstance" >
 		<constructor-arg value=""></constructor-arg>
 	</bean>
