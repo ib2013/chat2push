@@ -152,3 +152,12 @@ field number --class com.infobip.campus.chattopush.models.UserModel --fieldName 
 field number --class com.infobip.campus.chattopush.models.UserModel --fieldName registrationCode --type int
 field string --fieldName phoneNumber --class com.infobip.campus.chattopush.models.UserModel
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-15 16:25:55
+// [failed] entity jpa --class com.infobip.campus.chattopush.models.Session
+entity jpa --class com.infobip.campus.chattopush.models.Sessions
+field string --fieldName sessionId
+field string --fieldName username
+entity jpa --class SessionModel
+field string --fieldName sessionId
+field string --fieldName username
+help
+hint
