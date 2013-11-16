@@ -7,7 +7,11 @@ import com.infobip.campus.chattopush.models.MessageModel;
 public class MessageComparator implements Comparator<MessageModel> {
 	
 	public int compare(MessageModel msg1, MessageModel msg2) {
-        return msg1.getLastMessageDate().compareTo(msg2.getLastMessageDate());
+        if(msg1.getMessageDate() < msg2.getMessageDate())
+        	return -1;
+        else if(msg1.getMessageDate() == msg2.getMessageDate())
+        	return 0;
+        else return 1;
     }
 
 }
