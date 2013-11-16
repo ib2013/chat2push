@@ -73,5 +73,6 @@ public class UserController {
 	String errorHandler(CustomException ce, HttpServletResponse response) {
 		response.setStatus(ce.getErrorCode());
 		return ce.getErrorMessage();
+
 	}
 }

@@ -80,28 +80,33 @@ public class DefaultChannelService implements ChannelService {
 	public List<ClientChannelModel> fetchSubscribedChannels(String username) {
 
 		List<ClientChannelModel> result = new ArrayList<ClientChannelModel>();
-
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 
-		Map<String, ChannelModel> channelsMap = createChannelMap(channels);
-
-		Collection<UsersChannels> ucs = userChannelsRepository
-				.getSubscribedChannels(username);
-
-		for (UsersChannels uc : ucs) {
-			ChannelModel cm = channelsMap.get(uc.getChannel());
-			if (cm == null) {
-				continue;
+		for (ChannelModel channel : channels) {
+			ClientChannelModel clientChannel = new ClientChannelModel();
+			clientChannel.setDescription(channel.getDescription());
+			clientChannel.setName(channel.getName());
+			clientChannel.setPublic(channel.isIsPublic());
+			clientChannel.setSubscribed(isUserSubscribedToChannel(username,
+					channel.getName()));
+			if (channel.isIsPublic() || clientChannel.isSubscribed()) {
+				result.add(clientChannel);
 			}
-			ClientChannelModel ccm = new ClientChannelModel();
-			ccm.setSubscribed(true);
-			ccm.setDescription(cm.getDescription());
-			ccm.setName(cm.getName());
-			ccm.setPublic(cm.isIsPublic());
-			result.add(ccm);
 		}
 
 		return result;
+	}
+
+	private boolean isUserSubscribedToChannel(String username, String channel) {
+		List<UsersChannels> usersChannels = UsersChannels
+				.findAllUsersChannelses();
+		for (UsersChannels relation : usersChannels) {
+			if (relation.getChannel().equals(channel)
+					&& relation.getUsername().equals(username)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

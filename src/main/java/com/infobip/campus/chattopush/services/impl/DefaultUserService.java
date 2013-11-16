@@ -19,18 +19,24 @@ import com.infobip.campus.chattopush.exceptions.CustomException;
 import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
+import com.infobip.campus.chattopush.services.SmsMessageService;
 import com.infobip.campus.chattopush.services.UserService;
 
 @Service
 public class DefaultUserService implements UserService {
-
+	
 	@PersistenceContext
 	protected EntityManager em;
 
+	SmsMessageService smsMessageService;
 	UserRepository userRepository;
 	UserChannelsRepository userChannelsRepository;
 	MessageRepository messageRepository;
-
+	
+	public void setSmsMessageService(SmsMessageService smsMessageService){
+		this.smsMessageService = smsMessageService;
+	}
+	
 	public void setMessageRepository(MessageRepository messageRepository) {
 		this.messageRepository = messageRepository;
 	}
@@ -55,7 +61,25 @@ public class DefaultUserService implements UserService {
 			} else {
 				throw new CustomException(ErrorCode.NOUSER);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@Override
+	public void resendVerificationCode(UserModel model) {
+		UserModel user = userRepository.findByUsername(model.getUsername());
+		
+		if (user == null){
+			throw new CustomException(ErrorCode.NOUSER);
+		}
+		
+		try{
+		smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + user.getRegistrationCode(),user.getPhoneNumber());
+		}
+		catch(Exception e){
+			e.printStackTrace();
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -72,8 +96,10 @@ public class DefaultUserService implements UserService {
 				newUser.setRegistrationCode(1000 + (int) (Math.random() * 9000));
 				newUser.setRegistrationStatus(0);
 				newUser.setPhoneNumber(model.getPhoneNumber());
+				smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + newUser.getRegistrationCode(), newUser.getPhoneNumber());
 				newUser.merge();
 			} catch (Exception e) {
+				e.printStackTrace();
 				throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 			}
 		}

@@ -12,6 +12,8 @@ public interface UserService {
 	public void registerUser(UserModel _model);
 
 	public void verifyUser(UserModel _model);
+	
+	public void resendVerificationCode(UserModel _model);
 
 	public void deleteUser(UserModel _model);
 
