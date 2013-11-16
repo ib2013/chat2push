@@ -1,37 +1,22 @@
-package com.infobip.campus.chattopush.services.enums;
+package com.infobip.campus.chattopush.exceptions;
 
-public enum StatusCode {
-
-	SUCCESS(200, "Success"),
-	/**
-     */
+public enum ErrorCode {
+	SUCCESS(201, "Success"),
 	PASSERROR(401, "Wrong password"),
-	/**
-     */
 	NOUSER(403, "User not found"),
-	/**
-     */
 	EXISTS(406, "User already exists"),
-	/**
-     */
 	EXC(409, "Conflict"),
-	/**
-     */
 	NORESPONSE(444, "No reponse"),
-	/**
-     */
-	INTERNALSERVERERROR(500, "Internal Server Error");
-	/**
-	 * 
-	 */
-
+	CHANNEL_ALLREADY_EXISTS(406, "Channel allredy exists"),
+	INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
+	CHANNEL_USER_EXISTS(406, "Channel/user allredy exists");
 	private final int value;
 
-	private final String reason;
+	private final String message;
 
-	private StatusCode(int value, String _reason) {
+	private ErrorCode(int value, String message) {
 		this.value = value;
-		this.reason = _reason;
+		this.message = message;
 	}
 
 	public int getValue() {
@@ -39,7 +24,7 @@ public enum StatusCode {
 	}
 
 	public String getReason() {
-		return reason;
+		return message;
 	}
 
 }

@@ -8,16 +8,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.infobip.campus.chattopush.configuration.UserConfiguration;
+import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.UserService;
-import com.infobip.campus.chattopush.services.enums.StatusCode;
 
 public class UserServiceMock implements UserService {
 
 	@Override
-	public StatusCode loginUser(UserModel _model) {
+	public ErrorCode loginUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 
@@ -25,23 +25,23 @@ public class UserServiceMock implements UserService {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(_model.getPassword())) {
 
-					return StatusCode.SUCCESS;
+					return ErrorCode.SUCCESS;
 				} else {
-					return StatusCode.PASSERROR;
+					return ErrorCode.PASSERROR;
 
 				}
 			}
 		}
 
-		return StatusCode.NOUSER;
+		return ErrorCode.NOUSER;
 	}
 
 	@Override
-	public StatusCode registerUser(UserModel _model) throws Exception {
+	public ErrorCode registerUser(UserModel _model) throws Exception {
 		// TODO Auto-generated method stub
 		if (checkUserExists(_model) == false) {
 			if (UserConfiguration.usrs.add(_model) == true) {
-				return StatusCode.SUCCESS;
+				return ErrorCode.SUCCESS;
 			}
 		} else {
 			throw new nijePronaden();
@@ -50,7 +50,7 @@ public class UserServiceMock implements UserService {
 	}
 
 	@Override
-	public StatusCode deleteUser(UserModel _model) {
+	public ErrorCode deleteUser(UserModel _model) {
 		boolean deleteUserExecuted = false;
 		boolean deleteUserChannelRelation = false;
 		/*
@@ -75,10 +75,10 @@ public class UserServiceMock implements UserService {
 		}
 
 		if (deleteUserExecuted == true && deleteUserChannelRelation == true) {
-			return StatusCode.SUCCESS;
+			return ErrorCode.SUCCESS;
 		}
 
-		return StatusCode.EXC;
+		return ErrorCode.EXC;
 	}
 
 	@Override

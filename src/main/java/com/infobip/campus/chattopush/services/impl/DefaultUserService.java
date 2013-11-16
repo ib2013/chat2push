@@ -7,17 +7,17 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.infobip.campus.chattopush.configuration.MD5;
+import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
-import com.infobip.campus.chattopush.services.enums.StatusCode;
 
 @Service
 public class DefaultUserService implements UserService {
 
-	public StatusCode loginUser(UserModel _model) {
+	public ErrorCode loginUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
@@ -26,16 +26,16 @@ public class DefaultUserService implements UserService {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(MD5.getMD5(_model.getPassword()))) {
 
-					return StatusCode.SUCCESS;
+					return ErrorCode.SUCCESS;
 				} else {
-					return StatusCode.PASSERROR;
+					return ErrorCode.PASSERROR;
 				}
 			}
 		}
-		return StatusCode.NOUSER;
+		return ErrorCode.NOUSER;
 	}
 
-	public StatusCode registerUser(UserModel _model) {
+	public ErrorCode registerUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		try {
@@ -44,12 +44,12 @@ public class DefaultUserService implements UserService {
 				newUser.setUsername(_model.getUsername());
 				newUser.setPassword(MD5.getMD5(_model.getPassword()));
 				newUser.merge();
-				return StatusCode.SUCCESS;
+				return ErrorCode.SUCCESS;
 			}
-			return StatusCode.EXISTS;
+			return ErrorCode.EXISTS;
 		} catch (Exception e) {
 			// TODO: handle exception
-			return StatusCode.EXC;
+			return ErrorCode.EXC;
 
 		}
 
@@ -65,7 +65,7 @@ public class DefaultUserService implements UserService {
 		return "success";
 	}
 
-	public StatusCode deleteUser(UserModel _model) {
+	public ErrorCode deleteUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
@@ -93,14 +93,14 @@ public class DefaultUserService implements UserService {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 
-			return StatusCode.EXC;
+			return ErrorCode.EXC;
 		}
 
 		if (deleteUserChannelRelation == true && deleteUser == true) {
-			return StatusCode.SUCCESS;
+			return ErrorCode.SUCCESS;
 		}
 
-		return StatusCode.EXC;
+		return ErrorCode.EXC;
 
 	}
 

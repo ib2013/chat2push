@@ -1,4 +1,4 @@
-package com.infobip.campus.chattopush.services.mock;
+/*package com.infobip.campus.chattopush.services.mock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -167,4 +167,4 @@ public class ChannelServiceMock implements ChannelService {
 		return statistic;
 	}
 
-}
+}*/

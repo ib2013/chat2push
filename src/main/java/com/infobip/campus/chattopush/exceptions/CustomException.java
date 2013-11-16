@@ -1,12 +1,12 @@
-package com.infobip.campus.chattopush.services.exceptions;
+package com.infobip.campus.chattopush.exceptions;
 
-import com.infobip.campus.chattopush.services.enums.StatusCode;
 
-public class CustomException extends RuntimeException{
+public class CustomException extends RuntimeException {
 
-	StatusCode error;
+	private static final long serialVersionUID = 1L;
+	private ErrorCode error;
 	
-	public CustomException(StatusCode error) {
+	public CustomException(ErrorCode error) {
 		this.error = error;
 	}
 	
@@ -17,4 +17,5 @@ public class CustomException extends RuntimeException{
 	public String getErrorMessage() {
 		return error.getReason();
 	}
+
 }
