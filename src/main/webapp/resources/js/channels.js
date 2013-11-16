@@ -35,18 +35,17 @@ function addNewChannel(callback) {
 			data : JSON.stringify(channelJson),
 			success : function(rez, status, xhr) {
 				callback();
-			},
-			error: function(rez, status, xhr){
-				alert(xhr);
-			}
+			}			
 		});
 	} else {
 		$('#loading').hide();
 		alert("Title required!");
 	}
 }
-
+/*TREBA PROMENITI STATUS CODE*/
 function deleteChannel(channel) {
+	//var channel=$("#select_room_list option:selected");
+	//alert(channel.id);
 	var channelName=channel.id;
 	if (isNaN(channelName)) {
 		$('#loading').hide();
@@ -63,11 +62,25 @@ function deleteChannel(channel) {
 				contentType : 'application/json',
 				data : JSON.stringify(channelJson),
 				success : function(rez, status, xhr) {
-					fetchAllChannels();
-				},
-				error: function(rez, status, xhr){
-					alert(xhr);
+					/*if (rez == "SUCCESS") {
+						channel.remove();
+						$('#loading').hide();
+						//alert('Room deleted.');
+						fetchAllChannels();
+						statsRoom();
+					} else {
+						$('#loading').hide();
+						alert('Error!');
+					}*/
+					/*if (rez >300) {
+						$('#loading').hide();
+						alert("Error in adding room.");
+					} else {
+						callback();
+					}*/
+					callback();
 				}
+				
 			});
 		}	
 	} else {

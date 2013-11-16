@@ -1,61 +1,91 @@
+var appId = "1a6cfc8b976c"; // id aplikacije na infobip
 function allStats() {
 
 	statsByDays();
 	statsToday();
 }
 
-function graphDays(statsSent, statsReceived) {
-	$('#stats').highcharts({
-		chart : {
-			type : 'area'
-		},
-		title : {
-			text : 'Stats month: messages/day'
-		},
-		subtitle : {
-			text : 'Source: <a href="http://infobip.com">' + 'infobip</a>'
-		},
-		xAxis : {
-			title : {
-				text : 'Days'
-			},
-		},
-		yAxis : {
-			title : {
-				text : 'Messages'
-			},
-			labels : {
-				formatter : function() {
-					return this.value;
-				}
-			}
-		},
-		tooltip : {
-			pointFormat : '{series.name} <b>{point.y:,.0f}</b>'
-		},
-		plotOptions : {
-			area : {
-				pointStart : 1,
-				marker : {
-					enabled : false,
-					symbol : 'circle',
-					radius : 1,
-					states : {
-						hover : {
-							enabled : true
-						}
-					}
-				}
-			}
-		},
-		series : [ {
-			name : 'Sent',
-			data : statsSent
-		}, {
-			name : 'Received',
-			data : statsReceived
-		} ]
-	});
+function graphDays(statsSent, statsReceived, month, year) {
+	var date = new Date();
+	var thisMonth = date.getMonth();
+	var thisYear = date.getFullYear();
+
+	$('#stats')
+			.highcharts(
+					{
+						chart : {
+							zoomType : 'x',
+							spacingRight : 20
+						},
+						title : {
+							text : 'Stats days'
+						},
+						subtitle : {
+							text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
+									: 'Pinch the chart to zoom in'
+						},
+						xAxis : {
+							type : 'datetime',
+							maxZoom : 14 * 24 * 3600000, // fourteen days
+							title : {
+								text : null
+							}
+						},
+						yAxis : {
+							title : {
+								text : 'Messages'
+							}
+						},
+						tooltip : {
+							shared : true
+						},
+						legend : {
+							enabled : false
+						},
+						plotOptions : {
+							area : {
+								fillColor : {
+									linearGradient : {
+										x1 : 0,
+										y1 : 0,
+										x2 : 0,
+										y2 : 1
+									},
+									stops : [
+											[
+													0,
+													Highcharts.getOptions().colors[0] ],
+											[
+													1,
+													Highcharts
+															.Color(
+																	Highcharts
+																			.getOptions().colors[0])
+															.setOpacity(0).get(
+																	'rgba') ] ]
+								},
+								lineWidth : 1,
+								marker : {
+									enabled : false
+								},
+								shadow : false,
+								states : {
+									hover : {
+										lineWidth : 1
+									}
+								},
+								threshold : null
+							}
+						},
+
+						series : [ {
+							type : 'area',
+							name : 'Messages',
+							pointInterval : 24 * 3600 * 1000,
+							pointStart : Date.UTC(thisYear, thisMonth, 01),
+							data : statsSent
+						} ]
+					});
 
 }
 
@@ -68,39 +98,41 @@ function graphUser(username, data) {
 		for (var i = 0; i < data2.length; i++) {
 			var user = [];
 			user.push(data2[i].name);
-			allMessages+=data[data2[i].name];
+			allMessages += data[data2[i].name];
 			user.push(data[data2[i].name]);
 			stats.push(user);
 		}
 
-		$('#user_graph').highcharts({
-			chart : {
-				plotBackgroundColor : null,
-				plotBorderWidth : null,
-				plotShadow : false
-			},
-			title : {
-				text :'User:<b>' + username + '</b><br/>Messages:<b>' + allMessages+'</b>'
-			},
-			tooltip : {
-				pointFormat : '{series.name} <b>{point.y}</b>'
-			},
-			plotOptions : {
-				pie : {
-					allowPointSelect : true,
-					cursor : 'pointer',
-					dataLabels : {
-						enabled : false
+		$('#user_graph').highcharts(
+				{
+					chart : {
+						plotBackgroundColor : null,
+						plotBorderWidth : null,
+						plotShadow : false
 					},
-					showInLegend : true
-				}
-			},
-			series : [ {
-				type : 'pie',
-				name : 'Messages:',
-				data : stats
-			} ]
-		});
+					title : {
+						text : 'User:<b>' + username + '</b><br/>Messages:<b>'
+								+ allMessages + '</b>'
+					},
+					tooltip : {
+						pointFormat : '{series.name} <b>{point.y}</b>'
+					},
+					plotOptions : {
+						pie : {
+							allowPointSelect : true,
+							cursor : 'pointer',
+							dataLabels : {
+								enabled : false
+							},
+							showInLegend : true
+						}
+					},
+					series : [ {
+						type : 'pie',
+						name : 'Messages:',
+						data : stats
+					} ]
+				});
 
 	});
 
@@ -115,7 +147,7 @@ function graphRooms(data) {
 		for (var i = 0; i < data2.length; i++) {
 			var user = [];
 			user.push(data2[i].name);
-			allMessages+=data[data2[i].name];
+			allMessages += data[data2[i].name];
 			user.push(data[data2[i].name]);
 			stats.push(user);
 		}
@@ -127,7 +159,7 @@ function graphRooms(data) {
 				plotShadow : false
 			},
 			title : {
-				text :'Number of messages:<b>' + allMessages+'</b>'
+				text : 'Number of messages:<b>' + allMessages + '</b>'
 			},
 			tooltip : {
 				pointFormat : '{series.name} <b>{point.y}</b>'
@@ -159,57 +191,88 @@ function graphRooms(data) {
 }
 
 function graphToday(statsSent, statsReceived) {
-	$('#stats2').highcharts({
-		chart : {
-			type : 'area'
-		},
-		title : {
-			text : 'Stats today: messages/hour'
-		},
-		subtitle : {
-			text : 'Source: <a href="http://infobip.com">' + 'infobip</a>'
-		},
-		xAxis : {
-			title : {
-				text : 'Hours'
-			},
-		},
-		yAxis : {
-			title : {
-				text : 'Messages'
-			},
-			labels : {
-				formatter : function() {
-					return this.value;
-				}
-			}
-		},
-		tooltip : {
-			pointFormat : '{series.name} <b>{point.y:,.0f}</b>'
-		},
-		plotOptions : {
-			area : {
-				pointStart : 1,
-				marker : {
-					enabled : false,
-					symbol : 'circle',
-					radius : 1,
-					states : {
-						hover : {
-							enabled : true
-						}
-					}
-				}
-			}
-		},
-		series : [ {
-			name : 'Sent',
-			data : statsSent
-		}, {
-			name : 'Received',
-			data : statsReceived
-		} ]
-	});
+
+	var date = new Date();
+	var thisDay = date.getDate();
+	var thisMonth = date.getMonth();
+	var thisYear = date.getFullYear();
+
+	$('#stats2')
+			.highcharts(
+					{
+						chart : {
+							zoomType : 'x',
+							spacingRight : 20
+						},
+						title : {
+							text : 'Stats hours'
+						},
+						subtitle : {
+							text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
+									: 'Pinch the chart to zoom in'
+						},
+						xAxis : {
+							type : 'datetime',
+							maxZoom : 3600000, // fourteen days
+							title : {
+								text : null
+							}
+						},
+						yAxis : {
+							title : {
+								text : 'Messages'
+							}
+						},
+						tooltip : {
+							shared : true
+						},
+						legend : {
+							enabled : false
+						},
+						plotOptions : {
+							area : {
+								fillColor : {
+									linearGradient : {
+										x1 : 0,
+										y1 : 0,
+										x2 : 0,
+										y2 : 1
+									},
+									stops : [
+											[
+													0,
+													Highcharts.getOptions().colors[0] ],
+											[
+													1,
+													Highcharts
+															.Color(
+																	Highcharts
+																			.getOptions().colors[0])
+															.setOpacity(0).get(
+																	'rgba') ] ]
+								},
+								lineWidth : 1,
+								marker : {
+									enabled : false
+								},
+								shadow : false,
+								states : {
+									hover : {
+										lineWidth : 1
+									}
+								},
+								threshold : null
+							}
+						},
+
+						series : [ {
+							type : 'area',
+							name : 'Messages',
+							pointInterval : 3600 * 1000,
+							pointStart : Date.UTC(thisYear, thisMonth, thisDay),
+							data : statsSent
+						} ]
+					});
 
 }
 
@@ -221,26 +284,26 @@ function statsByDays() {
 	var statsSent = null;
 	var statsReceived = null;
 
-	$
-			.ajax({
-				url : "https://pushapi.infobip.com/1/statistics/application/1a6cfc8b976c/notifications?time-type=month&month="
-						+ thisMonth + "&year=" + thisYear + "",
-				headers : {
-					'Accept' : 'text/plain',
-					'Content-type' : 'application/json',
-					'Authorization' : 'Basic cHVzaGRlbW86cHVzaGRlbW8=',
-				},
-				method : 'GET',
-				contentType : 'application/json',
-				success : function(data, status, xhr) {
+	$.ajax({
+		url : "https://pushapi.infobip.com/1/statistics/application/" + appId
+				+ "/notifications?time-type=month&month=" + thisMonth
+				+ "&year=" + thisYear + "",
+		headers : {
+			'Accept' : 'text/plain',
+			'Content-type' : 'application/json',
+			'Authorization' : 'Basic cHVzaGRlbW86cHVzaGRlbW8=',
+		},
+		method : 'GET',
+		contentType : 'application/json',
+		success : function(data, status, xhr) {
 
-					statsSent = data.data[0].countSent;
-					statsReceived = data.data[0].countReceived;
+			statsSent = data.data[0].countSent;
+			statsReceived = data.data[0].countReceived;
 
-					graphDays(statsSent, statsReceived);
-				}
+			graphDays(statsSent, statsReceived);
+		}
 
-			});
+	});
 }
 
 function statsToday() {
@@ -252,31 +315,26 @@ function statsToday() {
 	var statsSent = null;
 	var statsReceived = null;
 
-	$
-			.ajax({
-				url : "https://pushapi.infobip.com/1/statistics/application/1a6cfc8b976c/notifications?time-type=day&day="
-						+ thisDay
-						+ "&month="
-						+ thisMonth
-						+ "&year="
-						+ thisYear
-						+ "",
-				headers : {
-					'Accept' : 'text/plain',
-					'Content-type' : 'application/json',
-					'Authorization' : 'Basic cHVzaGRlbW86cHVzaGRlbW8=',
-				},
-				method : 'GET',
-				contentType : 'application/json',
-				success : function(data, status, xhr) {
+	$.ajax({
+		url : "https://pushapi.infobip.com/1/statistics/application/" + appId
+				+ "/notifications?time-type=day&day=" + thisDay + "&month="
+				+ thisMonth + "&year=" + thisYear + "",
+		headers : {
+			'Accept' : 'text/plain',
+			'Content-type' : 'application/json',
+			'Authorization' : 'Basic cHVzaGRlbW86cHVzaGRlbW8=',
+		},
+		method : 'GET',
+		contentType : 'application/json',
+		success : function(data, status, xhr) {
 
-					statsSent = data.data[0].countSent;
-					statsReceived = data.data[0].countReceived;
+			statsSent = data.data[0].countSent;
+			statsReceived = data.data[0].countReceived;
 
-					graphToday(statsSent, statsReceived);
-				}
+			graphToday(statsSent, statsReceived);
+		}
 
-			});
+	});
 }
 
 function statsByUser(username) {
@@ -301,7 +359,7 @@ function statsByUser(username) {
 
 }
 
-function statsRoom(){
+function statsRoom() {
 	$.ajax({
 		url : _basePath + "channel/channelStatistic",
 		headers : {
@@ -310,11 +368,11 @@ function statsRoom(){
 		},
 		method : 'GET',
 		contentType : 'application/json',
-		
+
 		success : function(res, status, xhr) {
 
 			graphRooms(res);
 		}
 	});
-	
+
 }

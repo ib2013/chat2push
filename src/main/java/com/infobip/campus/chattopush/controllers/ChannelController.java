@@ -44,7 +44,7 @@ public class ChannelController {
 		return channelService.fetchSubscribedChannels(username);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/fetchUsersByRoom", consumes = "application/json", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/fetchUsersByRoom")//, consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public List<UserActivityModel> fetchUsersByChannel(
 			@RequestBody final ChannelModel channel) {
@@ -52,7 +52,7 @@ public class ChannelController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/fetchOpositeUsersByRoom", consumes = "application/json", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/fetchOpositeUsersByRoom")//, consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public List<UserModel> fetchOpositeUsersByChannel(
 			@RequestBody final ChannelModel channel) {
@@ -60,25 +60,25 @@ public class ChannelController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/add", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/add")//, consumes = "application/json")
 	@ResponseBody
 	public void addChannel(@RequestBody final ChannelModel model) {
 		channelService.addChannel(model);
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)//, consumes = "application/json")
 	@ResponseBody
 	public void deleteChannel(@RequestBody final ChannelModel model) {
 		channelService.deleteChannel(model);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/addUserToRoom", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/addUserToRoom")//, consumes = "application/json")
 	@ResponseBody
 	public void addUserToChannel(@RequestBody final UsersChannels object) {
 		channelService.addUserToRoom(object);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/removeUserFromRoom", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/removeUserFromRoom")//, consumes = "application/json")
 	@ResponseBody
 	public void removeUserFromChannel(
 			@RequestBody final UsersChannels object) {

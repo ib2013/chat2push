@@ -3,22 +3,21 @@ package com.infobip.campus.chattopush.services;
 import java.util.List;
 import java.util.Map;
 
-import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.UserModel;
 
 public interface UserService {
 
-	public ErrorCode loginUser(UserModel _model);
+	public void loginUser(UserModel model);
 
-	public ErrorCode registerUser(UserModel _model) throws Exception;
+	public void registerUser(UserModel model);
 
-	public ErrorCode verifyUser(UserModel _model);
+	public void verifyUser(UserModel model);
+	
+	public void resendVerificationCode(UserModel model);
 
-	public ErrorCode deleteUser(UserModel _model);
-
-	public boolean checkUserExists(UserModel _model);
+	public void deleteUser(UserModel model);
 
 	public List<UserModel> fetchAllUsers();
 
-	public Map<String, Integer> fetchUserStatistics(UserModel _model);
+	public Map<String, Integer> fetchUserStatistics(UserModel model);
 }

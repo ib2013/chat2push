@@ -25,7 +25,10 @@ public class ChannelRepository {
 		Query queryDeleteRelations = em
 				.createQuery("DELETE FROM UsersChannels uc WHERE uc.channel=:cn ");
 		queryDeleteRelations.setParameter("cn", channelName);
-		queryDeleteRelations.executeUpdate();
+		int n = queryDeleteRelations.executeUpdate();
+		System.out.println(n);
+		
+
 	}
 
 	public void removeUserFromRoomDb(UsersChannels relation) {
@@ -68,20 +71,21 @@ public class ChannelRepository {
 
 		return result;
 	}
-	/*
-	 * public UserActivityModel selectAllUsersInChannelDb(ChannelModel channel)
-	 * { Query query = em
-	 * .createQuery("SELECT cm FROM UsersChannels cm WHERE cm.channel=:cn ");
-	 * query.setParameter("cn", channel.getName());
-	 * 
-	 * @SuppressWarnings("unchecked") List<UserActivityModel> cm =
-	 * query.getResultList();
-	 * 
-	 * UserActivityModel result = null;
-	 * 
-	 * if (cm.size() > 0) { result = cm.get(0); }
-	 * 
-	 * return result; }
-	 */
+/*
+	public UserActivityModel selectAllUsersInChannelDb(ChannelModel channel) {
+		Query query = em
+				.createQuery("SELECT cm FROM UsersChannels cm WHERE cm.channel=:cn ");
+		query.setParameter("cn", channel.getName());
+		@SuppressWarnings("unchecked")
+		List<UserActivityModel> cm = query.getResultList();
+
+		UserActivityModel result = null;
+
+		if (cm.size() > 0) {
+			result = cm.get(0);
+		}
+
+		return result;
+	}*/
 
 }

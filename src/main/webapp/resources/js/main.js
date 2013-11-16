@@ -42,10 +42,12 @@ function addUserToChannel(userName, channel) {
 		contentType: 'application-json',
 		data: JSON.stringify(channelUserJson),
 		success:function(res, status,xhr){
+
 			if(status == "success"){
 				//alert("User added to room.");
+
 			}else{
-				alert("Error adding user.");
+				alert(res);
 			}
 		}
 	});
