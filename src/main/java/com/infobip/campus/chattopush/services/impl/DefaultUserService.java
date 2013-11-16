@@ -184,7 +184,7 @@ public class DefaultUserService implements UserService {
 			int brojPoruka = 0;
 			for (MessageModel msgModel : messages) {
 				if (msgModel.getChannel().contentEquals(chnlModel.getName())
-						&& msgModel.getUser().contentEquals(
+						&& msgModel.getUsername().contentEquals(
 								_model.getUsername())) {
 					brojPoruka++;
 				}
