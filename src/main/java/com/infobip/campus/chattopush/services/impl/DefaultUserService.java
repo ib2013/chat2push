@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.infobip.campus.chattopush.services.impl;
 
 import java.util.HashMap;
@@ -174,4 +173,3 @@ public class DefaultUserService implements UserService {
 		return false;
 	}
 }
-
