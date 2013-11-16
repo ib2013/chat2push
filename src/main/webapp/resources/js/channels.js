@@ -63,7 +63,7 @@ function deleteChannel(channel) {
 				contentType : 'application/json',
 				data : JSON.stringify(channelJson),
 				success : function(rez, status, xhr) {
-					callback();
+					fetchAllChannels();
 				},
 				error: function(rez, status, xhr){
 					alert(xhr);
