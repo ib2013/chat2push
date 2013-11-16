@@ -129,12 +129,17 @@ public class DefaultUserService implements UserService {
 			throw new CustomException(ErrorCode.WRONG_REGISTRATION_CODE);
 		}
 
-		model.setRegistrationStatus(1);
-		model.merge();
+		um.setRegistrationStatus(1);
+		um.merge();
 	}
 
 	private boolean checkUserExists(UserModel model) {
-		UserModel um = userRepository.findByUsername(model.getUsername());
+		UserModel um = null;
+		try {
+			um = userRepository.findByUsername(model.getUsername());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return um == null ? false : true;
 	}
 }
