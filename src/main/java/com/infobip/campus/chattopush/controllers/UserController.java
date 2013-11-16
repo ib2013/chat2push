@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.UserService;
-import com.infobip.campus.chattopush.services.enums.StatusCode;
 
 @RequestMapping("/user/**")
 @Controller
@@ -24,30 +24,30 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/login", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/login")//, consumes = "application/json")
 	@ResponseBody
-	public StatusCode loginUser(@RequestBody UserModel model) {
+	public ErrorCode loginUser(@RequestBody UserModel model) {
 
 		return userService.loginUser(model);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/register", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/register")//, consumes = "application/json")
 	@ResponseBody
 	@ExceptionHandler
-	public StatusCode registerUser(@RequestBody UserModel model) throws Exception {
+	public ErrorCode registerUser(@RequestBody UserModel model) throws Exception {
 		return userService.registerUser(model);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/verify", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/verify")//, consumes = "application/json")
 	@ResponseBody
-	public StatusCode verifyUser(@RequestBody UserModel model) {
+	public ErrorCode verifyUser(@RequestBody UserModel model) {
 		return userService.verifyUser(model);
 
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/delete", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/delete")//, consumes = "application/json")
 	@ResponseBody
-	public StatusCode deleteUser(@RequestBody UserModel model) {
+	public ErrorCode deleteUser(@RequestBody UserModel model) {
 
 		return userService.deleteUser(model);
 
@@ -61,7 +61,7 @@ public class UserController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/fetchUserStatistics", consumes = "application/json", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/fetchUserStatistics")//, consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public Map<String, Integer> fetchUserStatistics(@RequestBody UserModel _model) {
 		return userService.fetchUserStatistics(_model);

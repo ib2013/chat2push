@@ -8,62 +8,89 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.infobip.campus.chattopush.configuration.MD5;
+import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.SmsMessageService;
 import com.infobip.campus.chattopush.services.UserService;
-import com.infobip.campus.chattopush.services.enums.StatusCode;
 import com.infobip.campus.chattopush.services.exception.ChannelExceptionHandler;
 
 @Service
 public class DefaultUserService implements UserService {
+	
+	@Autowired
+	SmsMessageService smsMessageService;
+	
+	public void setSmsMessageService(SmsMessageService smsMessageService){
+		this.smsMessageService = smsMessageService;
+	}
 
-	public StatusCode loginUser(UserModel _model) {
+	public ErrorCode loginUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
+
+				if (model.getPassword().contentEquals(
+						MD5.getMD5(_model.getPassword()))) {
+
+					return ErrorCode.SUCCESS;
+				}
 				if (model.getPassword().contentEquals(
 						MD5.getMD5(_model.getPassword()))) {
 					if (model.getRegistrationStatus() != 0) {
-						return StatusCode.SUCCESS;
+						return ErrorCode.SUCCESS;
 					} else {
-						return StatusCode.MISSING_REGISTRATION;
+						return ErrorCode.MISSING_REGISTRATION;
 					}
 				} else {
-					return StatusCode.PASSERROR;
+					return ErrorCode.PASSERROR;
 				}
 			}
+
 		}
-		return StatusCode.NOUSER;
+		return ErrorCode.NOUSER;
+
 	}
 
-	public StatusCode verifyUser(UserModel _model) {
+	public ErrorCode verifyUser(UserModel _model) {
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getRegistrationStatus() != 0) {
-					return StatusCode.EXC;
+					return ErrorCode.EXC;
 				} else if (model.getRegistrationCode() != _model
 						.getRegistrationCode()) {
-					return StatusCode.WRONG_REGISTRATION_CODE;
+					return ErrorCode.WRONG_REGISTRATION_CODE;
 				} else {
 					model.setRegistrationStatus(1);
 					model.merge();
-					return StatusCode.SUCCESS;
+					return ErrorCode.SUCCESS;
 				}
 			}
 		}
 
-		return StatusCode.NOUSER;
+		return ErrorCode.NOUSER;
+	}
+	
+	@Override
+	public ErrorCode resendVerificationCode(UserModel _model) {
+		for (UserModel user : UserModel.findAllUserModels()){
+			if(user.getUsername().equals(_model.getUsername())){
+				smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + user.getRegistrationCode(),user.getPhoneNumber());
+				return ErrorCode.SUCCESS;
+			}
+		}
+		
+		return ErrorCode.EXC;
 	}
 
-	public StatusCode registerUser(UserModel _model) {
+	public ErrorCode registerUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		try {
@@ -75,12 +102,14 @@ public class DefaultUserService implements UserService {
 				newUser.setRegistrationStatus(0);
 				newUser.setPhoneNumber(_model.getPhoneNumber());
 				newUser.merge();
-				return StatusCode.SUCCESS;
+				smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + _model.getRegistrationCode(),_model.getPhoneNumber());
+				return ErrorCode.SUCCESS;
 			}
-			return StatusCode.EXISTS;
+			return ErrorCode.EXISTS;
 		} catch (Exception e) {
 			// TODO: handle exception
-			return StatusCode.EXC;
+			return ErrorCode.EXC;
+
 		}
 	}
 
@@ -94,7 +123,7 @@ public class DefaultUserService implements UserService {
 		return "success";
 	}
 
-	public StatusCode deleteUser(UserModel _model) {
+	public ErrorCode deleteUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
@@ -127,17 +156,18 @@ public class DefaultUserService implements UserService {
 			}
 
 		} catch (Exception ex) {
-			// TODO Auto-generated catch block
+
 			new ChannelExceptionHandler(ex.getMessage());
 		}
 
 		if (listaKanalaEmpty == true && deleteUser == true) {
-			return StatusCode.SUCCESS;
+			return ErrorCode.SUCCESS;
 		} else if (deleteUserChannelRelation == true && deleteUser == true) {
-			return StatusCode.SUCCESS;
+			return ErrorCode.SUCCESS;
+
 		}
 
-		return StatusCode.EXC;
+		return ErrorCode.EXC;
 
 	}
 
@@ -186,4 +216,5 @@ public class DefaultUserService implements UserService {
 
 		return statistic;
 	}
+
 }

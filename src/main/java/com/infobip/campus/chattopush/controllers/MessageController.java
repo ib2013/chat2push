@@ -36,7 +36,7 @@ public class MessageController {
 		return messageService.fetchMessageList(un, ch, startTime, endTime);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/send", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/send")//, consumes = "application/json")
 	@ResponseBody
 	public boolean sendMessage(@RequestBody final ClientMessageModel msg) {
 		

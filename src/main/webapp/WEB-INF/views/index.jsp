@@ -7,18 +7,26 @@
 		<img id="loading-image" src="resources/images/loading.gif"
 			alt="Loading..." />
 	</div>
-
+	<form>
+		<input type="button" value="Logout" onClick="logout()">
+	</form>
 
 	<script type="text/javascript">
 		var _basePath = '${_basePath}';
 		$(document).ready(function() {
+			if ($.session.get('administratorz') == null) {
+				window.location.href = "/";
+			}
 			pageCount(setPaging);
 			showAllUsersSync(showTenUsers);
 			$('#tab-container').easytabs();
 			documentReady(_basePath);
-			//	showAllUsers();
-			//	showTenUsers(1);
 		});
+
+		function logout() {
+			$.session.remove('administratorz');
+			window.location.href = "/";
+		}
 	</script>
 
 	<ul class='etabs'>
@@ -169,13 +177,16 @@
 		</div>
 	</div>
 	<div id="tabsstat" style="padding-top: 20px; padding-bottom: 20px;">
-		<div id='channel_header' style=" width: 1100px">
-			<label id='channel_list_tab' class='listOptions' style="margin-left: 225px; width: 1100px">General Chat Statistics</label>
+		<div id='channel_header' style="width: 1100px">
+			<label id='channel_list_tab' class='listOptions'
+				style="margin-left: 225px; width: 1100px">General Chat
+				Statistics</label>
 		</div>
-		<div id='room_graph' class="listContent2" style="clear:both; width:1100px; height:900px; margin-left: 225px;">
+		<div id='room_graph' class="listContent2"
+			style="clear: both; width: 1100px; height: 900px; margin-left: 225px;">
 			<div id="stats" style="height: 400px; clear: both;"></div>
 			<hr />
-			<div id="stats2" style="height: 400px; clear:both"></div>
+			<div id="stats2" style="height: 400px; clear: both"></div>
 		</div>
 	</div>
 </div>

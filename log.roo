@@ -161,3 +161,4 @@ field string --fieldName sessionId
 field string --fieldName username
 help
 hint
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-16 14:47:00
