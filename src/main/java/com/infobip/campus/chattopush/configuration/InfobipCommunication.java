@@ -43,12 +43,11 @@ public class InfobipCommunication {
 		}
 	}
 
-	public void deleteChannelInfobip(ChannelModel channel)
-			throws CustomException {
+	public void deleteChannelInfobip(ChannelModel channel) {
 		try {
 
 			String channelName = channel.getName().replaceAll(" ", "%20");
-			URL url = new URL(URI + channelName);
+			URL url = new URL(URI + "/"+channelName);
 			HTTPRequest request = new HTTPRequest(url, HTTPMethod.DELETE);
 
 			request.addHeader(new HTTPHeader("Authorization",
