@@ -90,7 +90,7 @@ function showTenUsers(num) {
 		}
 	}
 }
-/*TREBA PROMENITI STATUS CODE*/
+
 function deleteUser(user) {
 
 	//if (isNaN(user.id)) {
@@ -109,17 +109,12 @@ function deleteUser(user) {
 				contentType : 'application/json',
 				data : JSON.stringify(userJson),
 				success : function(rez, status, xhr) {
-					//alert(rez);
-					if (rez == "SUCCESS") {
-						//alert("obrisano" + rez);
-						showAllUsers();
-						showTenUsers(1);
-						$('#user_graph').html("");						
-						$('#loading').hide();
-					} else {
-						$('#loading').hide();
-						alert('Error!');
-					}
+				
+					showAllUsersSync(showTenUsers);
+					
+				},
+				error: function(rez, status, xhr) {
+					alert(xhr);
 				}
 			});
 
