@@ -45,7 +45,7 @@ function addUserToChannel(userName, channel) {
 			if(res=="SUCCESS"){
 				//alert("User added to room.");
 			}else{
-				alert("Error.");
+				alert("Error adding user.");
 			}
 		}
 	});
@@ -69,11 +69,11 @@ function removeUserFromChannel(userName, channel) {
 		contentType: 'application/json',
 		data: JSON.stringify(channelUserJson),
 		success:function(res, status,xhr){
-			if(res=="SUCCESS"){
+			/*if(res=="SUCCESS"){
 				//alert("User removed from room.");
 			}else{
 				alert("Error.");
-			}
+			}*/
 		}
 	});
 }
