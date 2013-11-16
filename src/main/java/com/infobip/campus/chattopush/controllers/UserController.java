@@ -1,7 +1,10 @@
+
 package com.infobip.campus.chattopush.controllers;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.infobip.campus.chattopush.exceptions.ErrorCode;
+import com.infobip.campus.chattopush.exceptions.CustomException;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.UserService;
 
@@ -24,32 +27,30 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/login")//, consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/login", consumes = "application/json")
 	@ResponseBody
-	public ErrorCode loginUser(@RequestBody UserModel model) {
-
-		return userService.loginUser(model);
+	public void loginUser(@RequestBody UserModel model) {
+		userService.loginUser(model);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/register")//, consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/register", consumes = "application/json")
 	@ResponseBody
-	@ExceptionHandler
-	public ErrorCode registerUser(@RequestBody UserModel model) throws Exception {
-		return userService.registerUser(model);
-	}
-	
-	@RequestMapping(method = RequestMethod.POST, value = "/verify")//, consumes = "application/json")
-	@ResponseBody
-	public ErrorCode verifyUser(@RequestBody UserModel model) {
-		return userService.verifyUser(model);
-
+	public void registerUser(@RequestBody UserModel model) {
+		userService.registerUser(model);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/delete")//, consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/verify", consumes = "application/json")
 	@ResponseBody
-	public ErrorCode deleteUser(@RequestBody UserModel model) {
+	public void verifyUser(@RequestBody UserModel model) {
+		userService.verifyUser(model);
 
-		return userService.deleteUser(model);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/delete", consumes = "application/json")
+	@ResponseBody
+	public void deleteUser(@RequestBody UserModel model) {
+
+		userService.deleteUser(model);
 
 	}
 
@@ -61,9 +62,16 @@ public class UserController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/fetchUserStatistics")//, consumes = "application/json", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/fetchUserStatistics", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public Map<String, Integer> fetchUserStatistics(@RequestBody UserModel _model) {
 		return userService.fetchUserStatistics(_model);
+	}
+
+	@ExceptionHandler(CustomException.class)
+	public @ResponseBody
+	String errorHandler(CustomException ce, HttpServletResponse response) {
+		response.setStatus(ce.getErrorCode());
+		return ce.getErrorMessage();
 	}
 }

@@ -1,219 +1,146 @@
+
 package com.infobip.campus.chattopush.services.impl;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Service;
 
 import com.infobip.campus.chattopush.configuration.MD5;
+import com.infobip.campus.chattopush.database.MessageRepository;
+import com.infobip.campus.chattopush.database.UserChannelsRepository;
+import com.infobip.campus.chattopush.database.UserRepository;
+import com.infobip.campus.chattopush.exceptions.CustomException;
 import com.infobip.campus.chattopush.exceptions.ErrorCode;
-import com.infobip.campus.chattopush.models.ChannelModel;
-import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
-import com.infobip.campus.chattopush.services.SmsMessageService;
 import com.infobip.campus.chattopush.services.UserService;
-import com.infobip.campus.chattopush.services.exception.ChannelExceptionHandler;
 
 @Service
 public class DefaultUserService implements UserService {
-	
-	SmsMessageService smsMessageService;
-	
-	public void setSmsMessageService(SmsMessageService smsMessageService){
-		this.smsMessageService = smsMessageService;
+
+	@PersistenceContext
+	protected EntityManager em;
+
+	UserRepository userRepository;
+	UserChannelsRepository userChannelsRepository;
+	MessageRepository messageRepository;
+
+	public void setMessageRepository(MessageRepository messageRepository) {
+		this.messageRepository = messageRepository;
 	}
 
-	public ErrorCode loginUser(UserModel _model) {
-
-		// TODO Auto-generated method stub
-		List<UserModel> list = UserModel.findAllUserModels();
-
-		for (UserModel model : list) {
-			if (model.getUsername().contentEquals(_model.getUsername())) {
-
-				if (model.getPassword().contentEquals(
-						MD5.getMD5(_model.getPassword()))) {
-
-					return ErrorCode.SUCCESS;
-				}
-				if (model.getPassword().contentEquals(
-						MD5.getMD5(_model.getPassword()))) {
-					if (model.getRegistrationStatus() != 0) {
-						return ErrorCode.SUCCESS;
-					} else {
-						return ErrorCode.MISSING_REGISTRATION;
-					}
-				} else {
-					return ErrorCode.PASSERROR;
-				}
-			}
-
-		}
-		return ErrorCode.NOUSER;
-
+	public void setUserChannelsRepository(UserChannelsRepository userChannelsRepository) {
+		this.userChannelsRepository = userChannelsRepository;
 	}
 
-	public ErrorCode verifyUser(UserModel _model) {
-		List<UserModel> list = UserModel.findAllUserModels();
-
-		for (UserModel model : list) {
-			if (model.getUsername().contentEquals(_model.getUsername())) {
-				if (model.getRegistrationStatus() != 0) {
-					return ErrorCode.EXC;
-				} else if (model.getRegistrationCode() != _model
-						.getRegistrationCode()) {
-					return ErrorCode.WRONG_REGISTRATION_CODE;
-				} else {
-					model.setRegistrationStatus(1);
-					model.merge();
-					return ErrorCode.SUCCESS;
-				}
-			}
-		}
-
-		return ErrorCode.NOUSER;
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
-	
+
 	@Override
-	public ErrorCode resendVerificationCode(UserModel _model) {
-		for (UserModel user : UserModel.findAllUserModels()){
-			if(user.getUsername().equals(_model.getUsername())){
-				//smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + user.getRegistrationCode(),user.getPhoneNumber());
-				return ErrorCode.SUCCESS;
-			}
-		}
-		
-		return ErrorCode.EXC;
-	}
-
-	public ErrorCode registerUser(UserModel _model) {
-
-		// TODO Auto-generated method stub
+	public void loginUser(UserModel model) {
+		UserModel object = null;
 		try {
-			if (checkUserExists(_model) == false) {
-				UserModel newUser = new UserModel();
-				newUser.setUsername(_model.getUsername());
-				newUser.setPassword(MD5.getMD5(_model.getPassword()));
-				newUser.setRegistrationCode(1000 + (int) (Math.random() * 9000));
-				newUser.setRegistrationStatus(0);
-				newUser.setPhoneNumber(_model.getPhoneNumber());
-				newUser.merge();
-				//smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + _model.getRegistrationCode(),_model.getPhoneNumber());
-				return ErrorCode.SUCCESS;
-			}
-			return ErrorCode.EXISTS;
-		} catch (Exception e) {
-			// TODO: handle exception
-			return ErrorCode.EXC;
-
-		}
-	}
-
-	public String deleteAll() {
-		// TODO Auto-generated method stub
-		List<UserModel> list = UserModel.findAllUserModels();
-
-		for (UserModel model : list) {
-			model.remove();
-		}
-		return "success";
-	}
-
-	public ErrorCode deleteUser(UserModel _model) {
-
-		// TODO Auto-generated method stub
-		List<UserModel> list = UserModel.findAllUserModels();
-		List<UsersChannels> listaKanala = UsersChannels
-				.findAllUsersChannelses();
-
-		boolean deleteUser = false;
-		boolean deleteUserChannelRelation = false;
-		boolean listaKanalaEmpty = false;
-
-		try {
-			for (UserModel modelUser : list) {
-				if (modelUser.getUsername().contentEquals(
-						_model.getUsername().toString())) {
-					modelUser.remove();
-					deleteUser = true;
-				}
-			}
-
-			if (listaKanala.isEmpty() != true) {
-				for (UsersChannels modelKanal : listaKanala) {
-					if (modelKanal.getUsername().contentEquals(
-							_model.getUsername())) {
-						modelKanal.remove();
-						deleteUserChannelRelation = true;
-					}
+			object = userRepository.findByUsername(model.getUsername());
+			if (object != null) {
+				if (!MD5.getMD5(model.getPassword()).contentEquals(object.getPassword())) {
+					throw new CustomException(ErrorCode.PASSERROR);
 				}
 			} else {
-				listaKanalaEmpty = true;
+				throw new CustomException(ErrorCode.NOUSER);
 			}
-
-		} catch (Exception ex) {
-
-			new ChannelExceptionHandler(ex.getMessage());
+		} catch (Exception e) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
-
-		if (listaKanalaEmpty == true && deleteUser == true) {
-			return ErrorCode.SUCCESS;
-		} else if (deleteUserChannelRelation == true && deleteUser == true) {
-			return ErrorCode.SUCCESS;
-
-		}
-
-		return ErrorCode.EXC;
-
 	}
 
-	public boolean checkUserExists(UserModel _model) {
-		List<UserModel> list = UserModel.findAllUserModels();
-
-		for (UserModel model : list) {
-			if (model.getUsername().contentEquals(
-					_model.getUsername().toString())) {
-				return true;
+	@Override
+	public void registerUser(UserModel model) {
+		if (checkUserExists(model) == true) {
+			throw new CustomException(ErrorCode.EXISTS);
+		} else {
+			UserModel newUser = new UserModel();
+			try {
+				newUser.setUsername(model.getUsername());
+				newUser.setPassword(MD5.getMD5(model.getPassword()));
+				newUser.setRegistrationCode(1000 + (int) (Math.random() * 9000));
+				newUser.setRegistrationStatus(0);
+				newUser.setPhoneNumber(model.getPhoneNumber());
+				newUser.merge();
+			} catch (Exception e) {
+				throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 			}
 		}
-
-		return false;
 	}
 
+	@Override
+	public void deleteUser(UserModel model) {
+		if (checkUserExists(model) == true) {
+			try {
+				userRepository.deleteUser(model.getUsername());
+				userRepository.removeFromAllChannels(model.getUsername());
+			} catch (Exception ex) {
+				throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+			}
+		}
+	}
+
+	@Override
 	public List<UserModel> fetchAllUsers() {
-		// TODO Auto-generated method stub
 		try {
 			return UserModel.findAllUserModels();
 		} catch (Exception e) {
-			// TODO: handle exception
-			return null;
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
-
 	}
 
-	public Map<String, Integer> fetchUserStatistics(UserModel _model) {
-		// TODO Auto-generated method stub
-		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
-		List<MessageModel> messages = MessageModel.findAllMessageModels();
+	@Override
+	public Map<String, Integer> fetchUserStatistics(UserModel model) {
+		Collection<UsersChannels> subscribedChannels = userChannelsRepository.getSubscribedChannels(model.getUsername());
 
 		Map<String, Integer> statistic = new HashMap<String, Integer>();
 
-		for (ChannelModel chnlModel : channels) {
-			int brojPoruka = 0;
-			for (MessageModel msgModel : messages) {
-				if (msgModel.getChannel().contentEquals(chnlModel.getName())
-						&& msgModel.getUser().contentEquals(
-								_model.getUsername())) {
-					brojPoruka++;
-				}
-			}
-			statistic.put(chnlModel.getName(), brojPoruka);
+		for (UsersChannels uc : subscribedChannels) {
+			int count = messageRepository.getMessagesForUserAndChannel(uc.getUsername(), uc.getChannel());
+			statistic.put(uc.getChannel(), count);
 		}
 
 		return statistic;
 	}
 
+	@Override
+	public void verifyUser(UserModel model) {
+		UserModel um = userRepository.findByUsername(model.getUsername());
+
+		if (um == null) {
+			throw new CustomException(ErrorCode.NOUSER);
+		}
+
+		if (um.getRegistrationStatus() == 1) {
+			return;
+		}
+
+		if (um.getRegistrationCode() != model.getRegistrationCode()) {
+			throw new CustomException(ErrorCode.WRONG_REGISTRATION_CODE);
+		}
+
+		um.setRegistrationStatus(1);
+		um.merge();
+	}
+
+	private boolean checkUserExists(UserModel model) {
+		UserModel um = null;
+		try {
+			um = userRepository.findByUsername(model.getUsername());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return um == null ? false : true;
+	}
 }
