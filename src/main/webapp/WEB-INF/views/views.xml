@@ -8,6 +8,9 @@
 		<put-attribute name="central" value="/WEB-INF/views/index.jsp" />
 	</definition>
 
+	<definition name="login" extends="public">
+		<put-attribute name="central" value="/WEB-INF/views/login.jsp" />
+	</definition>
 
 
 
