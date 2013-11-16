@@ -4,16 +4,15 @@
 package com.infobip.campus.chattopush.models;
 
 import com.infobip.campus.chattopush.models.MessageModel;
-import java.util.Date;
 
 privileged aspect MessageModel_Roo_JavaBean {
     
-    public String MessageModel.getUser() {
-        return this.user;
+    public String MessageModel.getUsername() {
+        return this.username;
     }
     
-    public void MessageModel.setUser(String user) {
-        this.user = user;
+    public void MessageModel.setUsername(String username) {
+        this.username = username;
     }
     
     public String MessageModel.getChannel() {
@@ -32,12 +31,12 @@ privileged aspect MessageModel_Roo_JavaBean {
         this.message = message;
     }
     
-    public Date MessageModel.getLastMessageDate() {
-        return this.lastMessageDate;
+    public long MessageModel.getMessageDate() {
+        return this.messageDate;
     }
     
-    public void MessageModel.setLastMessageDate(Date lastMessageDate) {
-        this.lastMessageDate = lastMessageDate;
+    public void MessageModel.setMessageDate(long messageDate) {
+        this.messageDate = messageDate;
     }
     
 }

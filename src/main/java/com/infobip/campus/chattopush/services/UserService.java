@@ -10,7 +10,7 @@ public interface UserService {
 
 	public ErrorCode loginUser(UserModel _model);
 
-	public ErrorCode registerUser(UserModel _model) throws Exception;
+	public ErrorCode registerUser(UserModel _model);
 
 	public ErrorCode verifyUser(UserModel _model);
 	

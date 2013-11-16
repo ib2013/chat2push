@@ -17,15 +17,17 @@ public class ChannelRepository {
 	public void deleteChannelDb(String channelName) {
 		Query query = em
 				.createQuery("DELETE FROM ChannelModel chm WHERE chm.name=:cn ");
-		query.setParameter("chm", channelName);
+		query.setParameter("cn", channelName);
 		query.executeUpdate();
 	}
 
 	public void deleteRelationsDb(String channelName) {
 		Query queryDeleteRelations = em
-				.createQuery("DELETE FROM UsersChannels uc WHERE uc.name=:uc ");
-		queryDeleteRelations.setParameter("uc", channelName);
-		queryDeleteRelations.executeUpdate();
+				.createQuery("DELETE FROM UsersChannels uc WHERE uc.channel=:cn ");
+		queryDeleteRelations.setParameter("cn", channelName);
+		int n = queryDeleteRelations.executeUpdate();
+		System.out.println(n);
+		
 
 	}
 

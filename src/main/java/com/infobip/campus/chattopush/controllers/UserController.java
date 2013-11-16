@@ -3,6 +3,8 @@ package com.infobip.campus.chattopush.controllers;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.infobip.campus.chattopush.exceptions.CustomException;
 import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.UserService;
@@ -34,8 +37,8 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.POST, value = "/register")//, consumes = "application/json")
 	@ResponseBody
 	@ExceptionHandler
-	public ErrorCode registerUser(@RequestBody UserModel model) throws Exception {
-		return userService.registerUser(model);
+	public void registerUser(@RequestBody UserModel model) {
+		userService.registerUser(model);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/verify")//, consumes = "application/json")
@@ -65,5 +68,10 @@ public class UserController {
 	@ResponseBody
 	public Map<String, Integer> fetchUserStatistics(@RequestBody UserModel _model) {
 		return userService.fetchUserStatistics(_model);
+	}
+	
+	@ExceptionHandler(CustomException.class)
+	public void exceptionHandler(CustomException ce, HttpServletResponse response) {
+		response.setStatus(ce.getErrorCode());
 	}
 }

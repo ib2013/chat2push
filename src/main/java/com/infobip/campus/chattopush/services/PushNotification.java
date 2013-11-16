@@ -33,9 +33,9 @@ public class PushNotification {
 		JsonObject object = new JsonObject();
 		
 		object.addProperty("channel", msg.getChannel());
-		object.addProperty("sent-by", msg.getUser());
+		object.addProperty("sent-by", msg.getUsername());
 		object.addProperty("message", msg.getMessage());
-		object.addProperty("time", msg.getLastMessageDate().getTime());
+		object.addProperty("time", msg.getMessageDate());
 		
 		this.notificationMessage = object.toString();
 
