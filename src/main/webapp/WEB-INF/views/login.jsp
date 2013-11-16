@@ -10,32 +10,34 @@
 
 
 	<script type="text/javascript">
-		/*	var _basePath = '${_basePath}';
-			$(document).ready(function() {
-				pageCount(setPaging);
-				showAllUsersSync(showTenUsers);
-				$('#tab-container').easytabs();
-				documentReady(_basePath);
-				//	showAllUsers();
-				//	showTenUsers(1);
-			});*/
+	/*$(document).ready(function() {
+		$('#username').val();
+		$('#username').val();
+	}*/
+		function checkAdmin() {
+			var username = $('#username').val();
+			var password = $('#password').val();
+			if (username == "") return;
+			if (password == "") return;
+			alert("Provera admina " + username + " " + password);
+			window.location.href = "/index";
+		}
 	</script>
 	<div id='loginform'
-		style="border: 0px solid; height: 500px; margin-top: 50px; margin-left: 300px;">
+		style="border: 0px solid; height: 500px; margin-top: 50px; margin-left: 350px;">
 		<div id='channel_header'
 			style="float: left; clear: both; width: 450px;">
 			<label id='channel_list_tab' class='listOptions2'
-				style="width: 450px;">List of Users </label>
+				style="width: 450px;">Login form</label>
 		</div>
 		<div id='lists' class="listContent"
 			style="width: 450px; height: 200px; clear: both;">
-			<form method="post" action="index.jsp">
+			<form method="post">
 				<p>
-					<input type="text" name="login" value=""
-						placeholder="Username">
+					<input id='username' type="text" name="login" value="" placeholder="Username">
 				</p>
 				<p>
-					<input type="password" name="password" value=""
+					<input id='password' type="password" name="password" value=""
 						placeholder="Password">
 				</p>
 				<!-- <p class="remember_me">
@@ -44,7 +46,7 @@
 					</label>
 				</p> -->
 				<p class="submit">
-					<input type="submit" name="commit" value="Login">
+					<input type="button"  value="Login" onClick="checkAdmin()">
 				</p>
 			</form>
 		</div>

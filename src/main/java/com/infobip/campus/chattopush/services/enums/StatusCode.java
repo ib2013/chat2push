@@ -20,7 +20,11 @@ public enum StatusCode {
 	NORESPONSE(444, "No reponse"),
 	/**
      */
-	INTERNALSERVERERROR(500, "Internal Server Error");
+	INTERNALSERVERERROR(500, "Internal Server Error"),
+	
+	MISSING_REGISTRATION(476, "Missing registration"),
+	
+	WRONG_REGISTRATION_CODE(487, "Wrong registration");
 	/**
 	 * 
 	 */

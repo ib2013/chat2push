@@ -43,7 +43,7 @@ public class UserServiceMock implements UserService {
 		} else {
 			return StatusCode.EXISTS;
 		}
-		return null;
+		return StatusCode.EXC;
 	}
 
 	@Override
@@ -54,7 +54,8 @@ public class UserServiceMock implements UserService {
 		 * User delete
 		 */
 		for (int i = 0; i < UserConfiguration.usrs.size(); i++) {
-			if (UserConfiguration.usrs.get(i).getUsername().contentEquals(_model.getUsername())) {
+			if (UserConfiguration.usrs.get(i).getUsername()
+					.contentEquals(_model.getUsername())) {
 				UserConfiguration.usrs.remove(i);
 
 				deleteUserExecuted = true;
@@ -103,13 +104,21 @@ public class UserServiceMock implements UserService {
 		for (ChannelModel chnlModel : UserConfiguration.chnls) {
 			int brojPoruka = 0;
 			for (MessageModel msgModel : UserConfiguration.msgs) {
-				if (msgModel.getChannel().contentEquals(chnlModel.getName()) && msgModel.getUser().contentEquals(_model.getUsername())) {
+				if (msgModel.getChannel().contentEquals(chnlModel.getName())
+						&& msgModel.getUser().contentEquals(
+								_model.getUsername())) {
 					brojPoruka++;
 				}
 			}
 			statistic.put(chnlModel.getName(), brojPoruka);
 		}
 		return statistic;
+	}
+
+	@Override
+	public StatusCode verifyUser(UserModel _model) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
