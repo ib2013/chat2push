@@ -10,20 +10,21 @@
 
 
 	<script type="text/javascript">
-	/*$(document).ready(function() {
-		$('#username').val();
-		$('#username').val();
-	}*/
-	function loginAdmin() {
+		$(document).ready(function() {
+			if ($.session.get('administratorz') != null) {
+				window.location.href = "/index";
+			}
+		});
+		function loginAdmin() {
 			var username = $('#username').val();
 			var password = $('#password').val();
-			if (username == "") return;
-			if (password == "") return;
-			//mainID= username;
-			alert("Provera admina " + username + " " + password);
-			
+			if (username == "")
+				return;
+			if (password == "")
+				return;
+			$.session.set('administratorz', username);
 			window.location.href = "/index";
-	}
+		}
 	</script>
 	<div id='loginform'
 		style="border: 0px solid; height: 500px; margin-top: 50px; margin-left: 350px;">
@@ -36,7 +37,8 @@
 			style="width: 450px; height: 200px; clear: both;">
 			<form method="post">
 				<p>
-					<input id='username' type="text" name="login" value="" placeholder="Username">
+					<input id='username' type="text" name="login" value=""
+						placeholder="Username">
 				</p>
 				<p>
 					<input id='password' type="password" name="password" value=""
@@ -48,7 +50,7 @@
 					</label>
 				</p> -->
 				<p>
-					<input type="button"  value="Login" onClick="loginAdmin()">
+					<input type="button" value="Login" onClick="loginAdmin()">
 				</p>
 			</form>
 		</div>
