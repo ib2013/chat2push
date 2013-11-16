@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Service;
 
 import com.infobip.campus.chattopush.configuration.MD5;
@@ -18,26 +22,44 @@ import com.infobip.campus.chattopush.services.exception.ChannelExceptionHandler;
 @Service
 public class DefaultUserService implements UserService {
 
-	public StatusCode loginUser(UserModel _model) {
+	@PersistenceContext
+	protected EntityManager em;
+
+	public StatusCode loginUser(UserModel model) {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
+		Query query = em.createQuery("Select u from UserModel u where u.username = :username");
+		query.setParameter("username", model.getUsername());
+		UserModel object = (UserModel) query.getSingleResult();
 
-		try {
-			for (UserModel model : list) {
-				if (model.getUsername().contentEquals(_model.getUsername())) {
-					if (model.getPassword().contentEquals(MD5.getMD5(_model.getPassword()))) {
-						return StatusCode.SUCCESS;
-					} else {
-						return StatusCode.PASSERROR;
-					}
-				}
+		System.out.println(object.toString());
+
+		if (model.equals(object)) {
+			return StatusCode.SUCCESS;
+		} else {
+			if (model.getUsername() != object.getUsername()) {
+				return StatusCode.NOUSER;
+			} else if (MD5.getMD5(model.getPassword()) != object.getPassword()) {
+				return StatusCode.PASSERROR;
 			}
-			return StatusCode.NOUSER;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			return StatusCode.PASSERROR;
 		}
+
+		// try {
+		// for (UserModel model : list) {
+		// if (model.getUsername().contentEquals(_model.getUsername())) {
+		// if (model.getPassword().contentEquals(MD5.getMD5(_model.getPassword()))) {
+		//
+		// } else {
+		// return StatusCode.PASSERROR;
+		// }
+		// }
+		// }
+		// return StatusCode.NOUSER;
+		// } catch (Exception e) {
+		// // TODO Auto-generated catch block
+		// return StatusCode.PASSERROR;
+		// }
 	}
 
 	public StatusCode registerUser(UserModel _model) {
