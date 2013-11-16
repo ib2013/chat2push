@@ -73,6 +73,7 @@ public class DefaultUserService implements UserService {
 				newUser.setPassword(MD5.getMD5(_model.getPassword()));
 				newUser.setRegistrationCode(1000 + (int) (Math.random() * 9000));
 				newUser.setRegistrationStatus(0);
+				newUser.setPhoneNumber(_model.getPhoneNumber());
 				newUser.merge();
 				return StatusCode.SUCCESS;
 			}
