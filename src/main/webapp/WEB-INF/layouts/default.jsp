@@ -25,6 +25,8 @@
 
 <spring:url value="resources/js/jquery.bootpag.min.js" var='jsBootpag' />
 <spring:url value="resources/js/bootstrap.min.js" var='jsBootstrap' />
+<spring:url value="resources/js/jquery.session.js" var='jsSession' />
+
 
 
 <spring:url value="resources/css/style.css" var="cssStyle" />
@@ -43,6 +45,7 @@
 
 <script type="text/javascript" src="${jsBootpag}"></script>
 <script type="text/javascript" src="${jsBootstrap}"></script>
+<script type="text/javascript" src="${jsSession}"></script>
 
 <link rel="stylesheet" type="text/css" media="screen" href="${cssStyle}" />
 <link rel="stylesheet" type="text/css" media="screen" href="${cssStyles}" />

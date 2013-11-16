@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.infobip.campus.chattopush.services.impl;
 
 import java.util.HashMap;
@@ -64,6 +65,9 @@ public class DefaultUserService implements UserService {
 			try {
 				newUser.setUsername(_model.getUsername());
 				newUser.setPassword(MD5.getMD5(_model.getPassword()));
+				newUser.setRegistrationCode(1000 + (int) (Math.random() * 9000));
+				newUser.setRegistrationStatus(0);
+				newUser.setPhoneNumber(_model.getPhoneNumber());
 				newUser.merge();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -127,7 +131,7 @@ public class DefaultUserService implements UserService {
 		for (ChannelModel chnlModel : channels) {
 			int brojPoruka = 0;
 			for (MessageModel msgModel : messages) {
-				if (msgModel.getChannel().contentEquals(chnlModel.getName()) && msgModel.getUser().contentEquals(_model.getUsername())) {
+				if (msgModel.getChannel().contentEquals(chnlModel.getName()) && msgModel.getUsername().contentEquals(_model.getUsername())) {
 					brojPoruka++;
 				}
 			}
@@ -170,3 +174,4 @@ public class DefaultUserService implements UserService {
 		return false;
 	}
 }
+

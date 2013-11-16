@@ -1,20 +1,19 @@
 package com.infobip.campus.chattopush.services.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
 
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.configuration.InfobipCommunication;
+import com.infobip.campus.chattopush.database.ChannelRepository;
+import com.infobip.campus.chattopush.database.UserChannelsRepository;
 import com.infobip.campus.chattopush.exceptions.CustomException;
 import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.ChannelModel;
@@ -26,8 +25,23 @@ import com.infobip.campus.chattopush.services.ChannelService;
 @Service
 public class DefaultChannelService implements ChannelService {
 
-	@PersistenceContext
-	protected EntityManager em;
+	ChannelRepository channelRepository;
+	InfobipCommunication infobipCommunication;
+	UserChannelsRepository userChannelsRepository;
+
+	public void setUserChannelsRepository(
+			UserChannelsRepository userChannelsRepository) {
+		this.userChannelsRepository = userChannelsRepository;
+	}
+
+	public void setInfobipCommunication(
+			InfobipCommunication infobipCommunication) {
+		this.infobipCommunication = infobipCommunication;
+	}
+
+	public void setChannelRepository(ChannelRepository channelRepository) {
+		this.channelRepository = channelRepository;
+	}
 
 	@Override
 	public ArrayList<ChannelModel> fetchChannelList() {
@@ -41,8 +55,7 @@ public class DefaultChannelService implements ChannelService {
 		if (channelExists(channel)) {
 			throw new CustomException(ErrorCode.CHANNEL_ALLREADY_EXISTS);
 		} else {
-			InfobipCommunication add = new InfobipCommunication();
-			add.addChannelInfoBip(channel);
+			infobipCommunication.addChannelInfobip(channel);
 			try {
 				channel.persist();
 			} catch (Exception e) {
@@ -55,32 +68,9 @@ public class DefaultChannelService implements ChannelService {
 	@Override
 	public void deleteChannel(ChannelModel channel) {
 		try {
-			InfobipCommunication delete = new InfobipCommunication();
-			delete.deleteChannelInfoBip(channel);
-
-			/*
-			 * Query query =
-			 * em.createQuery("DELETE FROM ChannelModel ch WHERE ch.name=:cn ");
-			 * query.setParameter("cn", channel.getName());
-			 * query.executeUpdate() /*List<ChannelModel> channels =
-			 * ChannelModel.findAllChannelModels(); String removChannel = "";
-			 * for (ChannelModel channelElement : channels) { if
-			 * (channelElement.getName().equals(channel.getName())) {
-			 * removChannel = channelElement.getName(); channelElement.remove();
-			 * break; } }
-			 */
-
-			Query query = em
-					.createQuery("DELETE FROM UsersChannels ch WHERE ch.name=:cn ");
-			query.setParameter("cn", channel.getName());
-			query.executeUpdate();
-			/*
-			 * List<UsersChannels> relations = new ArrayList<UsersChannels>(
-			 * UsersChannels.findAllUsersChannelses()); for (UsersChannels
-			 * releationElement : relations) { if
-			 * (releationElement.getChannel().equals(removChannel)) {
-			 * releationElement.remove(); break; } }
-			 */
+			infobipCommunication.deleteChannelInfobip(channel);
+			channelRepository.deleteChannelDb(channel.getName());
+			channelRepository.deleteRelationsDb(channel.getName());
 		} catch (Exception e) {
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
@@ -89,37 +79,29 @@ public class DefaultChannelService implements ChannelService {
 	@Override
 	public List<ClientChannelModel> fetchSubscribedChannels(String username) {
 
-		List<ClientChannelModel> returnParameters = new ArrayList<ClientChannelModel>();
+		List<ClientChannelModel> result = new ArrayList<ClientChannelModel>();
+
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 
-		for (ChannelModel channelElement : channels) {
-			ClientChannelModel clientObject = new ClientChannelModel();
-			clientObject.setName(channelElement.getName());
-			clientObject.setDescription(channelElement.getDescription());
-			clientObject.setPublic(channelElement.isIsPublic());
-			boolean findUser = false;
-			for (UsersChannels relations : UsersChannels
-					.findAllUsersChannelses()) {
-				if (relations.getUsername().equals(username)
-						&& relations.getChannel().equals(
-								channelElement.getName())) {
-					clientObject.setSubscribed(true);
-					findUser = true;
-					break;
-				}
-			}
-			if (!findUser) {
-				clientObject.setSubscribed(false);
-			}
+		Map<String, ChannelModel> channelsMap = createChannelMap(channels);
 
-			if (clientObject.isSubscribed() || clientObject.isPublic()) {
-				returnParameters.add(clientObject);
-				System.out.println(clientObject.getName()
-						+ clientObject.isSubscribed() + clientObject.isPublic()
-						+ " --- " + findUser);
+		Collection<UsersChannels> ucs = userChannelsRepository
+				.getSubscribedChannels(username);
+
+		for (UsersChannels uc : ucs) {
+			ChannelModel cm = channelsMap.get(uc.getChannel());
+			if (cm == null) {
+				continue;
 			}
+			ClientChannelModel ccm = new ClientChannelModel();
+			ccm.setSubscribed(true);
+			ccm.setDescription(cm.getDescription());
+			ccm.setName(cm.getName());
+			ccm.setPublic(cm.isIsPublic());
+			result.add(ccm);
 		}
-		return returnParameters;
+
+		return result;
 	}
 
 	@Override
@@ -141,11 +123,7 @@ public class DefaultChannelService implements ChannelService {
 
 	public void removeUserFromRoom(UsersChannels object) {
 		try {
-			Query query = em
-					.createQuery("DELETE FROM UsersChannels ch WHERE ch.username=:cu AND ch.channel = :ch ");
-			query.setParameter("cu", object.getUsername());
-			query.setParameter("ch", object.getChannel());
-
+			channelRepository.removeUserFromRoomDb(object);
 		} catch (Exception e) {
 			throw new CustomException(ErrorCode.CHANNEL_USER_EXISTS);
 		}
@@ -164,53 +142,28 @@ public class DefaultChannelService implements ChannelService {
 				activityUsers.add(userObject);
 			}
 		}
+
 		return activityUsers;
 	}
 
-	private int countMessagesByUserAndChannel(String channelName,
-			String username) {
-		int counter = 0;
-		ArrayList<MessageModel> msgModel = null;
-		try {
-			msgModel = new ArrayList<MessageModel>(
-					MessageModel.findAllMessageModels());
-		} catch (Exception e) {
-			e.printStackTrace();
-			msgModel = new ArrayList<MessageModel>();
-		}
-		for (MessageModel msg : msgModel) {
-			if (msg.getUser().equals(username)
-					&& msg.getChannel().equals(channelName)) {
-				counter++;
-			}
-		}
-
-		return counter;
-	}
-
+	@Override
 	public boolean channelExists(ChannelModel channel) {
-		List<ChannelModel> channels = new ArrayList<ChannelModel>(
-				ChannelModel.findAllChannelModels());
 
-		for (ChannelModel channelIterator : channels) {
-			if (channelIterator.getName().equals(channel.getName())) {
-				return true;
-			}
+		if (channelRepository.findChannelDb(channel.getName()) != null) {
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
+	@Override
 	public boolean existsUserInChannel(UsersChannels relations) {
-		List<UsersChannels> allRelations = new ArrayList<UsersChannels>(
-				UsersChannels.findAllUsersChannelses());
-		for (UsersChannels userChannel : allRelations) {
-			if (userChannel.getChannel().equals(relations.getChannel())
-					&& userChannel.getUsername()
-							.equals(relations.getUsername())) {
-				return true;
-			}
+		if (channelRepository.findUserInChannelDb(relations) != null) {
+			return true;
+		} else {
+			return false;
 		}
-		return false;
+
 	}
 
 	@Override
@@ -235,7 +188,8 @@ public class DefaultChannelService implements ChannelService {
 		return usersRoom;
 	}
 
-	public Map<String, Integer> channelStatistics() throws CustomException {
+	@Override
+	public Map<String, Integer> channelStatistics() {
 		// TODO Auto-generated method stub
 		try {
 			List<ChannelModel> channels = ChannelModel.findAllChannelModels();
@@ -258,6 +212,36 @@ public class DefaultChannelService implements ChannelService {
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
 
+	}
+
+	private Map<String, ChannelModel> createChannelMap(
+			List<ChannelModel> channels) {
+		Map<String, ChannelModel> mapa = new HashMap<String, ChannelModel>();
+		for (ChannelModel cm : channels) {
+			mapa.put(cm.getName(), cm);
+		}
+		return mapa;
+	}
+
+	private int countMessagesByUserAndChannel(String channelName,
+			String username) {
+		int counter = 0;
+		ArrayList<MessageModel> msgModel = null;
+		try {
+			msgModel = new ArrayList<MessageModel>(
+					MessageModel.findAllMessageModels());
+		} catch (Exception e) {
+			e.printStackTrace();
+			msgModel = new ArrayList<MessageModel>();
+		}
+		for (MessageModel msg : msgModel) {
+			if (msg.getUsername().equals(username)
+					&& msg.getChannel().equals(channelName)) {
+				counter++;
+			}
+		}
+
+		return counter;
 	}
 
 }
