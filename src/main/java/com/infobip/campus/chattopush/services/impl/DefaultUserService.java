@@ -40,9 +40,9 @@ public class DefaultUserService implements UserService {
 				if (model.equals(object)) {
 					throw new CustomException(ErrorCode.EXISTS);
 				} else {
-					if (model.getUsername() != object.getUsername()) {
+					if (!model.getUsername().contentEquals(object.getUsername())) {
 						throw new CustomException(ErrorCode.NOUSER);
-					} else if (MD5.getMD5(model.getPassword()) != object.getPassword()) {
+					} else if (!MD5.getMD5(model.getPassword()).contentEquals(object.getPassword())) {
 						throw new CustomException(ErrorCode.PASSERROR);
 					}
 				}
