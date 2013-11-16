@@ -12,6 +12,8 @@ public interface UserService {
 
 	public ErrorCode registerUser(UserModel _model) throws Exception;
 
+	public ErrorCode verifyUser(UserModel _model);
+
 	public ErrorCode deleteUser(UserModel _model);
 
 	public boolean checkUserExists(UserModel _model);

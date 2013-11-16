@@ -5,7 +5,6 @@ import com.infobip.campus.chattopush.services.impl.DefaultMessageService;
 import com.infobip.campus.chattopush.services.impl.DefaultUserService;
 
 import com.infobip.campus.chattopush.services.mock.MessageServiceMock;
-import com.infobip.campus.chattopush.services.mock.UserServiceMock;
 
 public class ServiceFactory {
 
@@ -27,7 +26,7 @@ public class ServiceFactory {
 
 	public static UserService getUserServiceInstance(String str) {
 		if (str.equals("mock")) {
-			return new UserServiceMock();
+			return null;
 		} else {
 			return new DefaultUserService();
 		}

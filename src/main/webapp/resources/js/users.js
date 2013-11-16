@@ -90,10 +90,10 @@ function showTenUsers(num) {
 		}
 	}
 }
-
+/*TREBA PROMENITI STATUS CODE*/
 function deleteUser(user) {
 
-	if (isNaN(user.id)) {
+	//if (isNaN(user.id)) {
 		if (confirm('Are you sure you want to delete ' + user.id + '?')) {
 			$('#loading').show();
 			var userJson = new Object();
@@ -102,15 +102,19 @@ function deleteUser(user) {
 			$.ajax({
 				url : _basePath + "user/delete",
 				headers : {
-					'Accept' : 'text/plain',
+					'Accept' : 'application/json',
 					'Content-Type' : 'application/json'
 				},
 				method : 'POST',
 				contentType : 'application/json',
 				data : JSON.stringify(userJson),
 				success : function(rez, status, xhr) {
-					if (rez == 'SUCCESS') {
+					//alert(rez);
+					if (rez == "SUCCESS") {
+						//alert("obrisano" + rez);
 						showAllUsers();
+						showTenUsers(1);
+						$('#user_graph').html("");						
 						$('#loading').hide();
 					} else {
 						$('#loading').hide();
@@ -120,17 +124,16 @@ function deleteUser(user) {
 			});
 
 		}
-	} else {
+/*	} else {
 		$('#loading').hide();
 		alert('Error to delete user.');
-	}
+	}*/
 
 	$('#loading').hide();
 
 }
 function onChangeFetchUsersByRoom() {
 	$('#loading').show();
-	getColor("imer");
 	var room = $("#select_room_list option:selected");
 	if (room.attr("id") == "PR")
 		$("#keyImage").show();

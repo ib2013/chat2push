@@ -146,6 +146,11 @@ field number --fieldName probaBr --type int
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-14 01:10:17
 
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-14 14:53:13
-// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-14 18:53:10
-// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-15 10:25:19
-// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-11-15 22:05:00
+
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-15 09:16:52
+hint
+field number --class com.infobip.campus.chattopush.models.UserModel --fieldName registrationStatus --type int
+field number --class com.infobip.campus.chattopush.models.UserModel --fieldName registrationCode --type int
+field string --fieldName phoneNumber --class com.infobip.campus.chattopush.models.UserModel
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-15 16:25:55
+

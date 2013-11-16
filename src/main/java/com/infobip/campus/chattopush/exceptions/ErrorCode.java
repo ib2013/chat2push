@@ -9,7 +9,9 @@ public enum ErrorCode {
 	NORESPONSE(444, "No reponse"),
 	CHANNEL_ALLREADY_EXISTS(406, "Channel allredy exists"),
 	INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
-	CHANNEL_USER_EXISTS(406, "Channel/user allredy exists");
+	CHANNEL_USER_EXISTS(406, "Channel/user allredy exists"),
+	MISSING_REGISTRATION(476, "Missing registration"),
+	WRONG_REGISTRATION_CODE(487, "Wrong registration");
 	private final int value;
 
 	private final String message;

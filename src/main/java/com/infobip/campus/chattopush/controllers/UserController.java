@@ -37,6 +37,13 @@ public class UserController {
 	public ErrorCode registerUser(@RequestBody UserModel model) throws Exception {
 		return userService.registerUser(model);
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/verify", consumes = "application/json")
+	@ResponseBody
+	public ErrorCode verifyUser(@RequestBody UserModel model) {
+		return userService.verifyUser(model);
+
+	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/delete", consumes = "application/json")
 	@ResponseBody
