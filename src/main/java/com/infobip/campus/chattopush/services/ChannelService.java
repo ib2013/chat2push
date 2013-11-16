@@ -1,12 +1,14 @@
 package com.infobip.campus.chattopush.services;
 
 import java.util.List;
+import java.util.Map;
 
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
+
 
 
 public interface ChannelService {
@@ -32,5 +34,7 @@ public interface ChannelService {
 	public List<UserActivityModel> fetchUserByChannel(ChannelModel channel);
 	
 	public List<UserModel> fetchOpositeUserByChannel(ChannelModel channel);
+	
+	public Map<String, Integer> channelStatistics();
 
 }

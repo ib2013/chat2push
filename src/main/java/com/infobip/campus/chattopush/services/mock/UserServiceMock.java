@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import com.infobip.campus.chattopush.configuration.UserConfiguration;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
@@ -57,7 +54,8 @@ public class UserServiceMock implements UserService {
 		 * User delete
 		 */
 		for (int i = 0; i < UserConfiguration.usrs.size(); i++) {
-			if (UserConfiguration.usrs.get(i).getUsername().contentEquals(_model.getUsername())) {
+			if (UserConfiguration.usrs.get(i).getUsername()
+					.contentEquals(_model.getUsername())) {
 				UserConfiguration.usrs.remove(i);
 
 				deleteUserExecuted = true;
@@ -106,7 +104,9 @@ public class UserServiceMock implements UserService {
 		for (ChannelModel chnlModel : UserConfiguration.chnls) {
 			int brojPoruka = 0;
 			for (MessageModel msgModel : UserConfiguration.msgs) {
-				if (msgModel.getChannel().contentEquals(chnlModel.getName()) && msgModel.getUser().contentEquals(_model.getUsername())) {
+				if (msgModel.getChannel().contentEquals(chnlModel.getName())
+						&& msgModel.getUser().contentEquals(
+								_model.getUsername())) {
 					brojPoruka++;
 				}
 			}
@@ -120,4 +120,5 @@ public class UserServiceMock implements UserService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

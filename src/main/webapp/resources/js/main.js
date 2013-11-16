@@ -25,7 +25,7 @@ function drop(ev) {
 	}
 }
 
-
+/*TREBA PROMENITI STATUS CODE*/
 function addUserToChannel(userName, channel) {
 	var user = document.getElementById(userName);
 	var channelUserJson=new Object();
@@ -35,14 +35,14 @@ function addUserToChannel(userName, channel) {
 	$.ajax({
 		url: _basePath+ "channel/addUserToRoom",
 		headers: {
-			'Accept': 'text/plain',
+			'Accept': 'application/json',
 			'Content-type':'application/json',
 		},
 		method: 'POST',
 		contentType: 'application-json',
 		data: JSON.stringify(channelUserJson),
 		success:function(res, status,xhr){
-			if(res=="success"){
+			if(res=="SUCCESS"){
 				//alert("User added to room.");
 			}else{
 				alert("Error.");
@@ -52,7 +52,7 @@ function addUserToChannel(userName, channel) {
 
 
 }
-
+/*TREBA PROMENITI STATUS CODE*/
 function removeUserFromChannel(userName, channel) {
 	var user = document.getElementById(userName);
 	var channelUserJson=new Object();
@@ -62,14 +62,14 @@ function removeUserFromChannel(userName, channel) {
 	$.ajax({
 		url: _basePath+ "channel/removeUserFromRoom",
 		headers: {
-			'Accept': 'text/plain',
+			'Accept': 'application/json',
 			'Content-type':'application/json',
 		},
 		method: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify(channelUserJson),
 		success:function(res, status,xhr){
-			if(res=="success"){
+			if(res=="SUCCESS"){
 				//alert("User removed from room.");
 			}else{
 				alert("Error.");
@@ -84,6 +84,7 @@ documentReady = function(basePath) {
 	fetchAllChannels();
 	showAllUsers();
 	showTenUsers(1);
-    statsByDays();
+    allStats();
+    statsRoom();
 	$('#loading').hide();
 };

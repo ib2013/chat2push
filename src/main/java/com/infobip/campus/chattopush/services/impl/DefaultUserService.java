@@ -15,7 +15,7 @@ import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.SmsMessageService;
 import com.infobip.campus.chattopush.services.UserService;
 import com.infobip.campus.chattopush.services.enums.StatusCode;
-import com.infobip.campus.chattopush.services.enums.StatusUser;
+import com.infobip.campus.chattopush.services.exception.ChannelExceptionHandler;
 
 @Service
 public class DefaultUserService implements UserService {
@@ -29,9 +29,9 @@ public class DefaultUserService implements UserService {
 			if (model.getUsername().contentEquals(_model.getUsername())) {
 				if (model.getPassword().contentEquals(
 						MD5.getMD5(_model.getPassword()))) {
-					if (model.getRegistrationStatus() != 0)
+					if (model.getRegistrationStatus() != 0) {
 						return StatusCode.SUCCESS;
-					else {
+					} else {
 						return StatusCode.MISSING_REGISTRATION;
 					}
 				} else {
@@ -81,9 +81,7 @@ public class DefaultUserService implements UserService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			return StatusCode.EXC;
-
 		}
-
 	}
 
 	public String deleteAll() {
@@ -105,32 +103,37 @@ public class DefaultUserService implements UserService {
 
 		boolean deleteUser = false;
 		boolean deleteUserChannelRelation = false;
+		boolean listaKanalaEmpty = false;
 
 		try {
 			for (UserModel modelUser : list) {
 				if (modelUser.getUsername().contentEquals(
 						_model.getUsername().toString())) {
 					modelUser.remove();
-
 					deleteUser = true;
 				}
 			}
 
-			for (UsersChannels modelKanal : listaKanala) {
-				if (modelKanal.getUsername()
-						.contentEquals(_model.getUsername())) {
-					modelKanal.remove();
-					deleteUserChannelRelation = true;
+			if (listaKanala.isEmpty() != true) {
+				for (UsersChannels modelKanal : listaKanala) {
+					if (modelKanal.getUsername().contentEquals(
+							_model.getUsername())) {
+						modelKanal.remove();
+						deleteUserChannelRelation = true;
+					}
 				}
+			} else {
+				listaKanalaEmpty = true;
 			}
 
-		} catch (Exception e) {
+		} catch (Exception ex) {
 			// TODO Auto-generated catch block
-
-			return StatusCode.EXC;
+			new ChannelExceptionHandler(ex.getMessage());
 		}
 
-		if (deleteUserChannelRelation == true && deleteUser == true) {
+		if (listaKanalaEmpty == true && deleteUser == true) {
+			return StatusCode.SUCCESS;
+		} else if (deleteUserChannelRelation == true && deleteUser == true) {
 			return StatusCode.SUCCESS;
 		}
 

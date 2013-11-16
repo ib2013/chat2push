@@ -1,3 +1,4 @@
+/*TREBA PROMENITI STATUS CODE*/
 function addNewChannel(callback) {
 	var channelTitle = $('#title').val();
 	var channelDescription = $('#channel_description').val();
@@ -24,36 +25,38 @@ function addNewChannel(callback) {
 		channelJson.name = channelTitle;
 		channelJson.isPublic = isPublic;
 		channelJson.description = channelDescription;
+		var nekitekst = ""; 
 		$.ajax({
 			url : _basePath + "channel/add",
 			headers : {
-				'Accept' : 'text/plain',
+				'Accept' : 'application/json',
 				'Content-Type' : 'application/json'
 			},
 			method : 'POST',
 			contentType : 'application/json; charset=utf-8',
 			data : JSON.stringify(channelJson),
 			success : function(rez, status, xhr) {
-				if (rez == "success") {
+				if (rez == "SUCCESS") {
 					$('#title').val("");
 					$('#channel_description').val("");
 					//fetchAllChannels();
 					$('#loading').hide();
 					alert("New room is added.");
 					callback();
+					
 				} else {
 					$('#loading').hide();
 					alert("Error in adding room.");
 				}
 			}
+			
 		});
 	} else {
 		$('#loading').hide();
 		alert("Title required!");
 	}
-
 }
-
+/*TREBA PROMENITI STATUS CODE*/
 function deleteChannel(channel) {
 	//var channel=$("#select_room_list option:selected");
 	//alert(channel.id);
@@ -66,18 +69,19 @@ function deleteChannel(channel) {
 			$.ajax({
 				url : _basePath + "channel/delete",
 				headers : {
-					'Accept' : 'text/plain',
+					'Accept' : 'application/json',
 					'Content-Type' : 'application/json'
 				},
 				method : 'POST',
 				contentType : 'application/json',
 				data : JSON.stringify(channelJson),
 				success : function(rez, status, xhr) {
-					if (rez == 'success') {
+					if (rez == "SUCCESS") {
 						channel.remove();
 						$('#loading').hide();
 						//alert('Room deleted.');
 						fetchAllChannels();
+						statsRoom();
 					} else {
 						$('#loading').hide();
 						alert('Error!');
@@ -179,13 +183,13 @@ function fetchAllChannels() {
 								}
 								
 							}
+							statsRoom();
 							$('#loading').hide();
 						} else {
 							$('#loading').hide();
 							//alert('Error loading channel.');
 						}
 						
-
 					});	
 	
 

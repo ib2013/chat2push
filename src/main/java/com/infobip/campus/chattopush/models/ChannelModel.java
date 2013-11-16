@@ -34,5 +34,6 @@ public class ChannelModel {
 		this.name = name;
 		this.description = description;
 	}
+	
 
 }

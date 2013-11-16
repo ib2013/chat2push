@@ -46,4 +46,13 @@ public enum StatusCode {
 		return reason;
 	}
 
+	public static StatusCode valueof(int statusCode) {
+		for (StatusCode status : values()) {
+			if (status.value == statusCode) {
+				return status;
+			}
+		}
+		throw new IllegalArgumentException("Fulao si exception!!!!! " + statusCode);
+	}
+
 }
