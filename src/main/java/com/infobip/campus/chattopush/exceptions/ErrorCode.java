@@ -1,7 +1,6 @@
 package com.infobip.campus.chattopush.exceptions;
 
 public enum ErrorCode {
-	SUCCESS(201, "Success"),
 	PASSERROR(401, "Wrong password"),
 	NOUSER(403, "User not found"),
 	EXISTS(406, "User already exists"),
