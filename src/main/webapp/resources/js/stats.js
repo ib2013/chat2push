@@ -1,3 +1,4 @@
+var appId = "1a6cfc8b976c"; //id aplikacije na infobip
 function allStats() {
 
 	statsByDays();
@@ -68,39 +69,41 @@ function graphUser(username, data) {
 		for (var i = 0; i < data2.length; i++) {
 			var user = [];
 			user.push(data2[i].name);
-			allMessages+=data[data2[i].name];
+			allMessages += data[data2[i].name];
 			user.push(data[data2[i].name]);
 			stats.push(user);
 		}
 
-		$('#user_graph').highcharts({
-			chart : {
-				plotBackgroundColor : null,
-				plotBorderWidth : null,
-				plotShadow : false
-			},
-			title : {
-				text :'User:<b>' + username + '</b><br/>Messages:<b>' + allMessages+'</b>'
-			},
-			tooltip : {
-				pointFormat : '{series.name} <b>{point.y}</b>'
-			},
-			plotOptions : {
-				pie : {
-					allowPointSelect : true,
-					cursor : 'pointer',
-					dataLabels : {
-						enabled : false
+		$('#user_graph').highcharts(
+				{
+					chart : {
+						plotBackgroundColor : null,
+						plotBorderWidth : null,
+						plotShadow : false
 					},
-					showInLegend : true
-				}
-			},
-			series : [ {
-				type : 'pie',
-				name : 'Messages:',
-				data : stats
-			} ]
-		});
+					title : {
+						text : 'User:<b>' + username + '</b><br/>Messages:<b>'
+								+ allMessages + '</b>'
+					},
+					tooltip : {
+						pointFormat : '{series.name} <b>{point.y}</b>'
+					},
+					plotOptions : {
+						pie : {
+							allowPointSelect : true,
+							cursor : 'pointer',
+							dataLabels : {
+								enabled : false
+							},
+							showInLegend : true
+						}
+					},
+					series : [ {
+						type : 'pie',
+						name : 'Messages:',
+						data : stats
+					} ]
+				});
 
 	});
 
@@ -115,7 +118,7 @@ function graphRooms(data) {
 		for (var i = 0; i < data2.length; i++) {
 			var user = [];
 			user.push(data2[i].name);
-			allMessages+=data[data2[i].name];
+			allMessages += data[data2[i].name];
 			user.push(data[data2[i].name]);
 			stats.push(user);
 		}
@@ -127,7 +130,7 @@ function graphRooms(data) {
 				plotShadow : false
 			},
 			title : {
-				text :'Number of messages:<b>' + allMessages+'</b>'
+				text : 'Number of messages:<b>' + allMessages + '</b>'
 			},
 			tooltip : {
 				pointFormat : '{series.name} <b>{point.y}</b>'
@@ -221,26 +224,26 @@ function statsByDays() {
 	var statsSent = null;
 	var statsReceived = null;
 
-	$
-			.ajax({
-				url : "https://pushapi.infobip.com/1/statistics/application/1a6cfc8b976c/notifications?time-type=month&month="
-						+ thisMonth + "&year=" + thisYear + "",
-				headers : {
-					'Accept' : 'text/plain',
-					'Content-type' : 'application/json',
-					'Authorization' : 'Basic cHVzaGRlbW86cHVzaGRlbW8=',
-				},
-				method : 'GET',
-				contentType : 'application/json',
-				success : function(data, status, xhr) {
+	$.ajax({
+		url : "https://pushapi.infobip.com/1/statistics/application/" + appId
+				+ "/notifications?time-type=month&month="
+				+ thisMonth + "&year=" + thisYear + "",
+		headers : {
+			'Accept' : 'text/plain',
+			'Content-type' : 'application/json',
+			'Authorization' : 'Basic cHVzaGRlbW86cHVzaGRlbW8=',
+		},
+		method : 'GET',
+		contentType : 'application/json',
+		success : function(data, status, xhr) {
 
-					statsSent = data.data[0].countSent;
-					statsReceived = data.data[0].countReceived;
+			statsSent = data.data[0].countSent;
+			statsReceived = data.data[0].countReceived;
 
-					graphDays(statsSent, statsReceived);
-				}
+			graphDays(statsSent, statsReceived);
+		}
 
-			});
+	});
 }
 
 function statsToday() {
@@ -252,31 +255,26 @@ function statsToday() {
 	var statsSent = null;
 	var statsReceived = null;
 
-	$
-			.ajax({
-				url : "https://pushapi.infobip.com/1/statistics/application/1a6cfc8b976c/notifications?time-type=day&day="
-						+ thisDay
-						+ "&month="
-						+ thisMonth
-						+ "&year="
-						+ thisYear
-						+ "",
-				headers : {
-					'Accept' : 'text/plain',
-					'Content-type' : 'application/json',
-					'Authorization' : 'Basic cHVzaGRlbW86cHVzaGRlbW8=',
-				},
-				method : 'GET',
-				contentType : 'application/json',
-				success : function(data, status, xhr) {
+	$.ajax({
+		url : "https://pushapi.infobip.com/1/statistics/application/" + appId
+				+ "/notifications?time-type=day&day=" + thisDay
+				+ "&month=" + thisMonth + "&year=" + thisYear + "",
+		headers : {
+			'Accept' : 'text/plain',
+			'Content-type' : 'application/json',
+			'Authorization' : 'Basic cHVzaGRlbW86cHVzaGRlbW8=',
+		},
+		method : 'GET',
+		contentType : 'application/json',
+		success : function(data, status, xhr) {
 
-					statsSent = data.data[0].countSent;
-					statsReceived = data.data[0].countReceived;
+			statsSent = data.data[0].countSent;
+			statsReceived = data.data[0].countReceived;
 
-					graphToday(statsSent, statsReceived);
-				}
+			graphToday(statsSent, statsReceived);
+		}
 
-			});
+	});
 }
 
 function statsByUser(username) {
@@ -301,7 +299,7 @@ function statsByUser(username) {
 
 }
 
-function statsRoom(){
+function statsRoom() {
 	$.ajax({
 		url : _basePath + "channel/channelStatistic",
 		headers : {
@@ -310,11 +308,11 @@ function statsRoom(){
 		},
 		method : 'GET',
 		contentType : 'application/json',
-		
+
 		success : function(res, status, xhr) {
 
 			graphRooms(res);
 		}
 	});
-	
+
 }

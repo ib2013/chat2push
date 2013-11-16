@@ -42,8 +42,10 @@ function addUserToChannel(userName, channel) {
 		contentType: 'application-json',
 		data: JSON.stringify(channelUserJson),
 		success:function(res, status,xhr){
-			if(status=="success"){
-				
+
+			if(status == "success"){
+				//alert("User added to room.");
+
 			}else{
 				alert(res);
 			}
@@ -69,11 +71,10 @@ function removeUserFromChannel(userName, channel) {
 		contentType: 'application/json',
 		data: JSON.stringify(channelUserJson),
 		success:function(res, status,xhr){
-			alert(status);
-			if(status=="success"){
-				alert("User removed from room.");
+			if(status == "success"){
+					//alert("User removed from room.");
 			}else{
-				alert(res);
+				alert("Error.");
 			}
 		}
 	});
