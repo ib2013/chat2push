@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.infobip.campus.chattopush.exceptions.CustomException;
-import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.services.UserService;
 
@@ -41,8 +40,8 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/verify", consumes = "application/json")
 	@ResponseBody
-	public ErrorCode verifyUser(@RequestBody UserModel model) {
-		return userService.verifyUser(model);
+	public void verifyUser(@RequestBody UserModel model) {
+		userService.verifyUser(model);
 
 	}
 
