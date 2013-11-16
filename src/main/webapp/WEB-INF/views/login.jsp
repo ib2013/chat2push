@@ -14,14 +14,16 @@
 		$('#username').val();
 		$('#username').val();
 	}*/
-		function checkAdmin() {
+	function loginAdmin() {
 			var username = $('#username').val();
 			var password = $('#password').val();
 			if (username == "") return;
 			if (password == "") return;
+			//mainID= username;
 			alert("Provera admina " + username + " " + password);
+			
 			window.location.href = "/index";
-		}
+	}
 	</script>
 	<div id='loginform'
 		style="border: 0px solid; height: 500px; margin-top: 50px; margin-left: 350px;">
@@ -45,8 +47,8 @@
 						id="remember_me"> Remember me on this computer
 					</label>
 				</p> -->
-				<p class="submit">
-					<input type="button"  value="Login" onClick="checkAdmin()">
+				<p>
+					<input type="button"  value="Login" onClick="loginAdmin()">
 				</p>
 			</form>
 		</div>

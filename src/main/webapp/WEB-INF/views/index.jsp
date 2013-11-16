@@ -7,18 +7,30 @@
 		<img id="loading-image" src="resources/images/loading.gif"
 			alt="Loading..." />
 	</div>
-
+	<form>
+	<input type="button"  value="Logout" onClick="logout()">
+	</form>
 
 	<script type="text/javascript">
 		var _basePath = '${_basePath}';
 		$(document).ready(function() {
+			//alert("Ulogovan si kao " + mainID);
 			pageCount(setPaging);
 			showAllUsersSync(showTenUsers);
 			$('#tab-container').easytabs();
 			documentReady(_basePath);
-			//	showAllUsers();
-			//	showTenUsers(1);
 		});
+		
+		function logout() {
+		/*	var username = $('#username').val();
+			var password = $('#password').val();
+			if (username == "") return;
+			if (password == "") return;*/
+		//	mainID= username;
+			//alert("Ulogovan si kao " + mainID);
+			//mainID="";
+			window.location.href = "/";
+	}
 	</script>
 
 	<ul class='etabs'>
