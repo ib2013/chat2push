@@ -6,18 +6,17 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
 
 import com.infobip.campus.chattopush.configuration.MD5;
+import com.infobip.campus.chattopush.database.UserRepository;
+import com.infobip.campus.chattopush.exceptions.CustomException;
+import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
-import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
-import com.infobip.campus.chattopush.services.enums.StatusCode;
-import com.infobip.campus.chattopush.services.exception.ChannelExceptionHandler;
 
 @Service
 public class DefaultUserService implements UserService {
@@ -25,132 +24,99 @@ public class DefaultUserService implements UserService {
 	@PersistenceContext
 	protected EntityManager em;
 
-	public StatusCode loginUser(UserModel model) {
+	UserRepository userRepository;
 
-		// TODO Auto-generated method stub
-		List<UserModel> list = UserModel.findAllUserModels();
-		Query query = em.createQuery("Select u from UserModel u where u.username = :username");
-		query.setParameter("username", model.getUsername());
-		UserModel object = (UserModel) query.getSingleResult();
-
-		System.out.println(object.toString());
-
-		if (model.equals(object)) {
-			return StatusCode.SUCCESS;
-		} else {
-			if (model.getUsername() != object.getUsername()) {
-				return StatusCode.NOUSER;
-			} else if (MD5.getMD5(model.getPassword()) != object.getPassword()) {
-				return StatusCode.PASSERROR;
-			}
-		}
-
-		// try {
-		// for (UserModel model : list) {
-		// if (model.getUsername().contentEquals(_model.getUsername())) {
-		// if (model.getPassword().contentEquals(MD5.getMD5(_model.getPassword()))) {
-		//
-		// } else {
-		// return StatusCode.PASSERROR;
-		// }
-		// }
-		// }
-		// return StatusCode.NOUSER;
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// return StatusCode.PASSERROR;
-		// }
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 
-	public StatusCode registerUser(UserModel _model) {
-
-		// TODO Auto-generated method stub
-		if (checkUserExists(_model) == false) {
-			UserModel newUser = new UserModel();
-			newUser.setUsername(_model.getUsername());
-			newUser.setPassword(MD5.getMD5(_model.getPassword()));
-			newUser.merge();
-			return StatusCode.SUCCESS;
-		}
-		return StatusCode.EXISTS;
-	}
-
-	public String deleteAll() {
-		// TODO Auto-generated method stub
-		List<UserModel> list = UserModel.findAllUserModels();
-
-		for (UserModel model : list) {
-			model.remove();
-		}
-		return "success";
-	}
-
-	public StatusCode deleteUser(UserModel _model) {
-
-		// TODO Auto-generated method stub
-		List<UserModel> list = UserModel.findAllUserModels();
-		List<UsersChannels> listaKanala = UsersChannels.findAllUsersChannelses();
-
-		boolean deleteUser = false;
-		boolean deleteUserChannelRelation = false;
-		boolean listaKanalaEmpty = false;
+	@Override
+	public void loginUser(UserModel model) {
+		UserModel object = null;
 
 		try {
-			for (UserModel modelUser : list) {
-				if (modelUser.getUsername().contentEquals(_model.getUsername().toString())) {
-					modelUser.remove();
-					deleteUser = true;
-				}
-			}
-			if (listaKanala.isEmpty() != true) {
-				for (UsersChannels modelKanal : listaKanala) {
-					if (modelKanal.getUsername().contentEquals(_model.getUsername())) {
-						modelKanal.remove();
-						deleteUserChannelRelation = true;
+			object = userRepository.loginUser(model);
+			if (object != null) {
+				if (model.equals(object)) {
+					throw new CustomException(ErrorCode.EXISTS);
+				} else {
+					if (model.getUsername() != object.getUsername()) {
+						throw new CustomException(ErrorCode.NOUSER);
+					} else if (MD5.getMD5(model.getPassword()) != object.getPassword()) {
+						throw new CustomException(ErrorCode.PASSERROR);
 					}
 				}
-			} else {
-				listaKanalaEmpty = true;
 			}
-
-		} catch (Exception ex) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			new ChannelExceptionHandler(ex.getMessage());
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
-
-		if (listaKanalaEmpty == true && deleteUser == true) {
-			return StatusCode.SUCCESS;
-		} else if (deleteUserChannelRelation == true && deleteUser == true) {
-			return StatusCode.SUCCESS;
-		}
-
-		return StatusCode.EXC;
-
 	}
 
-	public boolean checkUserExists(UserModel _model) {
-		List<UserModel> list = UserModel.findAllUserModels();
+	@Override
+	public void registerUser(UserModel _model) {
 
-		for (UserModel model : list) {
-			if (model.getUsername().contentEquals(_model.getUsername().toString())) {
-				return true;
+		// TODO Auto-generated method stub
+		if (checkUserExists(_model) == true) {
+			throw new CustomException(ErrorCode.EXISTS);
+		} else {
+			UserModel newUser = new UserModel();
+			try {
+				newUser.setUsername(_model.getUsername());
+				newUser.setPassword(MD5.getMD5(_model.getPassword()));
+				newUser.merge();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 			}
 		}
-
-		return false;
+		throw new CustomException(ErrorCode.SUCCESS);
 	}
 
+	public void deleteAll() throws CustomException {
+		// TODO Auto-generated method stub
+		List<UserModel> lista = UserModel.findAllUserModels();
+
+		try {
+			for (UserModel model : lista) {
+				model.remove();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Override
+	public void deleteUser(UserModel model) {
+
+		// TODO Auto-generated method stub
+		if (checkUserExists(model) == true) {
+			try {
+				userRepository.deleteUser(model);
+				userRepository.removeFromAllChannels(model);
+			} catch (Exception ex) {
+				// TODO Auto-generated catch block
+				throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+			}
+		} else {
+			throw new CustomException(ErrorCode.NOUSER);
+		}
+	}
+
+	@Override
 	public List<UserModel> fetchAllUsers() {
 		// TODO Auto-generated method stub
 		try {
 			return UserModel.findAllUserModels();
 		} catch (Exception e) {
 			// TODO: handle exception
-			return null;
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
 
 	}
 
+	@Override
 	public Map<String, Integer> fetchUserStatistics(UserModel _model) {
 		// TODO Auto-generated method stub
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
@@ -169,5 +135,38 @@ public class DefaultUserService implements UserService {
 		}
 
 		return statistic;
+	}
+
+	@Override
+	public ErrorCode verifyUser(UserModel _model) {
+		List<UserModel> list = UserModel.findAllUserModels();
+
+		for (UserModel model : list) {
+			if (model.getUsername().contentEquals(_model.getUsername())) {
+				if (model.getRegistrationStatus() != 0) {
+					return ErrorCode.EXC;
+				} else if (model.getRegistrationCode() != _model.getRegistrationCode()) {
+					return ErrorCode.WRONG_REGISTRATION_CODE;
+				} else {
+					model.setRegistrationStatus(1);
+					model.merge();
+					return ErrorCode.SUCCESS;
+				}
+			}
+		}
+
+		return ErrorCode.NOUSER;
+	}
+
+	public boolean checkUserExists(UserModel _model) {
+		List<UserModel> list = UserModel.findAllUserModels();
+
+		for (UserModel model : list) {
+			if (model.getUsername().contentEquals(_model.getUsername().toString())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

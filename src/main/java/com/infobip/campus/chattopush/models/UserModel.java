@@ -27,11 +27,51 @@ public class UserModel {
 		this.password = password;
 	}
 
+	public UserModel(String username, String password, String phoneNumber) {
+		this.username = username;
+		this.password = password;
+		this.phoneNumber = phoneNumber;
+	}
+
+	public UserModel(String username, int registrationCode) {
+		this.username = username;
+		this.registrationCode = registrationCode;
+	}
+
 	public UserModel(String username) {
 		this.username = username;
 	}
 
-	@Override
+	private int registrationStatus;
+
+	private int registrationCode;
+
+	private String phoneNumber;
+
+	public int getRegistrationStatus() {
+		return registrationStatus;
+	}
+
+	public void setRegistrationStatus(int registrationStatus) {
+		this.registrationStatus = registrationStatus;
+	}
+
+	public int getRegistrationCode() {
+		return registrationCode;
+	}
+
+	public void setRegistrationCode(int registrationCode) {
+		this.registrationCode = registrationCode;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -61,5 +101,4 @@ public class UserModel {
 			return false;
 		return true;
 	}
-
 }

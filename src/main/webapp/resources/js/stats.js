@@ -106,6 +106,58 @@ function graphUser(username, data) {
 
 }
 
+function graphRooms(data) {
+
+	var stats = [];
+	var allMessages = 0;
+	$.get(_basePath + "channel/fetch", function(data2, status, xhr) {
+		JSON.stringify(data2);
+		for (var i = 0; i < data2.length; i++) {
+			var user = [];
+			user.push(data2[i].name);
+			allMessages+=data[data2[i].name];
+			user.push(data[data2[i].name]);
+			stats.push(user);
+		}
+
+		$('#room_graph').highcharts({
+			chart : {
+				plotBackgroundColor : null,
+				plotBorderWidth : null,
+				plotShadow : false
+			},
+			title : {
+				text :'Number of messages:<b>' + allMessages+'</b>'
+			},
+			tooltip : {
+				pointFormat : '{series.name} <b>{point.y}</b>'
+			},
+			xAxis : {
+				title : {
+					text : 'Rooms'
+				},
+			},
+			plotOptions : {
+				pie : {
+					allowPointSelect : true,
+					cursor : 'pointer',
+					dataLabels : {
+						enabled : false
+					},
+					showInLegend : true
+				}
+			},
+			series : [ {
+				type : 'pie',
+				name : 'Messages:',
+				data : stats
+			} ]
+		});
+
+	});
+
+}
+
 function graphToday(statsSent, statsReceived) {
 	$('#stats2').highcharts({
 		chart : {
@@ -247,4 +299,22 @@ function statsByUser(username) {
 		}
 	});
 
+}
+
+function statsRoom(){
+	$.ajax({
+		url : _basePath + "channel/channelStatistic",
+		headers : {
+			'Accept' : 'application/json',
+			'Content-Type' : 'application/json'
+		},
+		method : 'GET',
+		contentType : 'application/json',
+		
+		success : function(res, status, xhr) {
+
+			graphRooms(res);
+		}
+	});
+	
 }

@@ -25,7 +25,7 @@ function drop(ev) {
 	}
 }
 
-
+/*TREBA PROMENITI STATUS CODE*/
 function addUserToChannel(userName, channel) {
 	var user = document.getElementById(userName);
 	var channelUserJson=new Object();
@@ -52,7 +52,7 @@ function addUserToChannel(userName, channel) {
 
 
 }
-
+/*TREBA PROMENITI STATUS CODE*/
 function removeUserFromChannel(userName, channel) {
 	var user = document.getElementById(userName);
 	var channelUserJson=new Object();
@@ -84,6 +84,7 @@ documentReady = function(basePath) {
 	fetchAllChannels();
 	showAllUsers();
 	showTenUsers(1);
-    statsByDays();
+    allStats();
+    statsRoom();
 	$('#loading').hide();
 };

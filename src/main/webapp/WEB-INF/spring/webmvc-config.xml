@@ -25,7 +25,9 @@
 	</mvc:interceptors>
 
 	<!-- Selects a static view for rendering without the need for an explicit controller -->
-	<mvc:view-controller path="/" view-name="index" />
+	<mvc:view-controller path="/" view-name="login" />
+	<mvc:view-controller path="/index" view-name="index" />
+
 	<mvc:view-controller path="/central"/>
 	<mvc:view-controller path="/uncaughtException" />
 	<mvc:view-controller path="/resourceNotFound" />
@@ -49,17 +51,14 @@
 		Nase definicije 
 	
 	-->
+	<bean id="userRepository" class="com.infobip.campus.chattopush.database.UserRepository"></bean>
 	
-	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="channelService" factory-method="getChannelServiceInstance" >
-		<constructor-arg value=""></constructor-arg>
-	</bean>
-	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="userService" factory-method="getUserServiceInstance" >
-		<constructor-arg value=""></constructor-arg>
+	<bean class="com.infobip.campus.chattopush.services.impl.DefaultChannelService" id="channelService"/>
+	<bean class="com.infobip.campus.chattopush.services.impl.DefaultUserService" id="userService" >
+	    <property name="userRepository" ref="userRepository"></property>
 	</bean>
 	
-	<bean class="com.infobip.campus.chattopush.services.ServiceFactory" id="messageService" factory-method="getMessageServiceInstance" >
-		<constructor-arg value=""></constructor-arg>
-	</bean>
+	<bean class="com.infobip.campus.chattopush.services.impl.DefaultMessageService" id="messageService"/>
 	
 	<bean class="com.infobip.campus.chattopush.controllers.ChannelController" id="channelController" >
 		<property name="channelService" ref="channelService"></property>
