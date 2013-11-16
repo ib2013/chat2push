@@ -8,13 +8,13 @@ import com.infobip.campus.chattopush.models.UserModel;
 
 public interface UserService {
 
-	public ErrorCode loginUser(UserModel _model);
+	public void loginUser(UserModel _model);
 
-	public ErrorCode registerUser(UserModel _model) throws Exception;
+	public void registerUser(UserModel _model);
 
 	public ErrorCode verifyUser(UserModel _model);
 
-	public ErrorCode deleteUser(UserModel _model);
+	public void deleteUser(UserModel _model);
 
 	public boolean checkUserExists(UserModel _model);
 

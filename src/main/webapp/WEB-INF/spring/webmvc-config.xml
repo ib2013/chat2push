@@ -3,7 +3,9 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+	                	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+	                	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
 	<!-- The controllers are autodetected POJOs labeled with the @Controller 
 		annotation. -->
@@ -69,22 +71,30 @@
 		id="themeResolver" p:cookieName="theme" p:defaultThemeName="standard" />
 
 	<!-- Nase definicije -->
+
+	<bean id ="userRepository" class = "com.infobip.campus.chattopush.database.UserRepository"/>
 	
 	<bean id="messageRepository" class="com.infobip.campus.chattopush.database.MessageRepository" />
-	
+
 	<bean id="channelRepository" class="com.infobip.campus.chattopush.database.ChannelRepository" />
-	
+
 	<bean id="userChannelsRepository" class="com.infobip.campus.chattopush.database.UserChannelsRepository" />
-	
-	<bean class="com.infobip.campus.chattopush.services.impl.DefaultUserService" id="userService"></bean>
-	
-	<bean class="com.infobip.campus.chattopush.services.impl.DefaultMessageService" id="messageService">
+
+	<bean class="com.infobip.campus.chattopush.services.impl.DefaultUserService" id="userService">
+	    <property name="userRepository" ref="userRepository"></property>
+	</bean>
+
+	<bean class="com.infobip.campus.chattopush.services.impl.DefaultMessageService"	id="messageService">
 		<property name="messageRepository" ref="messageRepository"></property>
 	</bean>
-	
-	<bean class="com.infobip.campus.chattopush.configuration.InfobipCommunication" id="infobipCommunication" />
 
-	<bean class="com.infobip.campus.chattopush.services.impl.DefaultChannelService" id="channelService">
+	<bean
+		class="com.infobip.campus.chattopush.configuration.InfobipCommunication"
+		id="infobipCommunication" />
+
+	<bean
+		class="com.infobip.campus.chattopush.services.impl.DefaultChannelService"
+		id="channelService">
 		<property name="channelRepository" ref="channelRepository" />
 		<property name="infobipCommunication" ref="infobipCommunication" />
 		<property name="userChannelsRepository" ref="userChannelsRepository" />
@@ -106,9 +116,7 @@
 		- view names for error views. The default behaviour of DispatcherServlet 
 		- is to propagate all exceptions to the servlet container: this will happen 
 		- here with all other types of exceptions. -->
-	<bean
-		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"
-		p:defaultErrorView="uncaughtException">
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" p:defaultErrorView="uncaughtException">
 		<property name="exceptionMappings">
 			<props>
 				<prop key=".DataAccessException">dataAccessFailure</prop>
