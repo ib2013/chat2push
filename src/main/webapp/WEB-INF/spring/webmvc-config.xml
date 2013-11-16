@@ -75,10 +75,7 @@
 	</bean>
 	
 	<bean class="com.infobip.campus.chattopush.services.impl.DefaultUserService" id="userService" >
-	<property name="smsMessageService" ref="smsMessageService"></property>
-	<bean class="org.springframework.web.servlet.theme.CookieThemeResolver"
-		id="themeResolver" p:cookieName="theme" p:defaultThemeName="standard" />
-
+	</bean>
 	<!-- Nase definicije -->
 	<bean
 		class="com.infobip.campus.chattopush.configuration.InfobipCommunication"
@@ -90,9 +87,6 @@
 		<property name="channelRepository" ref="channelRepository" />
 		<property name="infobipCommunication" ref="infobipCommunication" />
 		<property name="userChannelsRepository" ref="userChannelsRepository" />
-	</bean>
-
-
 	</bean>
 
 	<bean

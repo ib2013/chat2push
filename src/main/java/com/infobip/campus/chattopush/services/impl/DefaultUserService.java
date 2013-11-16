@@ -20,7 +20,6 @@ import com.infobip.campus.chattopush.services.exception.ChannelExceptionHandler;
 @Service
 public class DefaultUserService implements UserService {
 	
-	@Autowired
 	SmsMessageService smsMessageService;
 	
 	public void setSmsMessageService(SmsMessageService smsMessageService){
@@ -82,7 +81,7 @@ public class DefaultUserService implements UserService {
 	public ErrorCode resendVerificationCode(UserModel _model) {
 		for (UserModel user : UserModel.findAllUserModels()){
 			if(user.getUsername().equals(_model.getUsername())){
-				smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + user.getRegistrationCode(),user.getPhoneNumber());
+				//smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + user.getRegistrationCode(),user.getPhoneNumber());
 				return ErrorCode.SUCCESS;
 			}
 		}
@@ -102,7 +101,7 @@ public class DefaultUserService implements UserService {
 				newUser.setRegistrationStatus(0);
 				newUser.setPhoneNumber(_model.getPhoneNumber());
 				newUser.merge();
-				smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + _model.getRegistrationCode(),_model.getPhoneNumber());
+				//smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + _model.getRegistrationCode(),_model.getPhoneNumber());
 				return ErrorCode.SUCCESS;
 			}
 			return ErrorCode.EXISTS;
