@@ -1,10 +1,12 @@
 package com.infobip.campus.chattopush.services.exception;
 
-import com.infobip.campus.chattopush.services.enums.StatusCode;
+import com.infobip.campus.chattopush.exceptions.ErrorCode;
+
+
 
 public class ChannelExceptionHandler extends Exception {
 
-	StatusCode error;
+	ErrorCode error;
 
 	public ChannelExceptionHandler(String e) {
 		super(e);

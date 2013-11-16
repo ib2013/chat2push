@@ -7,50 +7,88 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.infobip.campus.chattopush.configuration.MD5;
+import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
 import com.infobip.campus.chattopush.models.UsersChannels;
 import com.infobip.campus.chattopush.services.UserService;
-import com.infobip.campus.chattopush.services.enums.StatusCode;
 import com.infobip.campus.chattopush.services.exception.ChannelExceptionHandler;
 
 @Service
 public class DefaultUserService implements UserService {
 
-	public StatusCode loginUser(UserModel _model) {
+	public ErrorCode loginUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
 
-		try {
-			for (UserModel model : list) {
-				if (model.getUsername().contentEquals(_model.getUsername())) {
-					if (model.getPassword().contentEquals(MD5.getMD5(_model.getPassword()))) {
-						return StatusCode.SUCCESS;
+		for (UserModel model : list) {
+			if (model.getUsername().contentEquals(_model.getUsername())) {
+
+				if (model.getPassword().contentEquals(
+						MD5.getMD5(_model.getPassword()))) {
+
+					return ErrorCode.SUCCESS;
+				}
+				if (model.getPassword().contentEquals(
+						MD5.getMD5(_model.getPassword()))) {
+					if (model.getRegistrationStatus() != 0) {
+						return ErrorCode.SUCCESS;
 					} else {
-						return StatusCode.PASSERROR;
+						return ErrorCode.MISSING_REGISTRATION;
 					}
+				} else {
+					return ErrorCode.PASSERROR;
 				}
 			}
-			return StatusCode.NOUSER;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			return StatusCode.PASSERROR;
+
 		}
+		return ErrorCode.NOUSER;
+
 	}
 
-	public StatusCode registerUser(UserModel _model) {
+	public ErrorCode verifyUser(UserModel _model) {
+		List<UserModel> list = UserModel.findAllUserModels();
+
+		for (UserModel model : list) {
+			if (model.getUsername().contentEquals(_model.getUsername())) {
+				if (model.getRegistrationStatus() != 0) {
+					return ErrorCode.EXC;
+				} else if (model.getRegistrationCode() != _model
+						.getRegistrationCode()) {
+					return ErrorCode.WRONG_REGISTRATION_CODE;
+				} else {
+					model.setRegistrationStatus(1);
+					model.merge();
+					return ErrorCode.SUCCESS;
+				}
+			}
+		}
+
+		return ErrorCode.NOUSER;
+	}
+
+	public ErrorCode registerUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
-		if (checkUserExists(_model) == false) {
-			UserModel newUser = new UserModel();
-			newUser.setUsername(_model.getUsername());
-			newUser.setPassword(MD5.getMD5(_model.getPassword()));
-			newUser.merge();
-			return StatusCode.SUCCESS;
+		try {
+			if (checkUserExists(_model) == false) {
+				UserModel newUser = new UserModel();
+				newUser.setUsername(_model.getUsername());
+				newUser.setPassword(MD5.getMD5(_model.getPassword()));
+				newUser.setRegistrationCode(1000 + (int) (Math.random() * 9000));
+				newUser.setRegistrationStatus(0);
+				newUser.setPhoneNumber(_model.getPhoneNumber());
+				newUser.merge();
+				return ErrorCode.SUCCESS;
+			}
+			return ErrorCode.EXISTS;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ErrorCode.EXC;
+
 		}
-		return StatusCode.EXISTS;
 	}
 
 	public String deleteAll() {
@@ -63,11 +101,12 @@ public class DefaultUserService implements UserService {
 		return "success";
 	}
 
-	public StatusCode deleteUser(UserModel _model) {
+	public ErrorCode deleteUser(UserModel _model) {
 
 		// TODO Auto-generated method stub
 		List<UserModel> list = UserModel.findAllUserModels();
-		List<UsersChannels> listaKanala = UsersChannels.findAllUsersChannelses();
+		List<UsersChannels> listaKanala = UsersChannels
+				.findAllUsersChannelses();
 
 		boolean deleteUser = false;
 		boolean deleteUserChannelRelation = false;
@@ -75,14 +114,17 @@ public class DefaultUserService implements UserService {
 
 		try {
 			for (UserModel modelUser : list) {
-				if (modelUser.getUsername().contentEquals(_model.getUsername().toString())) {
+				if (modelUser.getUsername().contentEquals(
+						_model.getUsername().toString())) {
 					modelUser.remove();
 					deleteUser = true;
 				}
 			}
+
 			if (listaKanala.isEmpty() != true) {
 				for (UsersChannels modelKanal : listaKanala) {
-					if (modelKanal.getUsername().contentEquals(_model.getUsername())) {
+					if (modelKanal.getUsername().contentEquals(
+							_model.getUsername())) {
 						modelKanal.remove();
 						deleteUserChannelRelation = true;
 					}
@@ -92,17 +134,18 @@ public class DefaultUserService implements UserService {
 			}
 
 		} catch (Exception ex) {
-			// TODO Auto-generated catch block
+
 			new ChannelExceptionHandler(ex.getMessage());
 		}
 
 		if (listaKanalaEmpty == true && deleteUser == true) {
-			return StatusCode.SUCCESS;
+			return ErrorCode.SUCCESS;
 		} else if (deleteUserChannelRelation == true && deleteUser == true) {
-			return StatusCode.SUCCESS;
+			return ErrorCode.SUCCESS;
+
 		}
 
-		return StatusCode.EXC;
+		return ErrorCode.EXC;
 
 	}
 
@@ -110,7 +153,8 @@ public class DefaultUserService implements UserService {
 		List<UserModel> list = UserModel.findAllUserModels();
 
 		for (UserModel model : list) {
-			if (model.getUsername().contentEquals(_model.getUsername().toString())) {
+			if (model.getUsername().contentEquals(
+					_model.getUsername().toString())) {
 				return true;
 			}
 		}
@@ -139,7 +183,9 @@ public class DefaultUserService implements UserService {
 		for (ChannelModel chnlModel : channels) {
 			int brojPoruka = 0;
 			for (MessageModel msgModel : messages) {
-				if (msgModel.getChannel().contentEquals(chnlModel.getName()) && msgModel.getUsername().contentEquals(_model.getUsername())) {
+				if (msgModel.getChannel().contentEquals(chnlModel.getName())
+						&& msgModel.getUsername().contentEquals(
+								_model.getUsername())) {
 					brojPoruka++;
 				}
 			}

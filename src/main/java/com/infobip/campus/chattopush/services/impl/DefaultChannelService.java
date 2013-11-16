@@ -1,7 +1,7 @@
 package com.infobip.campus.chattopush.services.impl;
 
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,15 +9,13 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.google.appengine.api.urlfetch.HTTPHeader;
-import com.google.appengine.api.urlfetch.HTTPMethod;
-import com.google.appengine.api.urlfetch.HTTPRequest;
-import com.google.appengine.api.urlfetch.HTTPResponse;
-import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
-import com.google.gson.Gson;
 import com.infobip.campus.chattopush.clients.ClientChannelModel;
 import com.infobip.campus.chattopush.clients.UserActivityModel;
-import com.infobip.campus.chattopush.configuration.Configuration;
+import com.infobip.campus.chattopush.configuration.InfobipCommunication;
+import com.infobip.campus.chattopush.database.ChannelRepository;
+import com.infobip.campus.chattopush.database.UserChannelsRepository;
+import com.infobip.campus.chattopush.exceptions.CustomException;
+import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.ChannelModel;
 import com.infobip.campus.chattopush.models.MessageModel;
 import com.infobip.campus.chattopush.models.UserModel;
@@ -27,12 +25,24 @@ import com.infobip.campus.chattopush.services.ChannelService;
 @Service
 public class DefaultChannelService implements ChannelService {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.infobip.campus.chattopush.channels.ChannelService#fetchChannelList()
-	 */
+	ChannelRepository channelRepository;
+	InfobipCommunication infobipCommunication;
+	UserChannelsRepository userChannelsRepository;
+
+	public void setUserChannelsRepository(
+			UserChannelsRepository userChannelsRepository) {
+		this.userChannelsRepository = userChannelsRepository;
+	}
+
+	public void setInfobipCommunication(
+			InfobipCommunication infobipCommunication) {
+		this.infobipCommunication = infobipCommunication;
+	}
+
+	public void setChannelRepository(ChannelRepository channelRepository) {
+		this.channelRepository = channelRepository;
+	}
+
 	@Override
 	public ArrayList<ChannelModel> fetchChannelList() {
 		ArrayList<ChannelModel> channelList = new ArrayList<ChannelModel>(
@@ -40,215 +50,82 @@ public class DefaultChannelService implements ChannelService {
 		return channelList;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.infobip.campus.rsstopush.channels.ChannelService#addChannel(com.infobip
-	 * .campus.rsstopush.channels.ChannelModel)
-	 */
 	@Override
-	public boolean addChannel(ChannelModel channel) {
-		if (isChannelExists(channel)) {
-			return false;
+	public void addChannel(ChannelModel channel) throws CustomException {
+		if (channelExists(channel)) {
+			throw new CustomException(ErrorCode.CHANNEL_ALLREADY_EXISTS);
 		} else {
-			Gson gson = new Gson();
+			infobipCommunication.addChannelInfobip(channel);
 			try {
-				URL url = new URL("https://pushapi.infobip.com/1/application/"
-						+ Configuration.APPLICATION_ID + "/channel");
-				HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
-
-				request.addHeader(new HTTPHeader("Authorization",
-						Configuration.AUTHORIZATION_INFO));
-				request.addHeader(new HTTPHeader("content-type",
-						"application/json; charset=utf-8"));
-				request.setPayload(gson.toJson(channel).getBytes());
-
-				HTTPResponse response = URLFetchServiceFactory
-						.getURLFetchService().fetch(request);
-				String responseText = new String(response.getContent());
-				try {
-					channel.persist();
-					return true; // response.getResponseCode() == 200;
-				} catch (Exception e) {
-					e.printStackTrace();
-					return false;
-				}
+				channel.persist();
 			} catch (Exception e) {
-				e.printStackTrace();
-				channel.remove();
-				return false;
+				throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 			}
 		}
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.infobip.campus.rsstopush.channels.ChannelService#deleteChannel(com
-	 * .infobip.campus.rsstopush.channels.ChannelModel)
-	 */
 	@Override
-	public boolean deleteChannel(ChannelModel channel) {
-		Gson gson = new Gson();
+	public void deleteChannel(ChannelModel channel) {
 		try {
-
-			String channelName = channel.getName().replaceAll(" ", "%20");
-			URL url = new URL("https://pushapi.infobip.com/1/application/"
-					+ Configuration.APPLICATION_ID + "/channel/" + channelName);
-			HTTPRequest request = new HTTPRequest(url, HTTPMethod.DELETE);
-
-			request.addHeader(new HTTPHeader("Authorization",
-					Configuration.AUTHORIZATION_INFO));
-			request.addHeader(new HTTPHeader("applicationID",
-					Configuration.APPLICATION_ID));
-			request.addHeader(new HTTPHeader("channelName", channel.getName()));
-
-			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
-					.fetch(request);
-
-			try {
-				List<ChannelModel> channels = ChannelModel
-						.findAllChannelModels();
-				String removChannel = "";
-				for (ChannelModel channelElement : channels) {
-					if (channelElement.getName().equals(channel.getName())) {
-						removChannel = channelElement.getName();
-						channelElement.remove();
-						break;
-					}
-				}
-
-				List<UsersChannels> relations = new ArrayList<UsersChannels>(
-						UsersChannels.findAllUsersChannelses());
-				for (UsersChannels releationElement : relations) {
-					if (releationElement.getChannel().equals(removChannel)) {
-						releationElement.remove();
-						break;
-					}
-				}
-				return true;
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
-			}
+			infobipCommunication.deleteChannelInfobip(channel);
+			channelRepository.deleteChannelDb(channel.getName());
+			channelRepository.deleteRelationsDb(channel.getName());
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.infobip.campus.rsstopush.channels.ChannelService#updateChannel(com
-	 * .infobip.campus.rsstopush.channels.ChannelModel,
-	 * com.infobip.campus.rsstopush.channels.ChannelModel)
-	 */
-	@Override
-	public boolean updateChannel(ChannelModel oldModel, ChannelModel newModel) {
-
-		Gson gson = new Gson();
-		try {
-			String formatSpace = oldModel.getName().replaceAll(" ", "%20");
-			URL url = new URL("https://pushapi.infobip.com/1/application/"
-					+ Configuration.APPLICATION_ID + "/channel/" + formatSpace);
-			HTTPRequest request = new HTTPRequest(url, HTTPMethod.PUT);
-
-			request.addHeader(new HTTPHeader("Authorization",
-					Configuration.AUTHORIZATION_INFO));
-			request.addHeader(new HTTPHeader("content-type", "application/json"));
-			request.addHeader(new HTTPHeader("channelName", oldModel.getName()));
-			request.setPayload(gson.toJson(newModel).getBytes());
-
-			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
-					.fetch(request);
-			String responseText = new String(response.getContent());
-
-			if (responseText.contains("HTTP/1.1 201 Created")) {
-				return true;
-			} else {
-				return false;
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@Override
 	public List<ClientChannelModel> fetchSubscribedChannels(String username) {
 
-		List<ClientChannelModel> returnParameters = new ArrayList<ClientChannelModel>();
+		List<ClientChannelModel> result = new ArrayList<ClientChannelModel>();
+
 		List<ChannelModel> channels = ChannelModel.findAllChannelModels();
 
-		for (ChannelModel channelElement : channels) {
-			ClientChannelModel clientObject = new ClientChannelModel();
-			clientObject.setName(channelElement.getName());
-			clientObject.setDescription(channelElement.getDescription());
-			clientObject.setPublic(channelElement.isIsPublic());
-			boolean findUser = false;
-			for (UsersChannels relations : UsersChannels
-					.findAllUsersChannelses()) {
-				if (relations.getUsername().equals(username)
-						&& relations.getChannel().equals(
-								channelElement.getName())) {
-					clientObject.setSubscribed(true);
-					findUser = true;
-					break;
-				}
-			}
-			if (!findUser) {
-				clientObject.setSubscribed(false);
-			}
+		Map<String, ChannelModel> channelsMap = createChannelMap(channels);
 
-			if (clientObject.isSubscribed() || clientObject.isPublic()) {
-				returnParameters.add(clientObject);
-				System.out.println(clientObject.getName()
-						+ clientObject.isSubscribed() + clientObject.isPublic()
-						+ " --- " + findUser);
+		Collection<UsersChannels> ucs = userChannelsRepository
+				.getSubscribedChannels(username);
+
+		for (UsersChannels uc : ucs) {
+			ChannelModel cm = channelsMap.get(uc.getChannel());
+			if (cm == null) {
+				continue;
 			}
+			ClientChannelModel ccm = new ClientChannelModel();
+			ccm.setSubscribed(true);
+			ccm.setDescription(cm.getDescription());
+			ccm.setName(cm.getName());
+			ccm.setPublic(cm.isIsPublic());
+			result.add(ccm);
 		}
-		return returnParameters;
+
+		return result;
 	}
 
 	@Override
-	public boolean addUserToRoom(UsersChannels object) {
+	public void addUserToRoom(UsersChannels object) {
 		ChannelModel channel = new ChannelModel();
 		channel.setName(object.getChannel());
 		channel.setDescription("");
-		if (isChannelExists(channel) && !isExistsUserInChannel(object)) {
+		if (channelExists(channel) && !existsUserInChannel(object)) {
 			try {
 				object.setLastMessage(new Date(0));
 				object.persist();
-				return true;
 			} catch (Exception e) {
-				return false;
+				throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 			}
 		} else {
-			return false;
+			throw new CustomException(ErrorCode.CHANNEL_USER_EXISTS);
 		}
 	}
 
-	public boolean removeUserFromRoom(UsersChannels object) {
+	public void removeUserFromRoom(UsersChannels object) {
 		try {
-			List<UsersChannels> relations = UsersChannels
-					.findAllUsersChannelses();
-			for (UsersChannels relationElement : relations) {
-				if (relationElement.getChannel().equals(object.getChannel())
-						&& relationElement.getUsername().equals(
-								object.getUsername())) {
-					relationElement.remove();
-					return true;
-				}
-			}
-			return false;
+			channelRepository.removeUserFromRoomDb(object);
 		} catch (Exception e) {
-			return false;
+			throw new CustomException(ErrorCode.CHANNEL_USER_EXISTS);
 		}
 	}
 
@@ -265,53 +142,28 @@ public class DefaultChannelService implements ChannelService {
 				activityUsers.add(userObject);
 			}
 		}
+
 		return activityUsers;
 	}
 
-	private int countMessagesByUserAndChannel(String channelName,
-			String username) {
-		int counter = 0;
-		ArrayList<MessageModel> msgModel = null;
-		try {
-			msgModel = new ArrayList<MessageModel>(
-					MessageModel.findAllMessageModels());
-		} catch (Exception e) {
-			e.printStackTrace();
-			msgModel = new ArrayList<MessageModel>();
-		}
-		for (MessageModel msg : msgModel) {
-			if (msg.getUsername().equals(username)
-					&& msg.getChannel().equals(channelName)) {
-				counter++;
-			}
-		}
+	@Override
+	public boolean channelExists(ChannelModel channel) {
 
-		return counter;
+		if (channelRepository.findChannelDb(channel.getName()) != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
-	public boolean isChannelExists(ChannelModel channel) {
-		List<ChannelModel> channels = new ArrayList<ChannelModel>(
-				ChannelModel.findAllChannelModels());
-
-		for (ChannelModel channelIterator : channels) {
-			if (channelIterator.getName().equals(channel.getName())) {
-				return true;
-			}
+	@Override
+	public boolean existsUserInChannel(UsersChannels relations) {
+		if (channelRepository.findUserInChannelDb(relations) != null) {
+			return true;
+		} else {
+			return false;
 		}
-		return false;
-	}
 
-	public boolean isExistsUserInChannel(UsersChannels relations) {
-		List<UsersChannels> allRelations = new ArrayList<UsersChannels>(
-				UsersChannels.findAllUsersChannelses());
-		for (UsersChannels userChannel : allRelations) {
-			if (userChannel.getChannel().equals(relations.getChannel())
-					&& userChannel.getUsername()
-							.equals(relations.getUsername())) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override
@@ -336,6 +188,7 @@ public class DefaultChannelService implements ChannelService {
 		return usersRoom;
 	}
 
+	@Override
 	public Map<String, Integer> channelStatistics() {
 		// TODO Auto-generated method stub
 		try {
@@ -354,13 +207,41 @@ public class DefaultChannelService implements ChannelService {
 				}
 				statistic.put(chnlModel.getName(), numMessage);
 			}
-
 			return statistic;
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
 
+	}
+
+	private Map<String, ChannelModel> createChannelMap(
+			List<ChannelModel> channels) {
+		Map<String, ChannelModel> mapa = new HashMap<String, ChannelModel>();
+		for (ChannelModel cm : channels) {
+			mapa.put(cm.getName(), cm);
+		}
+		return mapa;
+	}
+
+	private int countMessagesByUserAndChannel(String channelName,
+			String username) {
+		int counter = 0;
+		ArrayList<MessageModel> msgModel = null;
+		try {
+			msgModel = new ArrayList<MessageModel>(
+					MessageModel.findAllMessageModels());
+		} catch (Exception e) {
+			e.printStackTrace();
+			msgModel = new ArrayList<MessageModel>();
+		}
+		for (MessageModel msg : msgModel) {
+			if (msg.getUsername().equals(username)
+					&& msg.getChannel().equals(channelName)) {
+				counter++;
+			}
+		}
+
+		return counter;
 	}
 
 }
