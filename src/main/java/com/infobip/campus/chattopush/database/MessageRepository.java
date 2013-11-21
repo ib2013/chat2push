@@ -1,4 +1,3 @@
-
 package com.infobip.campus.chattopush.database;
 
 import java.util.ArrayList;
@@ -55,4 +54,3 @@ public class MessageRepository {
 		return messages == null ? 0 : messages.size();
 	}
 }
-

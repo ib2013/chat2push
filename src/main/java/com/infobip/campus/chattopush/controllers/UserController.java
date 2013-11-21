@@ -64,8 +64,10 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/fetchUserStatistics", consumes = "application/json", produces = "application/json")
 	@ResponseBody
+
 	public Map<String, Integer> fetchUserStatistics(@RequestBody UserModel _model) {
 		return userService.fetchUserStatistics(_model);
+
 	}
 
 	@ExceptionHandler(CustomException.class)

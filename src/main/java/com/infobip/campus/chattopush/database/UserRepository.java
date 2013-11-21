@@ -14,7 +14,8 @@ public class UserRepository {
 	protected EntityManager em;
 
 	public UserModel findByUsername(String username) {
-		Query query = em.createQuery("SELECT u from UserModel u where u.username = :username");
+		Query query = em
+				.createQuery("SELECT u from UserModel u where u.username = :username");
 		query.setParameter("username", username);
 		List<UserModel> models = query.getResultList();
 
@@ -22,13 +23,15 @@ public class UserRepository {
 	}
 
 	public void deleteUser(String username) {
-		Query query = em.createQuery("DELETE FROM UserModel u where u.username = :username");
+		Query query = em
+				.createQuery("DELETE FROM UserModel u where u.username = :username");
 		query.setParameter("username", username);
 		query.executeUpdate();
 	}
 
 	public void removeFromAllChannels(String username) {
-		Query query = em.createQuery("DELETE FROM UsersChannels u where u.username = :username");
+		Query query = em
+				.createQuery("DELETE FROM UsersChannels u where u.username = :username");
 		query.setParameter("username", username);
 		query.executeUpdate();
 	}

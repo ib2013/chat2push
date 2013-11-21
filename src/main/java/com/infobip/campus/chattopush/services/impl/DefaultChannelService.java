@@ -1,7 +1,6 @@
 package com.infobip.campus.chattopush.services.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -217,15 +216,6 @@ public class DefaultChannelService implements ChannelService {
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
 
-	}
-
-	private Map<String, ChannelModel> createChannelMap(
-			List<ChannelModel> channels) {
-		Map<String, ChannelModel> mapa = new HashMap<String, ChannelModel>();
-		for (ChannelModel cm : channels) {
-			mapa.put(cm.getName(), cm);
-		}
-		return mapa;
 	}
 
 	private int countMessagesByUserAndChannel(String channelName,

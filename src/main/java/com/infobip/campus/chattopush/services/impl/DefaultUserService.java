@@ -42,6 +42,7 @@ public class DefaultUserService implements UserService {
 
 	public void setUserChannelsRepository(
 			UserChannelsRepository userChannelsRepository) {
+
 		this.userChannelsRepository = userChannelsRepository;
 	}
 
@@ -54,6 +55,7 @@ public class DefaultUserService implements UserService {
 		UserModel object = null;
 		try {
 			object = userRepository.findByUsername(model.getUsername());
+
 		} catch (Exception e) {
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
@@ -84,6 +86,7 @@ public class DefaultUserService implements UserService {
 					"C2P Registration code:" + user.getRegistrationCode(),
 					user.getPhoneNumber());
 		} catch (Exception e) {
+
 			e.printStackTrace();
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
@@ -103,9 +106,11 @@ public class DefaultUserService implements UserService {
 				newUser.setPhoneNumber(model.getPhoneNumber());
 				smsMessageService.sendSmsMessage(
 						"Chat2Push",
-						"Chat2Push Registration code for user " + newUser.getUsername() + ":"
+						"Chat2Push Registration code for user "
+								+ newUser.getUsername() + ":"
 								+ newUser.getRegistrationCode(),
 						newUser.getPhoneNumber());
+
 				newUser.merge();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -137,6 +142,7 @@ public class DefaultUserService implements UserService {
 
 	@Override
 	public Map<String, Integer> fetchUserStatistics(UserModel model) {
+
 		Collection<UsersChannels> subscribedChannels = null;
 		try {
 			subscribedChannels = userChannelsRepository
@@ -149,6 +155,7 @@ public class DefaultUserService implements UserService {
 		Map<String, Integer> statistic = new HashMap<String, Integer>();
 
 		for (UsersChannels uc : subscribedChannels) {
+
 			int count = messageRepository.getMessagesForUserAndChannel(
 					uc.getUsername(), uc.getChannel());
 			statistic.put(uc.getChannel(), count);
