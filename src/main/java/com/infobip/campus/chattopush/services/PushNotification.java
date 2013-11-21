@@ -1,16 +1,18 @@
 package com.infobip.campus.chattopush.services;
 
+import java.net.URL;
 import java.util.ArrayList;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-
+import com.google.appengine.api.urlfetch.HTTPHeader;
+import com.google.appengine.api.urlfetch.HTTPMethod;
+import com.google.appengine.api.urlfetch.HTTPRequest;
+import com.google.appengine.api.urlfetch.HTTPResponse;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.infobip.campus.chattopush.configuration.Configuration;
+import com.infobip.campus.chattopush.exceptions.CustomException;
+import com.infobip.campus.chattopush.exceptions.ErrorCode;
 import com.infobip.campus.chattopush.models.MessageModel;
 
 public class PushNotification {
@@ -48,21 +50,27 @@ public class PushNotification {
 	}
 
 	public void notifyChannel() {
-		Gson gson = new Gson();
+		
 		try {
-			StringEntity parms = new StringEntity(gson.toJson(this));
-			HttpClient client = new DefaultHttpClient();
-			HttpPost request = new HttpPost(
-					"https://pushapi.infobip.com/3/application/"+ Configuration.APPLICATION_ID +"/message");
-			request.addHeader("Authorization", Configuration.AUTHORIZATION_INFO);
-			request.addHeader("content-type", "application/json");
-			request.setEntity(parms);
-			HttpResponse response = client.execute(request);
+			Gson gson = new Gson();
+			URL url = new URL("https://pushapi.infobip.com/3/application/"+ Configuration.APPLICATION_ID +"/message");
+			HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
 
-			System.out.println(this.toString());
+			request.addHeader(new HTTPHeader("Authorization",
+					Configuration.AUTHORIZATION_INFO));
+			request.addHeader(new HTTPHeader("content-type",
+					"application/json; charset=utf-8"));
+			request.setPayload(gson.toJson(this).getBytes());
+
+			HTTPResponse response = URLFetchServiceFactory.getURLFetchService()
+					.fetch(request);
+			if (response.getResponseCode() >= 300) {
+				throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
+	
 	}
 
 	@Override

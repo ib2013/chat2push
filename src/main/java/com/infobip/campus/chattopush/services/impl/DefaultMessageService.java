@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.infobip.campus.chattopush.clients.ClientMessageModel;
@@ -17,6 +19,7 @@ import com.infobip.campus.chattopush.services.PushNotification;
 public class DefaultMessageService implements MessageService {
 	
 	MessageRepository messageRepository;
+	private static final Logger LOG = LoggerFactory.getLogger(DefaultMessageService.class);
 	
 	public void setMessageRepository(MessageRepository messageRepository) {
 		this.messageRepository = messageRepository;
@@ -25,10 +28,14 @@ public class DefaultMessageService implements MessageService {
 	@Override
 	public List<MessageModel> fetchMessageList(String un, String ch,
 			long startTime, long endTime) {
+		
+		LOG.info("Fetching messages...");
 
 		List<MessageModel> result = new ArrayList<MessageModel>();
 
 		result = messageRepository.fetchMessagesInInterval(un, ch, startTime, endTime);
+		
+		LOG.info("MessageCount: " + result.size());
 
 		Collections.sort(result, new MessageComparator());
 
@@ -37,6 +44,7 @@ public class DefaultMessageService implements MessageService {
 
 	@Override
 	public boolean sendMessage(ClientMessageModel msg) {
+		LOG.info("Sending message...");
 
 		MessageModel mmodel = new MessageModel();
 
@@ -71,6 +79,7 @@ public class DefaultMessageService implements MessageService {
 
 	@Override
 	public List<MessageModel> fetchAllMessages() {
+		
 		List<MessageModel> messageList = MessageModel.findAllMessageModels();
 		return messageList;
 	}
