@@ -7,17 +7,18 @@ import com.infobip.campus.chattopush.models.UserModel;
 
 public interface UserService {
 
-	public void loginUser(UserModel model);
+	public void loginUser(UserModel _model);
 
-	public void registerUser(UserModel model);
+	public void registerUser(UserModel _model);
 
-	public void verifyUser(UserModel model);
-	
-	public void resendVerificationCode(UserModel model);
+	public void verifyUser(UserModel _model);
 
-	public void deleteUser(UserModel model);
+	public void resendVerificationCode(UserModel _model);
+
+	public void deleteUser(UserModel _model);
 
 	public List<UserModel> fetchAllUsers();
 
-	public Map<String, Integer> fetchUserStatistics(UserModel model);
+	public Map<String, Integer> fetchUserStatistics(UserModel _model);
+
 }

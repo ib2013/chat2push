@@ -1,4 +1,3 @@
-
 package com.infobip.campus.chattopush.database;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ public class MessageRepository {
 	protected EntityManager em;
 
 	@SuppressWarnings("unchecked")
-	public List<MessageModel> fetchMessagesInInterval(String un, String ch, long startTime, long endTime) {
+	public List<MessageModel> fetchMessagesInInterval(String un, String ch,
+			long startTime, long endTime) {
 		List<MessageModel> messages = new ArrayList<MessageModel>();
 		Query query;
 
-		query = em.createQuery("SELECT m FROM MessageModel m WHERE m.username=:un AND m.channel=:ch AND (m.messageDate > :startTime)");
+		query = em
+				.createQuery("SELECT m FROM MessageModel m WHERE m.username=:un AND m.channel=:ch AND (m.messageDate > :startTime)");
 		query.setParameter("un", un);
 		query.setParameter("ch", ch);
 		query.setParameter("startTime", startTime);
@@ -35,7 +36,8 @@ public class MessageRepository {
 		List<MessageModel> messages = new ArrayList<MessageModel>();
 		Query query;
 
-		query = em.createQuery("SELECT m FROM MessageModel m WHERE m.username=:un AND m.channel=:ch ");
+		query = em
+				.createQuery("SELECT m FROM MessageModel m WHERE m.username=:un AND m.channel=:ch ");
 		query.setParameter("un", username);
 		query.setParameter("ch", channel);
 
@@ -43,4 +45,3 @@ public class MessageRepository {
 		return messages == null ? 0 : messages.size();
 	}
 }
-

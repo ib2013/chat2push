@@ -1,4 +1,3 @@
-
 package com.infobip.campus.chattopush.services.impl;
 
 import java.util.Collection;
@@ -24,7 +23,7 @@ import com.infobip.campus.chattopush.services.UserService;
 
 @Service
 public class DefaultUserService implements UserService {
-	
+
 	@PersistenceContext
 	protected EntityManager em;
 
@@ -32,16 +31,18 @@ public class DefaultUserService implements UserService {
 	UserRepository userRepository;
 	UserChannelsRepository userChannelsRepository;
 	MessageRepository messageRepository;
-	
-	public void setSmsMessageService(SmsMessageService smsMessageService){
+
+	public void setSmsMessageService(SmsMessageService smsMessageService) {
 		this.smsMessageService = smsMessageService;
 	}
-	
+
 	public void setMessageRepository(MessageRepository messageRepository) {
 		this.messageRepository = messageRepository;
 	}
 
-	public void setUserChannelsRepository(UserChannelsRepository userChannelsRepository) {
+	public void setUserChannelsRepository(
+			UserChannelsRepository userChannelsRepository) {
+
 		this.userChannelsRepository = userChannelsRepository;
 	}
 
@@ -54,31 +55,38 @@ public class DefaultUserService implements UserService {
 		UserModel object = null;
 		try {
 			object = userRepository.findByUsername(model.getUsername());
-			if (object != null) {
-				if (!MD5.getMD5(model.getPassword()).contentEquals(object.getPassword())) {
-					throw new CustomException(ErrorCode.PASSERROR);
-				}
-			} else {
-				throw new CustomException(ErrorCode.NOUSER);
-			}
-		}
-		catch (Exception e) {
+
+		} catch (Exception e) {
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
+		if (object != null) {
+			if (!MD5.getMD5(model.getPassword()).contentEquals(
+					object.getPassword())) {
+				throw new CustomException(ErrorCode.PASSERROR);
+			}
+			if (object.getRegistrationStatus() == 0) {
+				throw new CustomException(ErrorCode.MISSING_REGISTRATION);
+			}
+		} else {
+			throw new CustomException(ErrorCode.NOUSER);
+		}
+
 	}
-	
+
 	@Override
 	public void resendVerificationCode(UserModel model) {
 		UserModel user = userRepository.findByUsername(model.getUsername());
-		
-		if (user == null){
+
+		if (user == null) {
 			throw new CustomException(ErrorCode.NOUSER);
 		}
-		
-		try{
-		smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + user.getRegistrationCode(),user.getPhoneNumber());
-		}
-		catch(Exception e){
+
+		try {
+			smsMessageService.sendSmsMessage("Chat2Push",
+					"C2P Registration code:" + user.getRegistrationCode(),
+					user.getPhoneNumber());
+		} catch (Exception e) {
+
 			e.printStackTrace();
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
@@ -96,7 +104,13 @@ public class DefaultUserService implements UserService {
 				newUser.setRegistrationCode(1000 + (int) (Math.random() * 9000));
 				newUser.setRegistrationStatus(0);
 				newUser.setPhoneNumber(model.getPhoneNumber());
-				smsMessageService.sendSmsMessage("Chat2Push","C2P Registration code:" + newUser.getRegistrationCode(), newUser.getPhoneNumber());
+				smsMessageService.sendSmsMessage(
+						"Chat2Push",
+						"Chat2Push Registration code for user "
+								+ newUser.getUsername() + ":"
+								+ newUser.getRegistrationCode(),
+						newUser.getPhoneNumber());
+
 				newUser.merge();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -128,12 +142,22 @@ public class DefaultUserService implements UserService {
 
 	@Override
 	public Map<String, Integer> fetchUserStatistics(UserModel model) {
-		Collection<UsersChannels> subscribedChannels = userChannelsRepository.getSubscribedChannels(model.getUsername());
+
+		Collection<UsersChannels> subscribedChannels = null;
+		try {
+			subscribedChannels = userChannelsRepository
+					.getSubscribedChannels(model.getUsername());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
 
 		Map<String, Integer> statistic = new HashMap<String, Integer>();
 
 		for (UsersChannels uc : subscribedChannels) {
-			int count = messageRepository.getMessagesForUserAndChannel(uc.getUsername(), uc.getChannel());
+
+			int count = messageRepository.getMessagesForUserAndChannel(
+					uc.getUsername(), uc.getChannel());
 			statistic.put(uc.getChannel(), count);
 		}
 

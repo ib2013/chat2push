@@ -218,15 +218,6 @@ public class DefaultChannelService implements ChannelService {
 
 	}
 
-	private Map<String, ChannelModel> createChannelMap(
-			List<ChannelModel> channels) {
-		Map<String, ChannelModel> mapa = new HashMap<String, ChannelModel>();
-		for (ChannelModel cm : channels) {
-			mapa.put(cm.getName(), cm);
-		}
-		return mapa;
-	}
-
 	private int countMessagesByUserAndChannel(String channelName,
 			String username) {
 		int counter = 0;
