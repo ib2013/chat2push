@@ -94,6 +94,8 @@
 		id="userService">
 		<property name="userRepository" ref="userRepository"></property>
 		<property name="smsMessageService" ref="smsMessageService"></property>
+		<property name="userChannelsRepository" ref="userChannelsRepository"></property>
+		<property name="messageRepository" ref="messageRepository"></property>
 	</bean>
 
 	<bean
@@ -110,7 +112,6 @@
 	<bean
 		class="com.infobip.campus.chattopush.services.impl.DefaultChannelService"
 		id="channelService">
-
 		<property name="channelRepository" ref="channelRepository" />
 		<property name="infobipCommunication" ref="infobipCommunication" />
 		<property name="userChannelsRepository" ref="userChannelsRepository" />
